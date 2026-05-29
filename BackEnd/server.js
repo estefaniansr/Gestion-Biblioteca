@@ -1,10 +1,11 @@
 const express = require('express')
+const dotenv = require('dotenv').config()
 
 const app = express()
 
-const HOSTNAME = '127.0.0.1'
+const HOSTNAME = process.env.HOSTNAME
 
-const PORT = 3000
+const PORT = process.env.PORT
 
 app.get('/', (req,res)=>{
     res.status(200)
