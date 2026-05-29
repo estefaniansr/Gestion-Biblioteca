@@ -4,7 +4,7 @@ const Usuarios = require('../model/usuariosModel')
 
 conexionAMongo('usuarios')
 
-exports.traerTodosUsuarios = async () => {
+exports.traerTodosUsuariosRepository = async () => {
     console.log('MongoDB Repository - traerTodosUsuarios')
     try{
         const usuarios = await Usuarios.find()

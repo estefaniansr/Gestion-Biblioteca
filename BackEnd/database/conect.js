@@ -11,8 +11,6 @@ exports.conexionAMongo = async (basedeDatos) => {
     try{
         await mongoose.connect(`${URIMONGODB}/${basedeDatos}`)
         console.log(`DB Mongo conectada correctamente`)
-        console.log("URI:", mongoose.connection.host)
-        console.log("DB:", mongoose.connection.name)
     }
     catch (error){
         console.log('Error al conectarse a MongoDB')
