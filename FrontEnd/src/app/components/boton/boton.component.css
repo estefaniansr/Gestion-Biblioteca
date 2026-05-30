@@ -1,0 +1,34 @@
+.boton {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.btn-boton {
+    height: 37px;
+    padding: 0 14px;
+    font-weight: 600;
+    color: var(--fondo);
+    background: var(--acento);
+    border-radius: var(--border-radius-btn);
+    border: 1px solid var(--acento);
+    outline: none;
+    cursor: pointer;
+    transition: all .3s;
+    box-sizing: border-box;
+}
+
+.btn-boton:hover {
+    background: var(--acento-hover);
+    box-shadow: var(--box-shadow);
+}
+
+@media (max-width: 768px) {
+    .movilNo {
+        display: none;
+    }
+
+    .btn-boton {
+        height: 30px;
+    }
+}

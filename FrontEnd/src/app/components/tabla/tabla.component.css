@@ -1,0 +1,250 @@
+.tabla-contenedor {
+    margin-top: 3%;
+    width: 100%;
+    background: var(--fondo-componente);
+    border: 1px solid var(--gris);
+    border-radius: var(--border-radius-btn);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+}
+
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--texto);
+    font-size: 0.9rem;
+    table-layout: auto;
+}
+
+thead tr {
+    border-bottom: 2px solid var(--gris);
+}
+
+th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--texto-gris);
+    white-space: nowrap;
+}
+
+th.th-acciones {
+    text-align: center;
+    min-width: 140px;
+}
+
+tbody tr {
+    border-bottom: 1px solid var(--gris);
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+
+td {
+    padding: 12px 16px;
+    vertical-align: middle;
+    height: 48px;
+    overflow: hidden;
+}
+
+td.td-acciones {
+    text-align: center;
+}
+
+td.td-acciones .acciones-grupo {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.sin-datos {
+    text-align: center;
+    padding: 40px 16px;
+    color: var(--texto);
+    opacity: 0.45;
+    font-style: italic;
+}
+
+.btn-accion {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: var(--border-radius-btn);
+    border: 1px solid var(--gris);
+    background: var(--fondo-componente);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-accion:hover {
+    box-shadow: var(--box-shadow);
+    border-color: var(--texto-gris);
+}
+
+.paginacion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-top: 1px solid var(--gris);
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.mostrando {
+    font-size: 0.85rem;
+    color: var(--texto-gris);
+}
+
+.paginas {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+
+
+.btn-pag {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border-radius: var(--border-radius-btn);
+    border: 1px solid var(--gris);
+    background: var(--fondo-componente);
+    color: var(--texto);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-pag:hover:not(:disabled) {
+    box-shadow: var(--box-shadow);
+}
+
+.btn-pag.activa {
+    background: var(--acento);
+    border-color: var(--acento);
+    color: var(--fondo-componente);
+    font-weight: 700;
+}
+
+.btn-pag:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.puntos {
+    font-size: 0.85rem;
+    color: var(--texto-gris);
+    padding: 0 4px;
+}
+
+.celda {
+    position: relative;
+    min-width: 120px;
+    max-width: 220px;
+}
+
+.celda-contenido {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+
+.celda-contenido span {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.input-edicion {
+    width: 100%;
+    padding: 6px 8px;
+    background: var(--fondo-componente);
+    border-radius: var(--border-radius-btn);
+    border: 1px solid var(--gris);
+    outline: none;
+}
+
+.input-edicion:focus {
+    box-shadow: var(--box-shadow);
+    border-color: var(--texto-gris);
+}
+
+.input-edicion:hover {
+    border-color: var(--texto-gris);
+}
+
+@media (max-width: 768px) {
+
+    .tabla-contenedor {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tabla {
+        min-width: 720px;
+        font-size: 0.75rem;
+    }
+
+    th {
+        font-size: 0.65rem;
+        padding: 10px 8px;
+    }
+
+    td {
+        padding: 10px 8px;
+        height: auto;
+    }
+
+    .celda {
+        min-width: 140px;
+        max-width: 180px;
+    }
+
+    .td-acciones {
+        min-width: 160px;
+    }
+
+    .btn-accion {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+    }
+
+    .acciones-grupo {
+        gap: 6px;
+    }
+
+    .paginacion {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .paginas {
+        justify-content: flex-end;
+        position: relative;
+        left: 120%;
+        width: 100%;
+    }
+
+    .mostrando {
+        position: relative;
+        top: 30px;
+        font-size: 0.6rem;
+    }
+}

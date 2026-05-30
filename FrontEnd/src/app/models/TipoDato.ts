@@ -1,0 +1,1 @@
+export type TipoDato = string | number | boolean; // tipo para los valores de dato que se puede utilizar

@@ -1,0 +1,197 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 15, 45, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 1rem;
+    animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal {
+    background: var(--fondo-componente);
+    border: 0.5px solid var(--gris);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(16px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1.25rem 1rem;
+    border-bottom: 0.5px solid var(--gris);
+    flex-shrink: 0;
+}
+
+.modal-titulo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--texto);
+}
+
+
+.btn-cerrar {
+    width: 30px;
+    height: 30px;
+    border: 0.5px solid var(--gris);
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+    color: var(--texto);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-cerrar:hover {
+    box-shadow: var(--box-shadow);
+    border-color: var(--texto-gris);
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.modal-body>div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--texto);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+
+.input,
+.select {
+    background: var(--fondo-componente);
+    border-radius: var(--border-radius-btn);
+    border: 1px solid var(--gris);
+    outline: none;
+    padding: 10px 10px 10px 35px;
+    transition: all .3s;
+}
+
+.input:hover,
+.select:hover {
+    border-color: var(--texto-gris);
+
+}
+
+.input:focus,
+.select:focus {
+    box-shadow: var(--box-shadow);
+    border-color: var(--texto-gris);
+}
+
+
+.modal-botones {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0.9rem 1.25rem;
+    border-top: 1px solid var(--gris);
+    flex-shrink: 0;
+}
+
+.btn-cancelar {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--texto);
+    background: none;
+    border: 0.5px solid var(--gris);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-cancelar:hover {
+    border-color: var(--texto-gris);
+    box-shadow: var(--box-shadow);
+}
+
+.btn-guardar {
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--fondo);
+    border-radius: var(--border-radius-btn);
+    border: 1px solid var(--acento);
+    background: var(--acento);
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.btn-guardar:hover {
+    background: var(--acento-hover);
+    box-shadow: var(--box-shadow);
+}
+
+.asterisco {
+    color: var(--acento);
+    font-weight: bold;
+}
+
+input::placeholder {
+    color: var(--texto-gris);
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: var(--texto-gris);
+}
+
+option {
+    color: var(--texto);
+}

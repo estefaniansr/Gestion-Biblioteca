@@ -1,0 +1,156 @@
+.header {
+    box-shadow: var(--box-shadow);
+    background: var(--fondo-componente-transparente);
+    color: var(--texto);
+    border: 1px solid var(--gris);
+    border-radius: var(--border-radius);
+    backdrop-filter: var(--blureado);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+
+.titulo-header {
+    font-weight: 700;
+    padding-left: 10px;
+    font-size: 1.5rem;
+    display: flex;
+    gap: 5px;
+}
+
+
+.nav-header {
+    display: flex;
+    align-items: start;
+    gap: 5rem;
+    color: var(--texto);
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+
+.item-header {
+    position: relative;
+    display: flex;
+    user-select: none;
+    padding: 6px 10px;
+    border-radius: var(--border-radius);
+    transition: all 0.25s ease;
+    user-select: none;
+
+}
+
+.icon-header {
+    width: 20px;
+    height: 20px;
+    padding-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform: translateY(-5px);
+}
+
+.item-header::before {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 0;
+    transform: translateX(-50%);
+    height: 2px;
+    background: var(--acento);
+    transition: width 0.3s ease;
+}
+
+.item-header svg {
+    width: 20px;
+    position: relative;
+    top: 5px;
+}
+
+.item-header:hover {
+    color: var(--acento);
+    background: var(--acento-transparente);
+}
+
+.item-header:hover::before {
+    width: 70%;
+}
+
+.activa {
+    color: var(--acento);
+    background: var(--acento-transparente);
+}
+
+.activa::before {
+    width: 100%;
+}
+
+.activa:hover::before {
+    width: 100%;
+}
+
+.btn-header {
+    margin-right: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    border: 1px solid var(--gris);
+    border-radius: var(--border-radius-btn);
+    background: none;
+    color: var(--texto);
+    transition: all .3s;
+}
+
+.btn-header:hover {
+    background: var(--acento-transparente);
+    color: var(--acento);
+    border-color: var(--acento-transparente);
+}
+
+
+@media (max-width: 768px) {
+    .titulo-header {
+        font-size: 1rem;
+    }
+
+    .movilNo {
+        display: none;
+    }
+
+    .nav-header {
+        font-size: .7rem;
+        gap: 0.5rem;
+        padding-left: 10px;
+    }
+
+    .btn-header svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .btn-header {
+        width: 30px;
+        height: 30px;
+        border: none;
+    }
+
+    .btn-header:hover {
+        background: none;
+        color: var(--acento);
+    }
+
+    .btn-header:focus {
+        color: var(--acento);
+    }
+
+}
