@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'
 
+import { Route } from '@angular/router'
+
 @Component({
     selector: 'app-header', // nombre de la etiqueta html <app-header />
     standalone: true, // no necesita declarse

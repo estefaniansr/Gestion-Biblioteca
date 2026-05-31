@@ -1,5 +1,7 @@
 const express = require('express')
 const dotenv = require('dotenv').config()
+const cors = require('cors')
+
 
 const app = express()
 
@@ -9,6 +11,7 @@ const PORT = process.env.PORT
 
 const {routerUsuarios} = require('./router/usuarios.router')
 
+app.use(cors())
 app.use('/usuarios', routerUsuarios)
 
 app.get('/', (req,res)=>{

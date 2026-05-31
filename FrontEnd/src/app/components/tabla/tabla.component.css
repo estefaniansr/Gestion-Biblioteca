@@ -248,3 +248,8 @@ td.td-acciones .acciones-grupo {
         font-size: 0.6rem;
     }
 }
+
+td {
+    white-space: pre-line;
+    line-height: 2;
+}
