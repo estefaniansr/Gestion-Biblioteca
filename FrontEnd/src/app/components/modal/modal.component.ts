@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CampoInput } from '../../models/campoInput.interface';
 import { CampoSelect } from '../../models/campoSelect.interface';
 import { Campo } from '../../models/campo.type';
-import { TipoDato } from '../../models/TipoDato';
+import { TipoDato } from '../../models/TipoDato.type';
 
 
 @Component({
@@ -63,3 +63,4 @@ export class ModalComponent implements OnChanges { // implmenta OnChanges para d
         return campo.tipo === 'select';  // confirma si campo.tipo (valor dentro de la interfaz) es de tipo select
     }
 }
+
