@@ -1,2 +1,13 @@
 ###
-GET http://127.0.0.1:3000/probando HTTP/1.1
+GET http://127.0.0.1:3000/usuarios HTTP/1.1
+###
+GET http://127.0.0.1:3000/usuarios/nombre/fACUNDO HTTP/1.1
+###
+GET http://127.0.0.1:3000/usuarios/apellido/martinez HTTP/1.1
+###
+GET http://127.0.0.1:3000/usuarios/dni/40954703 HTTP/1.1
+###
+###
+GET http://127.0.0.1:3000/usuarios/email/facundoemanuel73@gmail.com HTTP/1.1
+###
+GET http://127.0.0.1:3000/usuarios/telefono/1173639902 HTTP/1.1

@@ -32,56 +32,59 @@ interface Usuario {
 
 export class UsuariosComponent implements OnInit {
 
+  //ngOnInit ejecuta un codigo una vez cargo la pagina.
   ngOnInit(): void {
-    fetch('http://127.0.0.1:3000/usuarios')
-    .then(respuesta => respuesta.json())
-    .then(data => {
-      this.usuariosLLamados = data
-      this.usuariosLLamados.forEach((dato)=>{
-        this.usuariosTabla.push({
-          campo1: `${dato.nombre}\n ${dato.apellido}`,
-          campo2: `${dato.email}\n${dato.email}`,
-          campo3: `${dato.DNI}`
-        }
-        )
-      })
-    })
-    .catch(error => {
-      console.log(error)
-    })
+    console.log('Hola, esto deberia verse al cargar la pagina')
   }
 
   probandoCosas(){
-    fetch('http://127.0.0.1:3000/usuarios')
+    this.getTodosLosUsuarios()
+  }
+
+  getTodosLosUsuarios(){
+    //Limpiamos la tabla de usuarios local, por si anteriormente añadimos un usuario, que no quede duplicado.
+    this.usuariosTabla = []
+
+    try{
+      fetch('http://127.0.0.1:3000/usuarios')
     .then(respuesta => respuesta.json())
     .then(data => {
       this.usuariosLLamados = data
       this.usuariosLLamados.forEach((dato)=>{
         this.usuariosTabla.push({
           campo1: `${dato.nombre}\n ${dato.apellido}`,
-          campo2: `${dato.email}\n${dato.email}`,
+          campo2: `${dato.email}\n${dato.telefono}`,
           campo3: `${dato.DNI}`
         }
         )
+        this.cantidadUsuarios = this.usuariosTabla.length
       })
     })
     .catch(error => {
       console.log(error)
     })
+    }
+    
+    catch(error){
+      console.log('Error al traer los usuarios')
+    }
   }
 
   usuariosLLamados:Usuario[] = []
 
+  usuariosTabla: any[] = [
+  ];
+
   titulo = 'Usuarios'
   subtitulo = 'nada x ahora'
-  cUsuarios = 0
+  cantidadUsuarios = 0
   //cosas necesarias por componentes, no declarado por UsuariosComponent:
   activo = 'usuarios'; // estado general de la app
   textoBusqueda = '' // guarda lo que escribe el user
   textoBoton = '+ Nuevo' // titulo del btn x defecto
   modalAbierto = false // el modal esta cerrado x defecto
   filtroSeleccionado = '' // el filtro seleccionado esta vacio x defecto
-  paginaActual = 1 // la pag actual esta x defecto en la 1
+  paginaActual = 2 // la pag actual esta x defecto en la 1
 
   // campos
 
@@ -103,8 +106,6 @@ export class UsuariosComponent implements OnInit {
     { tipo: 'text', nombre: 'titulo', label: 'Nombre', requerido: true },
   ];
 
-  usuariosTabla: any[] = [
-  ]; // prueba
 
   // modal
 

@@ -2,7 +2,7 @@
     <!-- Pasas en [activo] el valor de TS  activo (linea 27) y el cambioTab genera un evento-->
 </app-header>
 
-<button (click)="probandoCosas()">Probando</button>
+<button (click)="probandoCosas()">Traer Usuarios</button>
 
   <div class="cont">
     <app-titulo [titulo]="titulo" [subtitulo]="subtitulo"></app-titulo>
@@ -22,7 +22,7 @@
     (cancelar)="modalAbierto = false" />
 
   <div class="tags-container">
-    <app-tags titulo="Usuarios" [cantidad]="cUsuarios">
+    <app-tags titulo="Usuarios" [cantidad]="cantidadUsuarios">
       <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
         <g clip-path="url(#clip0_4418_7032)">
           <path

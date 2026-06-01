@@ -13,7 +13,7 @@ const usuariosSchema = mongoose.Schema(
             required:true
         },
         DNI:{
-            type:Number,
+            type:String,
             required:true
         },
         email:{
@@ -21,7 +21,7 @@ const usuariosSchema = mongoose.Schema(
             required:true
         },
         telefono:{
-            type:Number,
+            type:String,
             required:true
         }
     }
