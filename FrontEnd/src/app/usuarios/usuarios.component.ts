@@ -12,6 +12,7 @@ import { CardComponent } from '../components/cards/cards.component'; // importar
 import { Campo } from '../models/campo.type'; // importar la interface de campo
 import { TipoDato } from '../models/TipoDato';
 import { FilaTabla } from '../models/filaTabla.type';
+import { using } from 'rxjs';
 
 interface Usuario {
   id:string,
@@ -37,8 +38,38 @@ export class UsuariosComponent implements OnInit {
     console.log('Hola, esto deberia verse al cargar la pagina')
   }
 
-  probandoCosas(){
-    this.getTodosLosUsuarios()
+  usuariosLLamados:Usuario[] = []
+
+  usuariosTabla: any[] = [
+  ];
+
+  titulo = 'Usuarios'
+  subtitulo = 'nada x ahora'
+  cantidadUsuarios = this.usuariosTabla.length
+  //cosas necesarias por componentes, no declarado por UsuariosComponent:
+  activo = 'usuarios'; // estado general de la app
+  textoBusqueda = '' // guarda lo que escribe el user
+  textoBoton = '+ Nuevo' // titulo del btn x defecto
+  modalAbierto = false // el modal esta cerrado x defecto
+  filtroSeleccionado = 'nombre'
+  paginaActual = 2 // la pag actual esta x defecto en la 1
+
+  // campos
+
+  CamposModal: Campo[] = [ // los campos que van al formulario del modal, editables
+    { tipo: 'text', nombre: 'Ejemplo requerido', label: 'Nombre', placeholder: 'Juan', requerido: true },
+    { tipo: 'text', nombre: 'Apellido', label: 'Apellido', placeholder: 'Perez', requerido:true },
+    {tipo: 'text', nombre: 'DNI', label: 'Numero de DNI', placeholder:'40123456', requerido: true},
+    {tipo: 'text', nombre: 'Email', label: 'Email', placeholder:'usuario@email.com', requerido: true},
+    {tipo: 'text', nombre: 'Telefono Celular', label: 'Telefono Celular', placeholder:'1124559071', requerido: true},
+  ];
+
+  CamposCard: Campo[] = [ // campos que van cuandoe editas las card
+    { tipo: 'text', nombre: 'titulo', label: 'Nombre', requerido: true },
+  ];
+
+    probandoCosas(){
+    this.getUsuarioBusqueda()
   }
 
   getTodosLosUsuarios(){
@@ -70,42 +101,44 @@ export class UsuariosComponent implements OnInit {
     }
   }
 
-  usuariosLLamados:Usuario[] = []
-
-  usuariosTabla: any[] = [
-  ];
-
-  titulo = 'Usuarios'
-  subtitulo = 'nada x ahora'
-  cantidadUsuarios = 0
-  //cosas necesarias por componentes, no declarado por UsuariosComponent:
-  activo = 'usuarios'; // estado general de la app
-  textoBusqueda = '' // guarda lo que escribe el user
-  textoBoton = '+ Nuevo' // titulo del btn x defecto
-  modalAbierto = false // el modal esta cerrado x defecto
-  filtroSeleccionado = '' // el filtro seleccionado esta vacio x defecto
-  paginaActual = 2 // la pag actual esta x defecto en la 1
-
-  // campos
-
-  CamposModal: Campo[] = [ // los campos que van al formulario del modal, editables
-    { tipo: 'text', nombre: 'Ejemplo requerido', label: 'ej', placeholder: 'Ej: Ejemplo', requerido: true },
-    { tipo: 'number', nombre: 'ej', label: 'ej', placeholder: 'ej' },
-    {
-      tipo: 'select',
-      nombre: 'ej',
-      label: 'ej',
-      requerido: true,
-      opciones: [
-        { valor: 'ej', texto: 'ej' },
-      ]
+  async getUsuarioBusqueda() {
+        this.usuariosTabla = []
+        try{
+          fetch(`http://127.0.0.1:3000/usuarios/${this.filtroSeleccionado}/${this.textoBusqueda}`)
+          .then(respuesta => respuesta.json())
+          .then(data => {
+            this.usuariosLLamados = data
+            this.usuariosLLamados.forEach((dato)=>{
+              this.usuariosTabla.push({
+                campo1: `${dato.nombre}\n ${dato.apellido}`,
+                campo2: `${dato.email}\n${dato.telefono}`,
+                campo3: `${dato.DNI}`
+              })
+            })
+          })
+        }
+        catch(error){
+          console.log(`Error al traer al usuario con el ${this.filtroSeleccionado} ${this.textoBusqueda}`)
+        }
     }
-  ];
 
-  CamposCard: Campo[] = [ // campos que van cuandoe editas las card
-    { tipo: 'text', nombre: 'titulo', label: 'Nombre', requerido: true },
-  ];
+  //     try{
+  //       fetch(`http://127.0.0.1:3000/usuarios/nombre/${this.textoBusqueda}`)
+  //       .then(respuesta => respuesta.json())
+  //       .then(data => {
+  //         this.usuariosLLamados = data
+  //         this.usuariosLLamados.forEach((dato)=>{
+  //           this.usuariosTabla.push({
 
+  //           })
+  //         })
+  //       })
+  //     }
+  //     catch(error){
+
+  //     }
+  //   }
+  // }
 
   // modal
 
@@ -124,7 +157,9 @@ export class UsuariosComponent implements OnInit {
   }
 
   onFiltrar(valor: string) { // pasa un valor x argumento
+    
     this.filtroSeleccionado = valor // y el filtro seleccionado se le pone el valor del argumento
+    console.log(this.filtroSeleccionado)
   }
 
   // acciones

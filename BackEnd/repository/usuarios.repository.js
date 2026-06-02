@@ -1,3 +1,4 @@
+const { ReturnDocument } = require('mongodb')
 const { conexionAMongo } = require('../database/conect')
 
 const Usuarios = require('../model/usuariosModel')
@@ -74,4 +75,16 @@ exports.traerUsuarioTelefono = async (parametroTelefono) => {
         console.log('error')
         throw Error(error)
     }
-} 
+}
+
+exports.crearUsuario = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
+    console.log('Usuarios Repository - crearUsuario')
+    try{
+        let contador = await Usuarios.findOneAndUpdate({contador: 'usuarios'}, {$inc: {valor: 1}}, {returnDocument: 'after'})
+        console.log(contador.valor)
+    }
+    catch(error){
+        console.log('ERROR en Usuarios Repository - crearUsuario')
+        throw Error(error)
+    }
+}

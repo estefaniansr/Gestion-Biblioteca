@@ -8,13 +8,13 @@
     <app-titulo [titulo]="titulo" [subtitulo]="subtitulo"></app-titulo>
     <!-- Pasa los @Input del componente titulo y entre "el nombre" -->
     <div class="acciones">
-      <app-filter [opciones]="['opcion', 'opcion', 'opcion', 'opcion']" (seleccionar)="onFiltrar($event)">
+      <app-filter [opciones]="['nombre', 'apellido', 'DNI', 'email', 'telefono']" (seleccionar)="onFiltrar($event)">
 
       </app-filter>
 
-      <app-buscador placeholder="Buscar ej..." (valorChange)="filtrado($event)"></app-buscador>
+      <app-buscador placeholder="{{filtroSeleccionado}}" (valorChange)="filtrado($event)"></app-buscador>
 
-      <app-boton [texto]="'Nuevo ejemplo'" (abrir)="modalAbierto = true"></app-boton>
+      <app-boton [texto]="'Nuevo usuario'" (abrir)="modalAbierto = true"></app-boton>
     </div>
   </div>
 
