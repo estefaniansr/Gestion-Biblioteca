@@ -17,7 +17,7 @@ exports.traerTodosUsuariosController = async (req,res) => {
     }
 }
 
-exports.traerUsuarioNombre = async (req,res) => {
+exports.traerUsuarioNombreController = async (req,res) => {
     console.log('Usuarios Controller - traerUsuarioNombre')
     try{
         let nombre = req.params.nombre
@@ -25,7 +25,7 @@ exports.traerUsuarioNombre = async (req,res) => {
         nombre = nombre.charAt(0).toUpperCase() + nombre.slice(1);
         res.setHeader('Content-Type', 'application/json')
         res.status(200)
-        res.send(await usuariosService.traerUsuarioNombre(nombre))
+        res.send(await usuariosService.traerUsuarioNombreService(nombre))
     }
     catch(error)
     {
@@ -38,7 +38,7 @@ exports.traerUsuarioNombre = async (req,res) => {
     }
 }
 
-exports.traerUsuarioApellido = async (req,res) => {
+exports.traerUsuarioApellidoController = async (req,res) => {
     console.log('Usuarios Controller - traerUsuarioApellido')
     try{
         let apellido = req.params.apellido
@@ -46,7 +46,7 @@ exports.traerUsuarioApellido = async (req,res) => {
         apellido = apellido.charAt(0).toUpperCase() + apellido.slice(1);
         res.setHeader('Content-Type', 'application/json')
         res.status(200)
-        res.send(await usuariosService.traerUsuarioApellido(apellido))
+        res.send(await usuariosService.traerUsuarioApellidoService(apellido))
     }
     catch(error)
     {
@@ -59,14 +59,14 @@ exports.traerUsuarioApellido = async (req,res) => {
     }
 }
 
-exports.traerUsuarioDNI = async (req,res) => {
+exports.traerUsuarioDNIController = async (req,res) => {
     console.log('Usuarios Controller - traerUsuarioDNI')
     try{
         let dni = req.params.dni
         console.log(req.body)
         res.setHeader('Content-Type', 'application/json')
         res.status(200)
-        res.send(await usuariosService.traerUsuarioDNI(dni))
+        res.send(await usuariosService.traerUsuarioDNIService(dni))
     }
     catch(error)
     {
@@ -79,7 +79,7 @@ exports.traerUsuarioDNI = async (req,res) => {
     }
 }
 
-exports.traerUsuarioEmail = async (req,res) => {
+exports.traerUsuarioEmailController = async (req,res) => {
     console.log('Usuarios Controller - traerUsuarioEmail')
     try{
         let email = req.params.email
@@ -87,7 +87,7 @@ exports.traerUsuarioEmail = async (req,res) => {
         console.log(req.body)
         res.setHeader('Content-Type', 'application/json')
         res.status(200)
-        res.send(await usuariosService.traerUsuarioEmail(email))
+        res.send(await usuariosService.traerUsuarioEmailService(email))
     }
     catch(error)
     {
@@ -100,17 +100,34 @@ exports.traerUsuarioEmail = async (req,res) => {
     }
 }
 
-exports.traerUsuarioTelefono = async (req,res) => {
+exports.traerUsuarioTelefonoController = async (req,res) => {
     console.log('Usuarios Controller - traerUsuarioTelefono')
     try{
         let telefono = req.params.telefono
         console.log(req.body)
         res.setHeader('Content-Type', 'application/json')
         res.status(200)
-        res.send(await usuariosService.traerUsuarioTelefono(telefono))
+        res.send(await usuariosService.traerUsuarioTelefonoService(telefono))
     }
     catch(error)
     {
+        console.log('ERROR en Usuarios Usuarios Controller - traerUsuarioTelefono')
+        console.log(error)
+        res.status(500).send({
+            code:500,
+            message:"ERROR en Usuarios Usuarios Controller - traerUsuarioTelefono"
+        })
+    }
+}
+
+exports.crearUsuarioController = async (req,res) =>{
+    console.log('Usuarios Controller - crearUsuarioController')
+    try{
+        let nuevo = req.body
+        res.status(200)
+        res.send(await usuariosService.crearUsuarioService(nuevo.nombre, nuevo.apellido, nuevo.DNI, nuevo.email, nuevo.telefono))
+    }
+    catch(error){
         console.log('ERROR en Usuarios Usuarios Controller - traerUsuarioTelefono')
         console.log(error)
         res.status(500).send({

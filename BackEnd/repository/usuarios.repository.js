@@ -80,11 +80,47 @@ exports.traerUsuarioTelefono = async (parametroTelefono) => {
 exports.crearUsuario = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
     console.log('Usuarios Repository - crearUsuario')
     try{
-        let contador = await Usuarios.findOneAndUpdate({contador: 'usuarios'}, {$inc: {valor: 1}}, {returnDocument: 'after'})
-        console.log(contador.valor)
+        let dniARevisar = await revisarDNI(pDNI)
+        if(dniARevisar == true){
+            console.log(`No se puede crear un usuario con este DNI: ${pDNI}`)
+        }
+        else{
+            let contador = await sumarUno()
+            let nuevo = await Usuarios.create({_id: contador, nombre: pNombre, apellido:pApellido, DNI:pDNI, email:pEmail, telefono:pTelefono})
+            console.log(nuevo)
+            return nuevo
+        }
+
     }
     catch(error){
         console.log('ERROR en Usuarios Repository - crearUsuario')
         throw Error(error)
+    }
+}
+
+async function revisarDNI(pDNI) {
+    try{
+        let dni = await Usuarios.find({DNI: pDNI})
+        if(dni.length == 1){
+            console.log(`DNI ${pDNI} encontado`)
+            return true
+        }
+        else{
+            console.log(`DNI ${pDNI} NO encontado`)
+            return false
+        }
+    }
+    catch(error){
+
+    }
+}
+
+async function sumarUno(){
+    try{
+        let contador = await Usuarios.findOneAndUpdate({contador: 'usuarios'}, {$inc: {valor: 1}}, {returnDocument: 'after'})
+        return contador.valor
+    }
+    catch(error){
+
     }
 }

@@ -12,57 +12,69 @@ exports.traerTodosUsuariosService = async () => {
     }
 }
 
-exports.traerUsuarioNombre = async (parametroNombre) => {
+exports.traerUsuarioNombreService = async (parametroNombre) => {
     console.log('Usuarios Service - traerUsuarioNombre')
     try{
         let datos = await usuariosRepository.traerUsuarioNombre(parametroNombre)
         return JSON.stringify(datos)
     } catch(error){
-        console.log('ERROR en Service - traerUsuarioNombre')
+        console.log('ERROR en Service - traerUsuarioNombreService')
         console.log(error)
     }
 }
 
-exports.traerUsuarioApellido = async (parametroApellido) => {
+exports.traerUsuarioApellidoService = async (parametroApellido) => {
     console.log('Usuarios Service - traerUsuarioApellido')
     try{
         let datos = await usuariosRepository.traerUsuarioApellido(parametroApellido)
         return JSON.stringify(datos)
     } catch(error){
-        console.log('ERROR en Service - traerUsuarioApellido')
+        console.log('ERROR en Service - traerUsuarioApellidoService')
         console.log(error)
     }
 }
 
-exports.traerUsuarioDNI = async (parametroDNI) => {
+exports.traerUsuarioDNIService = async (parametroDNI) => {
     console.log('Usuarios Service - traerUsuarioDNI')
     try{
         let datos = await usuariosRepository.traerUsuarioDNI(parametroDNI)
         return JSON.stringify(datos)
     } catch(error){
-        console.log('ERROR en Service - traerUsuarioDNI')
+        console.log('ERROR en Service - traerUsuarioDNIService')
         console.log(error)
     }
 }
 
-exports.traerUsuarioEmail = async (parametroEmail) => {
+exports.traerUsuarioEmailService = async (parametroEmail) => {
     console.log('Usuarios Service - traerUsuarioEmail')
     try{
         let datos = await usuariosRepository.traerUsuarioEmail(parametroEmail)
         return JSON.stringify(datos)
     } catch(error){
-        console.log('ERROR en Service - traerUsuarioEmail')
+        console.log('ERROR en Service - traerUsuarioEmailService')
         console.log(error)
     }
 }
 
-exports.traerUsuarioTelefono = async (parametroTelefono) => {
+exports.traerUsuarioTelefonoService = async (parametroTelefono) => {
     console.log('Usuarios Service - UsuarioTelefono')
     try{
         let datos = await usuariosRepository.traerUsuarioTelefono(parametroTelefono)
         return JSON.stringify(datos)
     } catch(error){
-        console.log('ERROR en Service - UsuarioTelefono')
+        console.log('ERROR en Service - traerUsuarioTelefonoService')
+        console.log(error)
+    }
+}
+
+exports.crearUsuarioService = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
+    console.log('Usuarios Service - crearUsuarioService')  
+    try{
+        let datos = await usuariosRepository.crearUsuario(pNombre, pApellido, pDNI, pEmail, pTelefono)
+        return JSON.stringify(datos)
+    }
+    catch(error){
+        console.log('ERROR en Service - crearUsuarioService')
         console.log(error)
     }
 }

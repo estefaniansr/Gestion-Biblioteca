@@ -12,6 +12,7 @@ const PORT = process.env.PORT
 const {routerUsuarios} = require('./router/usuarios.router')
 
 app.use(cors())
+
 app.use('/usuarios', routerUsuarios)
 
 app.get('/', (req,res)=>{
