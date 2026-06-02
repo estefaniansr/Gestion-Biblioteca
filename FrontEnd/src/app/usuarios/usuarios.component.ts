@@ -15,7 +15,6 @@ import { FilaTabla } from '../models/filaTabla.type';
 import { using } from 'rxjs';
 
 interface Usuario {
-  id:string,
   nombre: string,
   apellido: string,
   DNI: string,
@@ -46,6 +45,13 @@ export class UsuariosComponent implements OnInit {
   titulo = 'Usuarios'
   subtitulo = 'nada x ahora'
   cantidadUsuarios = this.usuariosTabla.length
+  datosdeModal:Usuario = {
+    nombre: '',
+    apellido: '',
+    DNI: '',
+    email: '',
+    telefono: '',
+  }
   //cosas necesarias por componentes, no declarado por UsuariosComponent:
   activo = 'usuarios'; // estado general de la app
   textoBusqueda = '' // guarda lo que escribe el user
@@ -57,27 +63,27 @@ export class UsuariosComponent implements OnInit {
   // campos
 
   CamposModal: Campo[] = [ // los campos que van al formulario del modal, editables
-    { tipo: 'text', nombre: 'Ejemplo requerido', label: 'Nombre', placeholder: 'Juan', requerido: true },
+    { tipo: 'text', nombre: 'Nombre', label: 'Nombre', placeholder: 'Juan', requerido: true },
     { tipo: 'text', nombre: 'Apellido', label: 'Apellido', placeholder: 'Perez', requerido:true },
-    {tipo: 'text', nombre: 'DNI', label: 'Numero de DNI', placeholder:'40123456', requerido: true},
-    {tipo: 'text', nombre: 'Email', label: 'Email', placeholder:'usuario@email.com', requerido: true},
-    {tipo: 'text', nombre: 'Telefono Celular', label: 'Telefono Celular', placeholder:'1124559071', requerido: true},
+    { tipo: 'text', nombre: 'DNI', label: 'Numero de DNI', placeholder:'40123456', requerido: true},
+    { tipo: 'text', nombre: 'Email', label: 'Email', placeholder:'usuario@email.com', requerido: true},
+    { tipo: 'text', nombre: 'Telefono Celular', label: 'Telefono Celular', placeholder:'1124559071', requerido: true},
   ];
 
   CamposCard: Campo[] = [ // campos que van cuandoe editas las card
     { tipo: 'text', nombre: 'titulo', label: 'Nombre', requerido: true },
   ];
 
-    probandoCosas(){
-    this.getUsuarioBusqueda()
+    async probandoCosas(){
+      
   }
 
-  getTodosLosUsuarios(){
+  async getTodosLosUsuarios(){
     //Limpiamos la tabla de usuarios local, por si anteriormente añadimos un usuario, que no quede duplicado.
     this.usuariosTabla = []
 
     try{
-      fetch('http://127.0.0.1:3000/usuarios')
+    const respuesta = await fetch('http://127.0.0.1:3000/usuarios')
     .then(respuesta => respuesta.json())
     .then(data => {
       this.usuariosLLamados = data
@@ -95,7 +101,6 @@ export class UsuariosComponent implements OnInit {
       console.log(error)
     })
     }
-    
     catch(error){
       console.log('Error al traer los usuarios')
     }
@@ -122,23 +127,30 @@ export class UsuariosComponent implements OnInit {
         }
     }
 
-  //     try{
-  //       fetch(`http://127.0.0.1:3000/usuarios/nombre/${this.textoBusqueda}`)
-  //       .then(respuesta => respuesta.json())
-  //       .then(data => {
-  //         this.usuariosLLamados = data
-  //         this.usuariosLLamados.forEach((dato)=>{
-  //           this.usuariosTabla.push({
-
-  //           })
-  //         })
-  //       })
-  //     }
-  //     catch(error){
-
-  //     }
-  //   }
-  // }
+    async crearUsuario(){
+      try{
+        const respuesta = await fetch(`http://127.0.0.1:3000/usuarios/crear`,
+          {
+            method: "POST",
+            headers:{
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              nombre: this.datosdeModal.nombre,
+              apellido: this.datosdeModal.apellido,
+              DNI: this.datosdeModal.DNI,
+              email: this.datosdeModal.email,
+              telefono: this.datosdeModal.telefono
+            })
+          }
+        )
+        console.log(respuesta)
+      }
+      catch(error){
+        console.log('Error en crearUsuario')
+        console.log(error)
+      }
+    }
 
   // modal
 
@@ -164,8 +176,14 @@ export class UsuariosComponent implements OnInit {
 
   // acciones
 
-  Guardar(datos: Record<string, TipoDato>) { // pasa datos que es una clave string y un valor de la interfaz
-    console.log("guardado", datos)
+  async Guardar(datos: Record<string, TipoDato>) { // pasa datos que es una clave string y un valor de la interfaz
+    this.datosdeModal.nombre = String(datos["Nombre"])
+    this.datosdeModal.apellido = String(datos["Apellido"])
+    this.datosdeModal.DNI = String(datos["DNI"])
+    this.datosdeModal.email = String(datos["Email"])
+    this.datosdeModal.telefono = String(datos["Telefono Celular"])
+
+    await this.crearUsuario()
   }
 
   Editar(datos: Record<string, TipoDato>) {
