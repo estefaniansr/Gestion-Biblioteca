@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { columnaTabla } from "../../models/columnaTabla.interface";
 import { FilaTabla } from "../../models/filaTabla.type";
+import { TipoDato } from "../../models/TipoDato.type";
 
 
 @Component({
@@ -28,11 +29,14 @@ export class TablaComponent {
     // cantidad de item que se muestran por pag
     @Input() itemsPorPagina: number = 10;
 
-    
+
     @Input() paginaActual: number = 1;
 
     // emite la fila seleccionada para editar hacia el componente padre
-    @Output() editar = new EventEmitter<FilaTabla>();
+    @Output() editar = new EventEmitter<{
+        id: string;
+        datos: Record<string, TipoDato>;
+    }>();
 
     // emite la fila seleccionada para eliminar hacia el componente padre
     @Output() eliminar = new EventEmitter<FilaTabla>();
