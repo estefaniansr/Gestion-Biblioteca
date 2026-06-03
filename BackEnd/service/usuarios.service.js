@@ -78,3 +78,14 @@ exports.crearUsuarioService = async (pNombre, pApellido, pDNI, pEmail, pTelefono
         console.log(error)
     }
 }
+
+exports.modificarUsuarioService = async (pDNI, parametroClave, parametroValor) =>{
+    console.log('Usuarios Service - modificarUsuarioService')
+    try{
+        let datos = await usuariosRepository.modificarUsuario(pDNI, parametroClave, parametroValor)
+        return JSON.stringify(datos)
+    }
+    catch(error){
+        console.log('ERROR en Service - modificarUsuarioService')
+    }
+}

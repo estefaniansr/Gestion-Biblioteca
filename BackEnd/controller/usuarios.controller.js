@@ -128,11 +128,35 @@ exports.crearUsuarioController = async (req,res) =>{
         res.send(await usuariosService.crearUsuarioService(nuevo.nombre, nuevo.apellido, nuevo.DNI, nuevo.email, nuevo.telefono))
     }
     catch(error){
-        console.log('ERROR en Usuarios Usuarios Controller - traerUsuarioTelefono')
+        console.log('ERROR en Usuarios Usuarios Controller - crearUsuarioController')
         console.log(error)
         res.status(500).send({
             code:500,
-            message:"ERROR en Usuarios Usuarios Controller - traerUsuarioTelefono"
+            message:"ERROR en Usuarios Usuarios Controller - crearUsuarioController"
+        })
+    }
+}
+
+exports.modificarUsuarioController = async (req,res) => {
+    console.log('Usuarios Controller - modificarUsuarioController')
+    try{
+        let dni = req.params.dni
+        let nuevo = req.body
+
+        let clave = Object.keys(nuevo)[0]
+        let valor = nuevo[clave]
+
+        console.log(`Clave: ${clave}, Valor: ${valor}`)
+
+        res.status(200)
+        res.send(await usuariosService.modificarUsuarioService(dni, clave, valor))
+    }
+    catch(error){
+        console.log('ERROR en Usuarios Controller - modificarUsuarioController')
+        console.log(error)
+        res.status(500).send({
+            code:500,
+            message:"ERROR en Usuarios Usuarios Controller - modificarUsuarioController"
         })
     }
 }

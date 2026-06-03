@@ -124,3 +124,29 @@ async function sumarUno(){
 
     }
 }
+
+//        nombre = nombre.toLowerCase();
+  //      nombre = nombre.charAt(0).toUpperCase() + nombre.slice(1);
+
+exports.modificarUsuario = async (pDNI, parametroClave, parametroValor) => {
+    console.log('Usuarios Service - modificarUsuario')
+    try{
+        let usuarioModificado = {}
+
+        usuarioModificado.clave = parametroClave.toLowerCase()
+
+        usuarioModificado.valor = parametroValor.toLowerCase()
+
+        usuarioModificado.valor = usuarioModificado.valor.charAt(0).toUpperCase() + usuarioModificado.valor.slice(1)
+
+        let usuario_A_Modificar = await Usuarios.findOneAndUpdate({DNI: `${pDNI}`}, {$set: {[usuarioModificado.clave]: usuarioModificado.valor}}, {returnDocument: "after"})
+        
+        console.log(usuario_A_Modificar)
+        return usuario_A_Modificar
+    }
+    catch(error){
+        console.log('ERROR En Repository - modificarUsuario')
+        console.log(`No se modifico el usuario con el DNI${pDNI}`)
+        console.log('error')
+    }
+}
