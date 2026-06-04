@@ -13,6 +13,10 @@
     z-index: 1000;
 }
 
+a {
+    text-decoration: none;
+    color: var(--texto);
+}
 
 .titulo-header {
     font-weight: 700;

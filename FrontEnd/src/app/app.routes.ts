@@ -1,8 +1,25 @@
+
 import { Routes } from '@angular/router';
-import { UsuariosComponent } from './usuarios/usuarios.component';
-import { HomeComponent } from './home/home.component';
+import { LibrosPages } from './pages/libros/libros.pages';
+// import { UsuariosPages } from './pages/usuarios/usuarios.pages';
+// import { PrestamosPages } from './pages/prestamos/prestamos.pages';
 
 export const routes: Routes = [
-    {path: '', component: HomeComponent},
-    {path: 'usuarios', component: UsuariosComponent}
+    {
+        path: 'libros',
+        component: LibrosPages
+    },
+    // {
+    //     path: 'usuarios',
+    //     component: UsuariosPages
+    // },
+    // {
+    //     path: 'prestamos',
+    //     component: PrestamosPages
+    // },
+    {
+        path: '',
+        redirectTo: 'libros',
+        pathMatch: 'full'
+    }
 ];

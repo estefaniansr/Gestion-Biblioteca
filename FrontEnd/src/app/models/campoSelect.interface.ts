@@ -1,4 +1,4 @@
-import { TipoDato } from "./TipoDato";
+import { TipoDato } from "./TipoDato.type";
 export interface CampoSelect {
     tipo: 'select';
     nombre: string;

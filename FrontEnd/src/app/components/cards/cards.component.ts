@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
 import { Campo } from '../../models/campo.type';
-import { TipoDato } from '../../models/TipoDato';
+import { TipoDato } from '../../models/TipoDato.type';
 
 @Component({
     selector: 'app-card',
