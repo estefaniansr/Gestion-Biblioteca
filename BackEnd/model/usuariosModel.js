@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const usuariosSchema = mongoose.Schema(
     {
         _id:{type:Number, required:false},
-        
         nombre:{
             type:String,
             required:true
@@ -14,7 +13,8 @@ const usuariosSchema = mongoose.Schema(
         },
         DNI:{
             type:String,
-            required:true
+            required:true,
+            unique:true
         },
         email:{
             type:String,
@@ -24,7 +24,7 @@ const usuariosSchema = mongoose.Schema(
             type:String,
             required:true
         }
-    }, {strict: false}
+    }, {strict: false, versionKey: false}
 )
 
 module.exports = mongoose.model('Usuarios', usuariosSchema, 'usuarios')

@@ -2,7 +2,13 @@
     <!-- Pasas en [activo] el valor de TS  activo (linea 27) y el cambioTab genera un evento-->
 </app-header>
 
-<button (click)="probandoCosas()">Traer Usuarios</button>
+<button (click)="getTodosLosUsuarios()">Traer Usuarios</button>
+<br>
+<br>
+<button (click)="getUsuarioBusqueda()">Usuario busqueda</button>
+<br>
+<br>
+<button (click)="crearUsuario()">Crear usuario</button>
 
   <div class="cont">
     <app-titulo [titulo]="titulo" [subtitulo]="subtitulo"></app-titulo>

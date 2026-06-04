@@ -3,7 +3,7 @@ const { conexionAMongo } = require('../database/conect')
 
 const Usuarios = require('../model/usuariosModel')
 
-conexionAMongo('usuarios')
+conexionAMongo()
 
 exports.traerTodosUsuariosRepository = async () => {
     console.log('Usuarios Repository - traerTodosUsuarios')
@@ -80,16 +80,16 @@ exports.traerUsuarioTelefono = async (parametroTelefono) => {
 exports.crearUsuario = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
     console.log('Usuarios Repository - crearUsuario')
     try{
-        let dniARevisar = await revisarDNI(pDNI)
-        if(dniARevisar == true){
-            console.log(`No se puede crear un usuario con este DNI: ${pDNI}`)
-        }
-        else{
+        // let dniARevisar = await revisarDNI(pDNI)
+        // if(dniARevisar == true){
+        //     console.log(`No se puede crear un usuario con este DNI: ${pDNI}`)
+        // }
+        // else{
             let contador = await sumarUno()
             let nuevo = await Usuarios.create({_id: contador, nombre: pNombre, apellido:pApellido, DNI:pDNI, email:pEmail, telefono:pTelefono})
             console.log(nuevo)
             return nuevo
-        }
+        // }
 
     }
     catch(error){
@@ -98,22 +98,22 @@ exports.crearUsuario = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
     }
 }
 
-async function revisarDNI(pDNI) {
-    try{
-        let dni = await Usuarios.find({DNI: pDNI})
-        if(dni.length == 1){
-            console.log(`DNI ${pDNI} encontado`)
-            return true
-        }
-        else{
-            console.log(`DNI ${pDNI} NO encontado`)
-            return false
-        }
-    }
-    catch(error){
-
-    }
-}
+// async function revisarDNI(pDNI) {
+//     try{
+//         let dni = await Usuarios.find({DNI: pDNI})
+//         if(dni.length == 1){
+//             console.log(`DNI ${pDNI} encontado`)
+//             return true
+//         }
+//         else{
+//             console.log(`DNI ${pDNI} NO encontado`)
+//             return false
+//         }
+//     }
+//     catch(error){
+//         console.log(error)
+//     }
+// }
 
 async function sumarUno(){
     try{
@@ -121,12 +121,9 @@ async function sumarUno(){
         return contador.valor
     }
     catch(error){
-
+        console.log(error)
     }
 }
-
-//        nombre = nombre.toLowerCase();
-  //      nombre = nombre.charAt(0).toUpperCase() + nombre.slice(1);
 
 exports.modificarUsuario = async (pDNI, parametroClave, parametroValor) => {
     console.log('Usuarios Service - modificarUsuario')
@@ -150,3 +147,6 @@ exports.modificarUsuario = async (pDNI, parametroClave, parametroValor) => {
         console.log('error')
     }
 }
+
+
+
