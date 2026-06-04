@@ -45,6 +45,14 @@ export class ModalComponent implements OnChanges { // implmenta OnChanges para d
         }
     }
 
+    valido(): boolean {
+        return this.campos.some(c => { // some devuelve true o false y recorre todo
+            const valor = this.valores[c.nombre] // obtiene el valor ingresado por el usuario en el campo nombre
+            return c.requerido && (valor === null || valor === undefined || valor === '')// devuelve true si esta vacio y es requerido
+        })
+    }
+
+
     cerrar() {
         this.cancelar.emit(); // cierra el modal enviando el evento al padre
     }
@@ -56,6 +64,7 @@ export class ModalComponent implements OnChanges { // implmenta OnChanges para d
 
     confirmar() {
         console.log("Datos guardados")
+        this.guardar.emit(this.valores)
     }
 
     esSelect(campo: Campo): campo is CampoSelect {

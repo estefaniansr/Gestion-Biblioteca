@@ -1,29 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TipoDato } from '../../models/TipoDato.type';
+import { Observable } from 'rxjs';
+import { FilaTabla } from '../../models/filaTabla.type';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root' // el servicio esta disponible globalmente
 })
 export class LibrosService {
 
-    // private apiUrl = 'http://localhost:3000/libros';
+    private apiUrl = 'http://127.0.0.1:3000/libros'; // url del back
 
     constructor(private http: HttpClient) { }  // inyecta HttpClient para realizar peticiones HTTP al back
 
-    ObtenerLibros() { // GET -> obtiene todos los libros
-        // return this.http.get(this.apiUrl);
-        return console.log("Obteniendo libros")
-    }
+    ObtenerLibros(): Observable<FilaTabla[]> {
+        /*
+        * Observable -> flujo de datos asincronicos
+        * filaTabla[] -> devuelve un array de filas
+         */
 
-    ObtenerLibro(id: string) { // GET -> obtiene un libro por id 
-        // return this.http.get(`${this.apiUrl}/${id}`);
-        return console.log(`Obteniendo datos del libro id ${id}`)
+        return this.http.get<FilaTabla[]>(this.apiUrl);
+
+    }
+    buscarLibro(input: string) {
+        return this.http.get<FilaTabla[]>(`${this.apiUrl}/buscar`, {
+            params: { input } // convierte el input en query string
+        });
     }
 
     CrearLibro(datos: Record<string, TipoDato>) { // POST -> crea un nuevo libro
-        // return this.http.post(this.apiUrl, datos);
-        return console.log("Creando libros", datos)
+        return this.http.post(this.apiUrl, datos);
     }
 
     editarLibro(id: string, datos: Record<string, TipoDato>) {// PUT -> actualiza un libro existente
@@ -37,7 +43,6 @@ export class LibrosService {
     }
 
     EliminarLibro(id: string) { // DELETE -> elimina un libro
-        // return this.http.delete(`${this.apiUrl}/${id}`);
-        return console.log(`Eliminado el libro id ${id}`)
+        return this.http.delete(`${this.apiUrl}/${id}`);
     }
 }

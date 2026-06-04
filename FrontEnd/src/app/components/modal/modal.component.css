@@ -114,6 +114,7 @@
 .select {
     background: var(--fondo-componente);
     border-radius: var(--border-radius-btn);
+    color: var(--texto);
     border: 1px solid var(--gris);
     outline: none;
     padding: 10px 10px 10px 35px;
@@ -194,4 +195,20 @@ select {
 
 option {
     color: var(--texto);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    color: var(--fondo);
+    border-radius: var(--border-radius-btn);
+    border: 1px solid var(--acento);
+    background: var(--acento)
+}
+
+button {
+    cursor: pointer;
 }

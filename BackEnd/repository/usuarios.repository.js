@@ -1,15 +1,13 @@
-const { conexionAMongo } = require('../database/conect')
 
 const Usuarios = require('../model/usuariosModel')
 
-conexionAMongo('usuarios')
 
 exports.traerTodosUsuariosRepository = async () => {
     console.log('MongoDB Repository - traerTodosUsuarios')
-    try{
+    try {
         const usuarios = await Usuarios.find()
         return usuarios
-    }catch(error){
+    } catch (error) {
         console.log('Error, no encontre usuarios')
         throw Error(error)
     }
