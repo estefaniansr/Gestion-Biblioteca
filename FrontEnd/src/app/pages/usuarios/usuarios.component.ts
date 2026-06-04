@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
-import { headerComponente } from '../components/header/header.component';
-import { BuscadorComponente } from '../components/buscador/buscador.component'; // importar el buscador
-import { BotonComponente } from '../components/boton/boton.component'; // importar el boton
-import { FilterComponent } from '../components/filter/filter.component'; // importar filter
-import { TituloComponent } from '../components/titulo/titulo.component'; // importar titulo
-import { TagComponent } from '../components/tags/tags.component'; // importar tags
-import { TablaComponent } from '../components/tabla/tabla.component'; // importar tabla
-import { ModalComponent } from '../components/modal/modal.component'; // importar modal
-import { CardComponent } from '../components/cards/cards.component'; // importar las cards
-import { Campo } from '../models/campo.type'; // importar la interface de campo
-import { TipoDato } from '../models/TipoDato';
-import { FilaTabla } from '../models/filaTabla.type';
-import { using } from 'rxjs';
+import { headerComponente } from "../../components/header/header.component"; // importar el header
+import { BuscadorComponente } from "../../components/buscador/buscador.component"; // importar el buscador
+import { BotonComponente } from "../../components/boton/boton.component"; // importar el boton
+import { FilterComponent } from "../../components/filter/filter.component"; // importar filter
+import { TituloComponent } from "../../components/titulo/titulo.component"; // importar titulo
+import { TagComponent } from "../../components/tags/tags.component"; // importar tags
+import { TablaComponent } from "../../components/tabla/tabla.component"; // importar tabla
+import { ModalComponent } from "../../components/modal/modal.component"; // importar modal
+
+// types e interfaces
+import { Campo } from "../../models/campo.type";
+import { TipoDato } from "../../models/TipoDato.type";
+import { FilaTabla } from "../../models/filaTabla.type";
 
 interface Usuario {
   nombre: string,
@@ -24,7 +24,7 @@ interface Usuario {
 
 @Component({
   selector: 'app-usuarios',
-  imports: [headerComponente, ModalComponent, BuscadorComponente, TituloComponent, FilterComponent, BotonComponente, TagComponent, TablaComponent, CardComponent],
+  imports: [headerComponente, ModalComponent, BuscadorComponente, TituloComponent, FilterComponent, BotonComponente, TagComponent, TablaComponent],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css'
 })
@@ -164,11 +164,11 @@ export class UsuariosComponent implements OnInit {
 
   // filtrado
 
-  filtrado(valor: string) { // recibe el texto emitido x el componente
+  filtrado(valor:any) { // recibe el texto emitido x el componente
     this.textoBusqueda = valor // lo guarda en el componente
   }
 
-  onFiltrar(valor: string) { // pasa un valor x argumento
+  onFiltrar(valor:any) { // pasa un valor x argumento
     
     this.filtroSeleccionado = valor // y el filtro seleccionado se le pone el valor del argumento
     console.log(this.filtroSeleccionado)
@@ -186,7 +186,7 @@ export class UsuariosComponent implements OnInit {
     await this.crearUsuario()
   }
 
-  Editar(datos: Record<string, TipoDato>) {
+  Editar(datos:any) {
     console.log('editado', datos)
   }
 
