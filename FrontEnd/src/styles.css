@@ -1,0 +1,62 @@
+:root {
+    --fondo: #F9F6EE;
+    --fondo-componente: #FBFBFB;
+    --fondo-componente-transparente: rgb(251, 251, 251, 0.50);
+    --texto: #181818;
+    --texto-gris: #8B8686;
+    --acento: #7f77dd;
+    --acento-hover: rgb(113, 108, 170);
+    --acento-transparente: rgb(127, 119, 221, 0.15);
+    --gris: #E6E0E0;
+    --border-radius: 15px;
+    --border-radius-btn: 10px;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.195);
+    --blureado: blur(12px);
+}
+
+.dark {
+    --fondo: #181818;
+    --fondo-componente: #0F0F0F;
+    --fondo-componente-transparente: #0F0F0F;
+    --texto: #FBFBFB;
+    --texto-gris: #D0CACA;
+    --acento: rgb(154, 147, 227);
+    --acento-hover: #b8b4e4;
+    --acento-transparente: rgb(154, 147, 227, 0.15);
+    --gris: #2d2929;
+    --box-shadow: 0 2px 8px rgba(255, 255, 255, 0.02);
+
+}
+
+body {
+    background: var(--fondo);
+    font-family: Arial, "Inter", Helvetica, sans-serif;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gris) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--gris), var(--texto-gris));
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--gris), var(--texto-gris));
+}
+
+

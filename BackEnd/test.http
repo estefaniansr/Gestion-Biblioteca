@@ -1,0 +1,33 @@
+###
+GET http://127.0.0.1:3000/usuarios HTTP/1.1
+###
+GET http://127.0.0.1:3000/usuarios/nombre/2 HTTP/1.1
+###
+GET http://127.0.0.1:3000/usuarios/apellido/martinez HTTP/1.1
+###
+GET http://127.0.0.1:3000/usuarios/dni/40954703 HTTP/1.1
+###
+###
+GET http://127.0.0.1:3000/usuarios/email/facundoemanuel73@gmail.com HTTP/1.1
+###
+GET http://127.0.0.1:3000/usuarios/telefono/1173639902 HTTP/1.1
+
+###
+POST http://127.0.0.1:3000/usuarios/crear/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "nombre":"Facundo",
+    "apellido": "Martinez",
+    "DNI": "4095470332141243124214124141242144214",
+    "email": "tuvieja4@gmail.com",
+    "telefono":"1173639902"
+}
+
+###
+POST http://127.0.0.1:3000/usuarios/modificar/40954703 HTTP/1.1
+Content-Type: application/json
+
+{
+    "apellido":"Bueno, vamos"
+}

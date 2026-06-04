@@ -1,0 +1,129 @@
+<main>
+    <app-header [activo]="activo"></app-header>
+    <div class="cont">
+        <app-titulo [titulo]="'Libros'" [subtitulo]="'Gestiona y organiza tus libros.'"></app-titulo>
+        <div class="acciones">
+            <app-filter [opciones]="['opcion', 'opcion', 'opcion', 'opcion']" (seleccionar)="onFiltrar($event)" />
+
+
+            <app-buscador placeholder="Buscar libros..." (valorChange)="filtrado($event)" />
+
+            <app-boton [texto]="'Nuevo libro'" (abrir)="modalAbierto = true"></app-boton>
+        </div>
+    </div>
+
+    <app-modal titulo="Nuevo libro" [abierto]="modalAbierto" [campos]="CamposModal" (guardar)="Guardar($event)"
+        (cancelar)="modalAbierto = false" />
+
+    <div class="tags-container">
+
+        <app-tags titulo="Total libros" [cantidad]="cantidad">
+            <svg width="40" height="40" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_11_616)">
+                    <mask id="mask0_11_616" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0"
+                        width="63" height="63">
+                        <path d="M63 0H0V63H63V0Z" fill="var(--acento)" />
+                    </mask>
+                    <g mask="url(#mask0_11_616)">
+                        <path
+                            d="M57.75 43.9417V12.258C57.75 9.10796 55.1775 6.77171 52.0537 7.03421H51.8963C46.3838 7.50671 38.01 10.3155 33.3375 13.2555L32.8912 13.5442C32.13 14.0167 30.87 14.0167 30.1088 13.5442L29.4525 13.1505C24.78 10.2367 16.4325 7.45421 10.92 7.00796C7.79625 6.74546 5.25 9.10796 5.25 12.2317V43.9417C5.25 46.4617 7.2975 48.8242 9.8175 49.1392L10.5788 49.2442C16.275 50.0055 25.0688 52.893 30.1088 55.6492L30.2138 55.7017C30.9225 56.0955 32.0513 56.0955 32.7338 55.7017C37.7738 52.9192 46.5938 50.0055 52.3163 49.2442L53.1825 49.1392C55.7025 48.8242 57.75 46.4617 57.75 43.9417Z"
+                            stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M31.5 14.4119V53.7868" stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M20.3438 22.2869H14.4375" stroke="var(--acento)" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M22.3125 30.1618H14.4375" stroke="var(--acento)" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </g>
+                </g>
+                <defs>
+                    <clipPath id="clip0_11_616">
+                        <rect width="63" height="63" fill="var(--acento)" />
+                    </clipPath>
+                </defs>
+            </svg>
+
+        </app-tags>
+        <app-tags titulo="Sin prestar" [cantidad]="cantidad">
+            <svg width="40" height="40" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_11_625)">
+                    <mask id="mask0_11_625" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0"
+                        width="63" height="63">
+                        <path d="M63 0H0V63H63V0Z" fill="var(--acento)" />
+                    </mask>
+                    <g mask="url(#mask0_11_625)">
+                        <path d="M53.8131 28.875V44.625C53.8131 44.9925 53.8131 45.36 53.7868 45.7275"
+                            stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M9.1875 47.25V18.375C9.1875 7.875 11.8125 5.25 22.3125 5.25H40.6875C51.1875 5.25 53.8125 7.875 53.8125 18.375"
+                            stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M16.6687 39.375H53.8125V48.5625C53.8125 53.6287 49.6912 57.75 44.625 57.75H18.375C13.3088 57.75 9.1875 53.6287 9.1875 48.5625V46.8563C9.1875 42.735 12.5475 39.375 16.6687 39.375Z"
+                            stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </g>
+                    <path d="M24 25.25L29.25 30.5L39.75 20" stroke="var(--acento)" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_11_625">
+                        <rect width="63" height="63" fill="var(--acento)" />
+                    </clipPath>
+                </defs>
+            </svg>
+
+        </app-tags>
+        <app-tags titulo="Prestados" [cantidad]="cantidad">
+            <svg width="40" height="40" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_11_646)">
+                    <mask id="mask0_11_646" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0"
+                        width="63" height="63">
+                        <path d="M63 0H0V63H63V0Z" fill="var(--acento)" />
+                    </mask>
+                    <g mask="url(#mask0_11_646)">
+                        <path d="M53.813 28.875V44.625C53.813 44.9925 53.813 45.36 53.7867 45.7275"
+                            stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M9.1875 47.25V18.375C9.1875 7.875 11.8125 5.25 22.3125 5.25H40.6875C51.1875 5.25 53.8125 7.875 53.8125 18.375"
+                            stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M16.6687 39.375H53.8125V48.5625C53.8125 53.6287 49.6912 57.75 44.625 57.75H18.375C13.3088 57.75 9.1875 53.6287 9.1875 48.5625V46.8563C9.1875 42.735 12.5475 39.375 16.6687 39.375Z"
+                            stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </g>
+                    <path
+                        d="M26.267 16.8182L30.9545 24.3821H31.0966L35.7841 16.8182H38.3764L32.6591 25.9091L38.3764 35H35.7841L31.0966 27.5781H30.9545L26.267 35H23.6747L29.5341 25.9091L23.6747 16.8182H26.267Z"
+                        fill="var(--acento)" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_11_646">
+                        <rect width="63" height="63" fill="var(--acento)" />
+                    </clipPath>
+                </defs>
+            </svg>
+
+        </app-tags>
+        <app-tags titulo="Categorías" [cantidad]="cantidad">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                class="icon-header movilNo">
+                <g clip-path="url(#clip0_4418_169837)">
+                    <path
+                        d="M4.16989 15.2998L8.69989 19.8298C10.5599 21.6898 13.5799 21.6898 15.4499 19.8298L19.8399 15.4398C21.6999 13.5798 21.6999 10.5598 19.8399 8.6898L15.2999 4.1698C14.3499 3.2198 13.0399 2.7098 11.6999 2.7798L6.69989 3.0198C4.69989 3.1098 3.10989 4.6998 3.00989 6.6898L2.76989 11.6898C2.70989 13.0398 3.21989 14.3498 4.16989 15.2998Z"
+                        stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                        d="M9.49988 12C10.8806 12 11.9999 10.8807 11.9999 9.5C11.9999 8.11929 10.8806 7 9.49988 7C8.11917 7 6.99988 8.11929 6.99988 9.5C6.99988 10.8807 8.11917 12 9.49988 12Z"
+                        stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_4418_169837">
+                        <rect width="24" height="24" fill="white" />
+                    </clipPath>
+                </defs>
+            </svg>
+        </app-tags>
+    </div>
+
+    <app-tabla [columnas]="columnas" [datos]="EjPaginado" [mostrarEliminar]="true" [totalItems]="datosTablaArray.length"
+        [itemsPorPagina]="10" [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event"
+        (editar)="Editar($event['id'], $event['datos'])">
+    </app-tabla>
+
+</main>
