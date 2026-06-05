@@ -5,8 +5,6 @@ const cors = require('cors')
 const app = express()
 app.use(cors())
 app.use(express.json())
-conexionAMongo('GestionBiblioteca') // ejecuta la conexion a la bd libros
-
 
 const HOSTNAME = process.env.HOSTNAME
 
