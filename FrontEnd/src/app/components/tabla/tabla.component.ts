@@ -39,7 +39,7 @@ export class TablaComponent {
     }>();
 
     // emite la fila seleccionada para eliminar hacia el componente padre
-    @Output() eliminar = new EventEmitter<FilaTabla>();
+    @Output() eliminar = new EventEmitter<string>();
 
     // emite el num de pag cuando el usuario cambia de pagina
     @Output() cambioPagina = new EventEmitter<number>();
@@ -132,7 +132,11 @@ export class TablaComponent {
     }
 
     onEliminar(item: FilaTabla) {
-        this.eliminar.emit(item); // emite al padre el evento eliminar con el arguemtno item que es filaTabla la interfaz
+        this.eliminar.emit(item['_id'] as string);
+        /*
+         * toma el id desde la fila seleccionada
+        * se usa _id porque FilTabla es un objeo dinamico
+        */
     }
 
     // navega a una pagina especifica y valida que no sea la actual y que sea number

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 
 
 // componentes
@@ -27,28 +27,28 @@ import { LibrosService } from "../services/libros.services";
     styleUrl: './libros.pages.css'
 })
 
-export class LibrosPages {
+export class LibrosPages implements OnInit { // implementa la interfaz onInit de angular para que poder usar sus metodos
     // inicializacion 
 
     activo = 'libros'// estado general de la app
     textoBusqueda = '' // guarda lo que escribe el user
-    textoBoton = '+ Nuevo' // titulo del btn x defecto
     modalAbierto = false // el modal esta cerrado x defecto
     filtroSeleccionado = '' // el filtro seleccionado esta vacio x defecto
     paginaActual = 1 // la pag actual esta x defecto en la 1
-    cantidad = 2
+    cantidadTotal = 2
+    cantidad = 0
     columnas = [
-        { key: 'Libro', label: 'Libro' },
-        { key: 'Autor', label: 'Autor' },
-        { key: 'Categoria', label: 'Categoría' },
+        { key: 'libro', label: 'Libro' },
+        { key: 'autor', label: 'Autor' },
+        { key: 'categoria', label: 'Categoría' },
     ]
 
     CamposModal: Campo[] = [ // los campos que van al formulario del modal, editables
-        { tipo: 'text', nombre: 'Nombre', label: 'Nombre', placeholder: 'El principito', requerido: true },
-        { tipo: 'text', nombre: 'Autor', label: 'Autor', placeholder: 'Antoine de Saint-Exupéry', requerido: true },
+        { tipo: 'text', nombre: 'libro', label: 'Nombre', placeholder: 'El principito', requerido: true },
+        { tipo: 'text', nombre: 'autor', label: 'Autor', placeholder: 'Antoine de Saint-Exupéry', requerido: true },
         {
             tipo: 'select',
-            nombre: 'Categoria',
+            nombre: 'categoria',
             label: 'Categoria',
             requerido: true,
             opciones: [
@@ -57,24 +57,38 @@ export class LibrosPages {
         }
     ];
 
-    datosTabla() {
-        this.librosService.ObtenerLibros();
+    cantTotal = () => {
+        this.librosService.ObtenerLibros().subscribe({
+            next: (res: FilaTabla[]) => {
+                this.cantidadTotal = res.length
+            }, error: (err) => {
+                console.log(err)
+            }
+        })
     }
 
-    //     datosTabla() {
 
-    //     this.librosService.ObtenerLibros().subscribe({
-    //         next: (libros) => {
-    //             console.log(libros);
-    //         },
-    //         error: (err) => {
-    //             console.error(err);
-    //         }
-    //     });
 
-    // }
 
     constructor(private librosService: LibrosService) { } // servicio que se comunica con la API
+
+    recargarDatos() {
+        this.librosService.ObtenerLibros().subscribe({
+            next: (libros: FilaTabla[]) => {
+                console.log(libros);
+                this.datosTablaArray = libros
+                this.cantidadTotal = libros.length
+            },
+            error: (err) => {
+                console.error(err);
+            }
+        });
+    }
+
+    ngOnInit(): void { // se ejecuta automaticamente al cargar el componente
+        this.recargarDatos()
+
+    }
 
     // modal
     abrirModal() { // abre el modal
@@ -87,22 +101,33 @@ export class LibrosPages {
 
     // acciones 
 
-    // Guardar(datos: Record<string, TipoDato>) {
-    //     this.librosService.CrearLibro(datos).subscribe({ // libroServices tiene el metodo CrearLibro que pasa por argumentos datos y ejecuta subscribe escucha la respuesta del http
-    //         next: (res: string) =>{  // se ejecuta cuando el servidor da ok
-    //             console.log('Libro creado', res) // depurar
-    //         },
-    //         error: (err: string) =>{ // si tira error el server
-    //             console.log("Error al crear el libro", err)
-    //         }
-    //     }
-    //     )
-    // }
-
     Guardar(datos: Record<string, TipoDato>) {
-        this.librosService.CrearLibro(datos);
+        this.librosService.CrearLibro(datos).subscribe({ // libroServices tiene el metodo CrearLibro que pasa por argumentos datos y ejecuta subscribe escucha la respuesta del http
+            next: (res) => {  // se ejecuta cuando el servidor da ok
+                console.log('Libro creado', res) // depurar
+                this.recargarDatos() //  recarga la tabla
+                this.modalAbierto = false // cierra el modal
+            },
+            error: (err: string) => { // si tira error el server
+                console.log("Error al crear el libro", err)
+            }
+        }
+        )
     }
 
+
+    Eliminar(id: string) {
+        this.librosService.EliminarLibro(id).subscribe({
+            next: (res) => {
+                console.log(res)
+                this.recargarDatos()
+            },
+            error: (err: string) => {
+                console.log(err)
+            }
+        })
+
+    }
 
     Editar(id: string, datos: Record<string, TipoDato>) {
         this.librosService.editarLibroEspecifico(id, datos)
@@ -116,32 +141,25 @@ export class LibrosPages {
         console.log(err)}
         })
     }
-
-
-    */
-
-
-
-    Eliminar(id: string) {
-        this.librosService.EliminarLibro(id)
-    }
-
-    /* 
-    Eliminar(id:string) {
-    this.librosService.EliminarLibro(id).subscribe({
-    next: (res:string) =>{
-    console.log(res)},
-    error: (err: string) =>{
-    console.log(err)}
-    })
+    
     
     */
 
+    Buscador(input: string) {
+        this.librosService.buscarLibro(input).subscribe({
+            next: (res: FilaTabla[]) => {
+                console.log(res)
+                this.datosTablaArray = res
+            }, error: (err: string) => {
+                console.log(err)
+            }
+        })
+    }
+
+
+
     // filtrado
 
-    filtrado(valor: string) { // recibe el texto emitido x el componente
-        this.textoBusqueda = valor // lo guarda en el componente
-    }
 
     onFiltrar(valor: string) { // pasa un valor x argumento
         this.filtroSeleccionado = valor // y el filtro seleccionado se le pone el valor del argumento

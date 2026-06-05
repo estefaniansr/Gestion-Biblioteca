@@ -77,7 +77,7 @@
             <button class="btn-cancelar" (click)="cerrar()">Cancelar</button>
 
             <!-- al hacer click emite el metodo confirmar -->
-            <button class="btn-guardar" (click)="confirmar()">Guardar</button>
+            <button class="btn-guardar" (click)="confirmar()" [disabled]="valido()">Guardar</button>
 
         </div>
 

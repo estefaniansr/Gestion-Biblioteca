@@ -4,9 +4,9 @@
         <app-titulo [titulo]="'Libros'" [subtitulo]="'Gestiona y organiza tus libros.'"></app-titulo>
         <div class="acciones">
             <app-filter [opciones]="['opcion', 'opcion', 'opcion', 'opcion']" (seleccionar)="onFiltrar($event)" />
+            no funciona
 
-
-            <app-buscador placeholder="Buscar libros..." (valorChange)="filtrado($event)" />
+            <app-buscador placeholder="Buscar libros por nombre, autor o categorías..." (valorChange)="Buscador($event)" />
 
             <app-boton [texto]="'Nuevo libro'" (abrir)="modalAbierto = true"></app-boton>
         </div>
@@ -17,7 +17,7 @@
 
     <div class="tags-container">
 
-        <app-tags titulo="Total libros" [cantidad]="cantidad">
+        <app-tags titulo="Total libros" [cantidad]="cantidadTotal">
             <svg width="40" height="40" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_11_616)">
                     <mask id="mask0_11_616" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0"
@@ -119,11 +119,15 @@
                 </defs>
             </svg>
         </app-tags>
+        no funciona
+
     </div>
 
     <app-tabla [columnas]="columnas" [datos]="EjPaginado" [mostrarEliminar]="true" [totalItems]="datosTablaArray.length"
         [itemsPorPagina]="10" [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event"
-        (editar)="Editar($event['id'], $event['datos'])">
+        (editar)="Editar($event['id'], $event['datos'])" (eliminar)="Eliminar($event)">
     </app-tabla>
+    editar no funciona, eliminar si
+
 
 </main>
