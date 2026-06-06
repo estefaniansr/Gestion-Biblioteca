@@ -53,19 +53,21 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
             requerido: true,
             opciones: [
                 { valor: 'Novela', texto: 'Novela' },
+                { valor: 'Novela', texto: 'Novela' },
             ]
         }
     ];
+    opcionFilter = [
+        'Recientes',
+        'Antiguos',
+        'Título A-Z',
+        'Título Z-A',
+        'Autor A-Z',
+        'Autor Z-A',
+        'No func'
+    ]
 
-    cantTotal = () => {
-        this.librosService.ObtenerLibros().subscribe({
-            next: (res: FilaTabla[]) => {
-                this.cantidadTotal = res.length
-            }, error: (err) => {
-                console.log(err)
-            }
-        })
-    }
+
 
 
 
