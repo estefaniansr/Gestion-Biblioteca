@@ -31,7 +31,8 @@ exports.crearLibroRepository = async (datos) => {
         const nuevoLibro = await libros.create({ // .create crea un nuevo documento
             libro: datos.libro,
             autor: datos.autor,
-            categoria: datos.categoria
+            categoria: datos.categoria,
+            fechaCreacion: datos.fechaCreacion
         })
         return nuevoLibro
     } catch (err) {

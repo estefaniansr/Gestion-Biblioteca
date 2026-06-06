@@ -36,8 +36,9 @@
 
 .item {
     padding: 10px;
-    font-weight: 600;
+    font-weight: normal;
     cursor: pointer;
+    font-size: 0.9rem;
     transition: 0.2s;
     border-bottom: 1px solid var(--gris);
 }

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const autoIncrementar = require('mongoose-sequence')(mongoose) // importar plugin para incrementar campos
 
 
 const librosSchema = mongoose.Schema({ // collecion o schema de libros
@@ -10,12 +9,18 @@ const librosSchema = mongoose.Schema({ // collecion o schema de libros
     },
     autor: {
         type: String,
-        required: true
+        required: true,
+
     },
     categoria: { // array de categorias
         type: [String],
         required: true
     },
+    fechaCreacion: {
+        type: Date,
+        required: true,
+        default: Date.now // x defecto fecha de hoy
+    }
 })
 
 

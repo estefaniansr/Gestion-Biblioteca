@@ -3,8 +3,7 @@
     <div class="cont">
         <app-titulo [titulo]="'Libros'" [subtitulo]="'Gestiona y organiza tus libros.'"></app-titulo>
         <div class="acciones">
-            <app-filter [opciones]="['opcion', 'opcion', 'opcion', 'opcion']" (seleccionar)="onFiltrar($event)" />
-            no funciona
+            <app-filter [opciones]="opcionFilter" (seleccionar)="onFiltrar($event)" />
 
             <app-buscador placeholder="Buscar libros por nombre, autor o categorías..." (valorChange)="Buscador($event)" />
 
@@ -44,7 +43,7 @@
             </svg>
 
         </app-tags>
-        <app-tags titulo="Sin prestar" [cantidad]="cantidad">
+        <app-tags titulo="Sin prestar no func" [cantidad]="cantidad">
             <svg width="40" height="40" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_11_625)">
                     <mask id="mask0_11_625" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0"
@@ -72,7 +71,7 @@
             </svg>
 
         </app-tags>
-        <app-tags titulo="Prestados" [cantidad]="cantidad">
+        <app-tags titulo="Prestados no func" [cantidad]="cantidad">
             <svg width="40" height="40" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_11_646)">
                     <mask id="mask0_11_646" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0"
@@ -101,7 +100,7 @@
             </svg>
 
         </app-tags>
-        <app-tags titulo="Categorías" [cantidad]="cantidad">
+        <app-tags titulo="Categorías  no func" [cantidad]="cantidad">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
                 class="icon-header movilNo">
                 <g clip-path="url(#clip0_4418_169837)">
@@ -119,7 +118,6 @@
                 </defs>
             </svg>
         </app-tags>
-        no funciona
 
     </div>
 
