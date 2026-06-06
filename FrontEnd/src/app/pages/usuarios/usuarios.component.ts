@@ -17,7 +17,7 @@ import { FilaTabla } from "../../models/filaTabla.type";
 interface Usuario {
   nombre: string,
   apellido: string,
-  DNI: string,
+  DNI: number,
   email:string,
   telefono:string
 }
@@ -48,7 +48,7 @@ export class UsuariosComponent implements OnInit {
   datosdeModal:Usuario = {
     nombre: '',
     apellido: '',
-    DNI: '',
+    DNI: 0,
     email: '',
     telefono: '',
   }
@@ -65,7 +65,7 @@ export class UsuariosComponent implements OnInit {
   CamposModal: Campo[] = [ // los campos que van al formulario del modal, editables
     { tipo: 'text', nombre: 'Nombre', label: 'Nombre', placeholder: 'Juan', requerido: true },
     { tipo: 'text', nombre: 'Apellido', label: 'Apellido', placeholder: 'Perez', requerido:true },
-    { tipo: 'text', nombre: 'DNI', label: 'Numero de DNI', placeholder:'40123456', requerido: true},
+    { tipo: 'number', nombre: 'DNI', label: 'Numero de DNI', placeholder:'40123456', requerido: true},
     { tipo: 'text', nombre: 'Email', label: 'Email', placeholder:'usuario@email.com', requerido: true},
     { tipo: 'text', nombre: 'Telefono Celular', label: 'Telefono Celular', placeholder:'1124559071', requerido: true},
   ];
@@ -87,6 +87,7 @@ export class UsuariosComponent implements OnInit {
     .then(respuesta => respuesta.json())
     .then(data => {
       this.usuariosLLamados = data
+      console.log(this.usuariosLLamados)
       this.usuariosLLamados.forEach((dato)=>{
         this.usuariosTabla.push({
           campo1: `${dato.nombre}\n ${dato.apellido}`,
@@ -179,11 +180,15 @@ export class UsuariosComponent implements OnInit {
   async Guardar(datos: Record<string, TipoDato>) { // pasa datos que es una clave string y un valor de la interfaz
     this.datosdeModal.nombre = String(datos["Nombre"])
     this.datosdeModal.apellido = String(datos["Apellido"])
-    this.datosdeModal.DNI = String(datos["DNI"])
+    this.datosdeModal.DNI = Number(datos["DNI"])
     this.datosdeModal.email = String(datos["Email"])
     this.datosdeModal.telefono = String(datos["Telefono Celular"])
 
     await this.crearUsuario()
+
+    this.modalAbierto = false
+
+    window.alert('Usuario creado')
   }
 
   Editar(datos:any) {

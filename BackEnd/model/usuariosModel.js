@@ -12,7 +12,7 @@ const usuariosSchema = mongoose.Schema(
             required:true
         },
         DNI:{
-            type:String,
+            type:Number,
             required:true,
             unique:true
         },
