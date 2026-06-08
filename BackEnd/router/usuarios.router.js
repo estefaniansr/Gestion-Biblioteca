@@ -22,5 +22,6 @@ routerUsuarios.post('/crear', usuariosController.crearUsuarioController)
 
 routerUsuarios.post('/modificar/:dni', usuariosController.modificarUsuarioController)
 
+routerUsuarios.delete('/borrar/:dni', usuariosController.borrarUsuario)
 
 module.exports = { routerUsuarios }

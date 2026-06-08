@@ -21,7 +21,7 @@ const usuariosSchema = mongoose.Schema(
             required:true
         },
         telefono:{
-            type:String,
+            type:Number,
             required:true
         }
     }, {strict: false, versionKey: false}

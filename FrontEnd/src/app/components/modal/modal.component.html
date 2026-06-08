@@ -21,6 +21,10 @@
 
         <div class="modal-body">
 
+            @if (mensaje){
+                <div [innerHTML]="mensaje"></div>
+            }
+
             <!-- Recorre todos los campos del formulario -->
             @for (campo of campos; track campo.nombre) {
 

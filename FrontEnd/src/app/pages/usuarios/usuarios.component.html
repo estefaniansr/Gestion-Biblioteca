@@ -8,7 +8,7 @@
 <button (click)="getUsuarioBusqueda()">Usuario busqueda</button>
 <br>
 <br>
-<button (click)="crearUsuario()">Crear usuario</button>
+<button (click)="abrirModalBorrar()">Probar MODAL</button>
 
   <div class="cont">
     <app-titulo [titulo]="titulo" [subtitulo]="subtitulo"></app-titulo>
@@ -24,8 +24,21 @@
     </div>
   </div>
 
-  <app-modal titulo="Nuevo ej" [abierto]="modalAbierto" [campos]="CamposModal" (guardar)="Guardar($event)"
+  @if(modalAbierto){
+    <app-modal titulo="Nuevo usuario" [abierto]="modalAbierto" [campos]="CamposModal" (guardar)="guardarModalUsuario($event)"
     (cancelar)="modalAbierto = false" />
+  }
+
+  @if(modalBorrarAbierto){
+    <app-modal titulo="¿Borrar usuario?" [abierto]="modalBorrarAbierto" (guardar)="guardarModalBorrar($event)"
+    (cancelar)="modalBorrarAbierto = false" [mensaje]="mensajeModal"/>
+  }
+
+  @if(cartel){
+    <app-modal titulo="Cambio realizado" [abierto]="cartel"
+    (cancelar)="cartel = false" [mensaje]="mensajeModal"/>
+  }
+
 
   <div class="tags-container">
     <app-tags titulo="Usuarios" [cantidad]="cantidadUsuarios">
@@ -58,7 +71,7 @@
     { key: 'campo2',  label: 'Contacto'  },
     { key: 'campo3', label: 'DNI' },
   ]" [datos]="usuariosTabla" [mostrarEliminar]="true" [totalItems]="usuariosTabla.length" [itemsPorPagina]="10"
-    [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event" (editar)="Editar($event)">
+    [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event" (editar)="Editar($event)" (eliminar)="eliminarUsuarioBoton($event)">
   </app-tabla>
 
 

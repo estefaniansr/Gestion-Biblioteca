@@ -19,6 +19,8 @@ export class ModalComponent implements OnChanges { // implmenta OnChanges para d
     @Input() abierto: boolean = false; // controla si el modal esta abierto o cerrado
     @Input() campos: Campo[] = []; // campos de la interfaz Campo
 
+    @Input() mensaje = ''; //mensaje opcional por si se requiere mostrar algo diferente
+
     @Output() guardar = new EventEmitter<Record<string, TipoDato>>(); // envia al componente padre un evento que envia los datos del form
     @Output() cancelar = new EventEmitter<void>(); // manda al padre que cancelo
 

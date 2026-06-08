@@ -94,7 +94,7 @@ exports.crearUsuario = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
     }
     catch(error){
         console.log('ERROR en Usuarios Repository - crearUsuario')
-        throw Error(error)
+        throw error
     }
 }
 
@@ -144,8 +144,6 @@ exports.eliminarUsuario = async (pDNI) => {
         console.log(error)
     }
 }
-
-this.eliminarUsuario(123)
 
 
 
