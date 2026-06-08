@@ -132,7 +132,29 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     }
 
     Editar(id: string, datos: Record<string, TipoDato>) {
-        this.librosService.editarLibroEspecifico(id, datos)
+
+        this.librosService.editarLibro(id, datos).subscribe({ 
+            /*
+            * llama al servicio que hace la peticion put al back
+            * se envia el id del libro y los nuevos datos actualizados
+             */
+
+            next: (res) => { // se ejecuta cuando el backend responde correctamente
+
+                console.log('Libro editado', res)
+
+                this.recargarDatos() // llama al metodo recargar datos
+
+            },
+
+            error: (err) => {
+
+                console.log(err)
+
+            }
+
+        })
+
     }
 
     /* Editar(id:string, datos: Record<string, TipoDato>) {

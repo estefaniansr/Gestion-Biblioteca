@@ -35,8 +35,11 @@
                         </ng-container>
                         <!-- modo editar -->
                         <ng-template #editMode>
-                            <!-- Input ligado al objeto de edición temporal -->
-                            <input [(ngModel)]="editCache[col.key]" class="input-edicion" />
+                            <!-- Input ligado al objeto de fila editando -->
+                            <input [(ngModel)]="filaEditando![col.key]"
+                                (ngModelChange)="filaEditando![col.key] = $event"  class="input-edicion" />
+                                <!-- [(ngModel)] muestra el valor -->
+                                 <!-- (ngModelChange) -> actualiza el objeto, ! si existe -->
                         </ng-template>
 
                     </div>
@@ -81,7 +84,7 @@
                         <!-- modo edicion-->
                         <ng-template #editActions>
 
-                            <button class="btn-accion" (click)="guardarEdicion()" title="Guardar">
+                            <button class="btn-accion" type="button" (click)="guardarEdicion()" title="Guardar">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
                                     fill="var(--texto)">
                                     <g clip-path="url(#clip0_4418_7375)">

@@ -25,6 +25,16 @@ exports.crearLibroService = async (datos) => {
     }
 }
 
+exports.editarLibroService = async (id, datos) => {
+    try {
+        console.log("Editar libro service")
+        let libroEditado = await librosRepository.editarLibroRepository(id, datos)
+        return JSON.stringify(libroEditado)
+    } catch (e) {
+        console.error("Error en el service editarLibroService", e)
+    }
+}
+
 exports.eliminarLibroService = async (id) => {
     try {
         console.log("Eliminar libro service")
