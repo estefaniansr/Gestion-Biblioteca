@@ -32,15 +32,15 @@ export class LibrosService {
         return this.http.post(this.apiUrl, datos);
     }
 
-    editarLibro(id: string, datos: Record<string, TipoDato>) {// PUT -> actualiza un libro existente
-        // return this.http.put(`${this.apiUrl}/${id}`, datos);
-        return console.log(`Actualizando datos del libro id ${id}`)
+    editarLibro(id: string, datos: Record<string, TipoDato>) {
+
+        return this.http.put(`${this.apiUrl}/${id}`, datos)
+        /**
+         * hace una peticion put al back
+         * put actualiza los recursos
+         */
     }
 
-    editarLibroEspecifico(id: string, datos: Record<string, TipoDato>) { // PATCH -> modifica algunos campos
-        // return this.http.patch(`${this.apiUrl}/${id}`, datos);
-        return console.log("Modificando datos")
-    }
 
     EliminarLibro(id: string) { // DELETE -> elimina un libro
         return this.http.delete(`${this.apiUrl}/${id}`);

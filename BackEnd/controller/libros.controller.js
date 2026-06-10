@@ -37,6 +37,19 @@ exports.crearLibroController = async (req, res) => {
     }
 }
 
+exports.editarLibroController = async (req, res) => {
+    try {
+        res.setHeader('Content-Type', 'application/json')
+        const id = req.params.id // saca el id de los parametros de la URL
+        const datos = req.body // obtiene los datos enviados desde el front en forma de objeto
+        const libtoEditado = await librosService.editarLibroService(id, datos)
+        res.status(200).send(libtoEditado)
+    } catch (err) {
+        console.log("error en editarLibroController", err)
+        res.status(500).send({ code: 500, message: "Error al usar el controlelr" })
+    }
+}
+
 exports.eliminarLibroController = async (req, res) => {
     try {
         res.setHeader('Content-Type', 'application/json')

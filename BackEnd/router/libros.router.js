@@ -13,5 +13,7 @@ routerLibros.post('/', librosController.crearLibroController)
 //delete
 routerLibros.delete('/:id', librosController.eliminarLibroController)
 
+// put
+routerLibros.put('/:id',librosController.editarLibroController)
 
 module.exports = { routerLibros }

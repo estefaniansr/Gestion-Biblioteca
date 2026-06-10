@@ -24,6 +24,28 @@ exports.obtenerLibrosRepository = async () => {
     }
 }
 
+exports.editarLibroRepository = async (id, datos) => {
+    console.log("Editando libro:", id)
+    console.log("Datos antes de editar")
+    console.table(datos)
+
+    try {
+        const libroEditado = await libros.findByIdAndUpdate( // busca en el objeto libros por ID y lo actualiza
+            id, datos, // le pasa el id que busca y los datos que actualiza
+            {
+                returnDocument: 'after'
+            }
+        )
+        console.log("Datos editados")
+        console.table(libroEditado)
+        return libroEditado
+
+    } catch (err) {
+        console.log("Error editando el libro", id)
+        throw Error(err)
+    }
+}
+
 exports.crearLibroRepository = async (datos) => {
     console.log(' repository crear libro')
 
