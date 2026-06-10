@@ -34,6 +34,7 @@ exports.traerUsuarioNombreService = async (parametroNombre) => {
         console.log('ERROR en Service - traerUsuarioNombreService')
         separador()
         console.log(error)
+        throw error
     }
 }
 
@@ -50,6 +51,7 @@ exports.traerUsuarioApellidoService = async (parametroApellido) => {
         console.log('ERROR en Service - traerUsuarioApellidoService')
         separador()
         console.log(error)
+        throw error
     }
 }
 
@@ -66,6 +68,7 @@ exports.traerUsuarioDNIService = async (parametroDNI) => {
         console.log('ERROR en Service - traerUsuarioDNIService')
         separador()
         console.log(error)
+        throw error
     }
 }
 
@@ -82,6 +85,7 @@ exports.traerUsuarioEmailService = async (parametroEmail) => {
         console.log('ERROR en Service - traerUsuarioEmailService')
         separador()
         console.log(error)
+        throw error
     }
 }
 
@@ -97,21 +101,21 @@ exports.traerUsuarioTelefonoService = async (parametroTelefono) => {
         console.log('ERROR en Service - traerUsuarioTelefonoService')
         separador()
         console.log(error)
+        throw error
     }
 }
 
-exports.crearUsuarioService = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
+exports.crearUsuarioService = async (parametroBody) => {
     console.log('Usuarios Service - crearUsuarioService')  
     separador()
 
     try{
-        let datos = 
-        {
-            nombre: normalizar(pNombre),
-            apellido: normalizar(pApellido),
-            DNI: Number(pDNI),
-            email: normalizarEmail(pEmail),
-            telefono: Number(pTelefono)
+        let datos = {
+            nombre: normalizar(parametroBody.nombre),
+            apellido: normalizar(parametroBody.apellido),
+            DNI: Number(parametroBody.DNI),
+            email: normalizarEmail(parametroBody.email),
+            telefono: Number(parametroBody.telefono)
         }
 
         let respuesta = await usuariosRepository.crearUsuario(datos.nombre, datos.apellido, datos.DNI, datos.email, datos.telefono)
@@ -152,6 +156,7 @@ exports.modificarUsuarioService = async (pDNI, parametroClave, parametroValor) =
         console.log('ERROR en Service - modificarUsuarioService')
         separador()
         console.log(error)
+        throw error
     }
 }
 
@@ -168,5 +173,6 @@ exports.eliminarUsuarioService = async (pDNI) => {
         console.log('ERROR en Service - eliminarUsuarioService')
         separador()
         console.log(error)
+        throw error
     }
 }

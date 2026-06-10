@@ -14,6 +14,8 @@ import { Campo } from "../../models/campo.type";
 import { TipoDato } from "../../models/TipoDato.type";
 import { FilaTabla } from "../../models/filaTabla.type";
 import { using } from 'rxjs';
+import { CampoInput } from '../../models/campoInput.interface';
+
 
 interface Usuario {
   _id: Number,
@@ -45,6 +47,7 @@ export class UsuariosComponent implements OnInit {
   ];
 
   titulo = 'Usuarios'
+  tituloModal = ''
   subtitulo = 'nada x ahora'
   cantidadUsuarios = this.usuariosTabla.length
   datosdeModal:Usuario = {
@@ -75,6 +78,10 @@ export class UsuariosComponent implements OnInit {
     { tipo: 'number', nombre: 'DNI', label: 'Numero de DNI', placeholder:'40123456', requerido: true},
     { tipo: 'text', nombre: 'Email', label: 'Email', placeholder:'usuario@email.com', requerido: true},
     { tipo: 'text', nombre: 'Telefono Celular', label: 'Telefono Celular', placeholder:'1124559071', requerido: true},
+  ];
+
+    CamposModalEditar: CampoInput[] = [ // los campos que van al formulario del modal, editables
+    { tipo: 'text', nombre: 'Nombre', label: 'Nombre', placeholder: 'Juan', requerido: true },
   ];
 
   CamposModalBorrar: any[] = [ // los campos que van al formulario del modal, editables
@@ -193,6 +200,7 @@ export class UsuariosComponent implements OnInit {
 
   abrirModalBorrar(){
     this.modalBorrarAbierto = true
+    this.modalAbierto = false
   }
 
   // filtrado
@@ -221,23 +229,19 @@ export class UsuariosComponent implements OnInit {
     this.modalAbierto = false
   }
 
-  Editar(datos:any) {
-    console.log('editado', datos)
+  editarUsuario(datos:any){
+    this.tituloModal = 'Editar usuario'
+    this.usuarioFiltrado = this.usuariosLLamados.find(usuario => usuario._id == datos.id)
+    console.log(this.usuarioFiltrado)
+    this.CamposModalEditar[0].placeholder = this.usuarioFiltrado?.nombre
+    this.cartel = true
+    this.mensajeModal = `'me encanta la pija'`
   }
 
   eliminarUsuarioBoton(id:String | Number) {
   this.usuarioFiltrado = this.usuariosLLamados.find(usuario => usuario._id == id)
   console.log(this.usuarioFiltrado)
-  this.mensajeModal = `
-  <h1>¿Esta seguro que desea borrar el siguiente usuario?</h1>
-  <h2>Nombre completo:
-  <br>${this.usuarioFiltrado?.nombre} ${this.usuarioFiltrado?.apellido}
-  <br>DNI: ${this.usuarioFiltrado?.DNI}
-  <br>Email: ${this.usuarioFiltrado?.email}
-  <br>Telefono: ${this.usuarioFiltrado?.telefono}
-  </h2>
-  `
-  
+
   this.abrirModalBorrar()
   }
 

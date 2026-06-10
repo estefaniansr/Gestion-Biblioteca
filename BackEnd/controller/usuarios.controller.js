@@ -115,12 +115,8 @@ exports.traerUsuarioTelefonoController = async (req,res) => {
 exports.crearUsuarioController = async (req,res) =>{
     console.log('Usuarios Controller - crearUsuarioController')
     try{
-        let nuevo = req.body
-        let respuesta = await usuariosService.crearUsuarioService(nuevo.nombre, nuevo.apellido, nuevo.DNI, nuevo.email, nuevo.telefono)
-
-        console.log(respuesta)
-        console.log('PORONGA PORONGA PORONGA PORONGA PORONGA')
-        return res.status(201).send(respuesta)
+        let respuesta = await usuariosService.crearUsuarioService(req.body)
+        return res.status(200).send(respuesta)
     }
     catch(error){
         console.log('ERROR en crearUsuarioController')
@@ -174,5 +170,10 @@ exports.borrarUsuario = async (req,res) =>{
     }
     catch(error){
         console.log('ERROR en Controller - borrarUsuario')
+        console.log(error)
+        res.status(500).send({
+            code:500,
+            message:"Error en borrarUsuario"
+        })
     }
 }
