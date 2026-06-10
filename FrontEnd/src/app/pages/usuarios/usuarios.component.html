@@ -66,12 +66,8 @@
     </app-tags>
   </div>
 
-  <app-tabla [columnas]="[
-    { key: 'campo1', label: 'Nombre completo' },
-    { key: 'campo2',  label: 'Contacto'  },
-    { key: 'campo3', label: 'DNI' },
-  ]" [datos]="usuariosTabla" [mostrarEliminar]="true" [totalItems]="usuariosTabla.length" [itemsPorPagina]="10"
-    [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event" (editar)="Editar($event)" (eliminar)="eliminarUsuarioBoton($event)">
+  <app-tabla [columnas]="columnas" [datos]="usuariosTabla" [mostrarEliminar]="true" [totalItems]="usuariosTabla.length" [itemsPorPagina]="10"
+    [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event" (editar)="editarUsuario($event)" (eliminar)="eliminarUsuarioBoton($event)">
   </app-tabla>
 
 

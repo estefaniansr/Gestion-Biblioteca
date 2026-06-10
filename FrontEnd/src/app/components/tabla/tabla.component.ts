@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { columnaTabla } from "../../models/columnaTabla.interface";
 import { FilaTabla } from "../../models/filaTabla.type";
 import { TipoDato } from "../../models/TipoDato.type";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -14,6 +15,10 @@ import { TipoDato } from "../../models/TipoDato.type";
 })
 
 export class TablaComponent {
+
+    constructor(private router:Router){
+        
+    }
 
     // columnas que se renderizan en la tabla (
     @Input() columnas: columnaTabla[] = [];
@@ -102,6 +107,10 @@ export class TablaComponent {
 
     // activa el modo edición para una fila
     onEditar(item: FilaTabla) {
+
+        if(this.router.url === '/usuarios'){
+            this.editar.emit({id: item['_id'] as string, datos: item});
+        }
         this.filaEditando = item;
 
         // se clona la fila para editar sin modificar la original directamente

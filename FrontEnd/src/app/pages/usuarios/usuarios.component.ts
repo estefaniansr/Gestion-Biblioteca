@@ -67,9 +67,10 @@ export class UsuariosComponent implements OnInit {
   textoBoton = '+ Nuevo' // titulo del btn x defecto
   modalAbierto = false // el modal esta cerrado x defecto
   filtroSeleccionado = 'nombre'
-  mensajeModal = ''
+  mensajeModal = 'HJOLA CHICOS'
   paginaActual = 2 // la pag actual esta x defecto en la 1
 
+  columnas = [{key: 'nombre', label:'hola'}]
   // campos
 
   CamposModal: Campo[] = [ // los campos que van al formulario del modal, editables
@@ -109,7 +110,7 @@ export class UsuariosComponent implements OnInit {
       this.usuariosLLamados.forEach((dato)=>{
         this.usuariosTabla.push({
           _id: dato._id,
-          campo1: `${dato.nombre}\n ${dato.apellido}`,
+          nombre: `${dato.nombre}\n ${dato.apellido}`,
           campo2: `${dato.email}\n${dato.telefono}`,
           campo3: `${dato.DNI}`
         }
@@ -135,7 +136,7 @@ export class UsuariosComponent implements OnInit {
             this.usuariosLLamados = data
             this.usuariosLLamados.forEach((dato)=>{
               this.usuariosTabla.push({
-                campo1: `${dato.nombre}\n ${dato.apellido}`,
+                nombre: `${dato.nombre}\n ${dato.apellido}`,
                 campo2: `${dato.email}\n${dato.telefono}`,
                 campo3: `${dato.DNI}`
               })
@@ -235,7 +236,7 @@ export class UsuariosComponent implements OnInit {
     console.log(this.usuarioFiltrado)
     this.CamposModalEditar[0].placeholder = this.usuarioFiltrado?.nombre
     this.cartel = true
-    this.mensajeModal = `'me encanta la pija'`
+    this.mensajeModal = `'me encanta la hambuerguesa con papas'`
   }
 
   eliminarUsuarioBoton(id:String | Number) {
