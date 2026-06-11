@@ -186,8 +186,13 @@ td.td-acciones .acciones-grupo {
     border-color: var(--texto-gris);
 }
 
-.input-edicion:hover {
+.input-edicion:not(:disabled):hover {
     border-color: var(--texto-gris);
+}
+
+.input-edicion:disabled {
+    background: var(--gris);
+    cursor: not-allowed;
 }
 
 @media (max-width: 768px) {
