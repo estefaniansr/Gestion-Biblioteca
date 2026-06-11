@@ -8,7 +8,7 @@ conexionAMongo()
 exports.traerTodosUsuariosRepository = async () => {
     console.log('Usuarios Repository - traerTodosUsuarios')
     try{
-        const usuarios = await Usuarios.find()
+        const usuarios = await Usuarios.find({contador: {$ne: 'usuarios'}})
         return usuarios
     }
     catch(error){
@@ -94,26 +94,10 @@ exports.crearUsuario = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
     }
     catch(error){
         console.log('ERROR en Usuarios Repository - crearUsuario')
-        throw Error(error)
+        throw error
     }
 }
 
-// async function revisarDNI(pDNI) {
-//     try{
-//         let dni = await Usuarios.find({DNI: pDNI})
-//         if(dni.length == 1){
-//             console.log(`DNI ${pDNI} encontado`)
-//             return true
-//         }
-//         else{
-//             console.log(`DNI ${pDNI} NO encontado`)
-//             return false
-//         }
-//     }
-//     catch(error){
-//         console.log(error)
-//     }
-// }
 
 async function sumarUno(){
     try{
@@ -145,6 +129,19 @@ exports.modificarUsuario = async (pDNI, parametroClave, parametroValor) => {
         console.log('ERROR En Repository - modificarUsuario')
         console.log(`No se modifico el usuario con el DNI${pDNI}`)
         console.log('error')
+    }
+}
+
+exports.eliminarUsuario = async (pDNI) => {
+    console.log('Usuarios Repository - eliminarUsuario')
+    try{
+        let usuarioEliminar = await Usuarios.deleteOne({DNI: pDNI} , {returnDocument: "after"})
+        console.log(usuarioEliminar)
+        return usuarioEliminar
+    }
+    catch(error){
+        console.log('ERROR En Repository- eliminarUsuario')
+        console.log(error)
     }
 }
 

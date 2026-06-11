@@ -21,6 +21,10 @@
 
         <div class="modal-body">
 
+            @if (mensaje){
+                <div [innerHTML]="mensaje"></div>
+            }
+
             <!-- Recorre todos los campos del formulario -->
             @for (campo of campos; track campo.nombre) {
 
@@ -77,7 +81,7 @@
             <button class="btn-cancelar" (click)="cerrar()">Cancelar</button>
 
             <!-- al hacer click emite el metodo confirmar -->
-            <button class="btn-guardar" (click)="confirmar()">Guardar</button>
+            <button class="btn-guardar" (click)="confirmar()" [disabled]="valido()">Guardar</button>
 
         </div>
 

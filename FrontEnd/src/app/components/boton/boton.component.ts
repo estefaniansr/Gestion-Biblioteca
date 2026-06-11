@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 })
 
 export class BotonComponente {
-    @Input() texto: string = '+ Nuevo' // texto que viene del padre
+    @Input() texto: string = 'Nuevo' // texto que viene del padre
     @Output() abrir = new EventEmitter<void>() // evento que se envia al padre, void -> no devuelve ningun valor
 
     abrirModal() {

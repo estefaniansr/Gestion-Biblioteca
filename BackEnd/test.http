@@ -1,7 +1,7 @@
 ###
 GET http://127.0.0.1:3000/usuarios HTTP/1.1
 ###
-GET http://127.0.0.1:3000/usuarios/nombre/2 HTTP/1.1
+GET http://127.0.0.1:3000/usuarios/nombre/JUAN HTTP/1.1
 ###
 GET http://127.0.0.1:3000/usuarios/apellido/martinez HTTP/1.1
 ###
@@ -19,7 +19,7 @@ Content-Type: application/json
 {
     "nombre":"Facundo",
     "apellido": "Martinez",
-    "DNI": "4095470332141243124214124141242144214",
+    "DNI": "409547031123341",
     "email": "tuvieja4@gmail.com",
     "telefono":"1173639902"
 }
@@ -31,3 +31,6 @@ Content-Type: application/json
 {
     "apellido":"Bueno, vamos"
 }
+
+###
+DELETE http://127.0.0.1:3000/usuarios/borrar/4144151 HTTP/1.1
