@@ -1,6 +1,7 @@
 const express = require('express')
 const dotenv = require('dotenv').config()
 const cors = require('cors')
+const { routerPrestamos } = require('./router/prestamos.router')
 
 
 const app = express()
@@ -14,6 +15,7 @@ const {routerUsuarios} = require('./router/usuarios.router')
 app.use(cors())
 
 app.use('/usuarios', routerUsuarios)
+app.use('/prestamos', routerPrestamos)
 
 app.get('/', (req,res)=>{
     res.status(200)
