@@ -36,10 +36,10 @@
                         <!-- modo editar -->
                         <ng-template #editMode>
                             <!-- Input ligado al objeto de fila editando -->
-                            <input [(ngModel)]="filaEditando![col.key]"
-                                (ngModelChange)="filaEditando![col.key] = $event"  class="input-edicion" />
-                                <!-- [(ngModel)] muestra el valor -->
-                                 <!-- (ngModelChange) -> actualiza el objeto, ! si existe -->
+                            <input [(ngModel)]="filaEditando![col.key]" [disabled]="esCampoBloqueado(col.key)"
+                                (ngModelChange)="filaEditando![col.key] = $event" class="input-edicion" />
+                            <!-- [(ngModel)] muestra el valor -->
+                            <!-- (ngModelChange) -> actualiza el objeto, ! si existe -->
                         </ng-template>
 
                     </div>

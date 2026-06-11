@@ -23,6 +23,8 @@ export class TablaComponent {
     // columnas que se renderizan en la tabla (
     @Input() columnas: columnaTabla[] = [];
 
+    @Input() camposBloqueados: string[] = []; // campo bloqueado
+
     // datos de la tabla)
     @Input() datos: FilaTabla[] = [];
 
@@ -123,6 +125,10 @@ export class TablaComponent {
         this.filaEditando = null;
 
         this.filaEditada = {}
+    }
+
+    esCampoBloqueado(campo: string): boolean { // metodo para bloquear, pasa como parametro campo y devuelve el campo el array y el .incluide es si existe el dato en el array
+        return this.camposBloqueados.includes(campo);
     }
 
     guardarEdicion() {
