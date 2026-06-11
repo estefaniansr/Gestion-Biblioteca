@@ -29,8 +29,8 @@ interface Usuario {
 @Component({
   selector: 'app-usuarios',
   imports: [headerComponente, ModalComponent, BuscadorComponente, TituloComponent, FilterComponent, BotonComponente, TagComponent, TablaComponent],
-  templateUrl: './usuarios.component.html',
-  styleUrl: './usuarios.component.css'
+  templateUrl: './usuarios.pages.html',
+  styleUrl: './usuarios.pages.css'
 })
 
 
