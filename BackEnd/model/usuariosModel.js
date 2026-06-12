@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 
 const usuariosSchema = mongoose.Schema(
     {
-        _id:{type:Number, required:false},
         nombre:{
             type:String,
             required:true

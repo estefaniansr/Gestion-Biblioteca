@@ -17,10 +17,10 @@ POST http://127.0.0.1:3000/usuarios/crear/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "nombre":"Facundo",
-    "apellido": "Martinez",
-    "DNI": "409547031123341",
-    "email": "tuvieja4@gmail.com",
+    "nombre":"gerardo",
+    "apellido": "perez",
+    "DNI": "39625167",
+    "email": "facundoemanuel73@gmail.com",
     "telefono":"1173639902"
 }
 
@@ -34,3 +34,6 @@ Content-Type: application/json
 
 ###
 DELETE http://127.0.0.1:3000/usuarios/borrar/4144151 HTTP/1.1
+
+###
+GET http://127.0.0.1:3000/usuarios/facundo HTTP/1.1

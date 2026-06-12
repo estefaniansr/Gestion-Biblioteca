@@ -177,3 +177,23 @@ exports.borrarUsuario = async (req,res) =>{
         })
     }
 }
+
+exports.traerUsuarioController = async (req,res) => {
+    console.log('tuvieja')
+    separador()
+    
+    try{
+        let datos = req.params.buscar
+        res.status(200)
+        res.send(await usuariosService.traerUsuarioService(datos))
+
+    }
+    catch(error){
+        console.log('error')
+        console.log(error)
+        res.status(500).send({
+            code:500,
+            message:'Error'
+        })
+    }
+}

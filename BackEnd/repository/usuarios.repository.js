@@ -2,6 +2,7 @@ const { ReturnDocument } = require('mongodb')
 const { conexionAMongo } = require('../database/conect')
 
 const Usuarios = require('../model/usuariosModel')
+const { separador } = require('../utils/separador')
 
 conexionAMongo()
 
@@ -80,32 +81,13 @@ exports.traerUsuarioTelefono = async (parametroTelefono) => {
 exports.crearUsuario = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
     console.log('Usuarios Repository - crearUsuario')
     try{
-        // let dniARevisar = await revisarDNI(pDNI)
-        // if(dniARevisar == true){
-        //     console.log(`No se puede crear un usuario con este DNI: ${pDNI}`)
-        // }
-        // else{
-            let contador = await sumarUno()
-            let nuevo = await Usuarios.create({_id: contador, nombre: pNombre, apellido:pApellido, DNI:pDNI, email:pEmail, telefono:pTelefono})
+            let nuevo = await Usuarios.create({nombre: pNombre, apellido:pApellido, DNI:pDNI, email:pEmail, telefono:pTelefono})
             console.log(nuevo)
             return nuevo
-        // }
-
     }
     catch(error){
         console.log('ERROR en Usuarios Repository - crearUsuario')
         throw error
-    }
-}
-
-
-async function sumarUno(){
-    try{
-        let contador = await Usuarios.findOneAndUpdate({contador: 'usuarios'}, {$inc: {valor: 1}}, {returnDocument: 'after'})
-        return contador.valor
-    }
-    catch(error){
-        console.log(error)
     }
 }
 
@@ -142,6 +124,35 @@ exports.eliminarUsuario = async (pDNI) => {
     catch(error){
         console.log('ERROR En Repository- eliminarUsuario')
         console.log(error)
+    }
+}
+
+exports.traerUsuario = async (parametro) => {
+    console.log('Usuarios Repository - traerUsuario')
+    separador()
+
+    try{
+
+        let datos = parametro
+
+        let busqueda = [
+            {nombre: parametro},
+            {apellido: parametro},
+            {email:parametro},    
+        ]
+
+        if(!isNaN(datos)){
+            busqueda.push({DNI: datos})
+            busqueda.push({telefono: datos})
+        }
+
+        let usuarios = await Usuarios.find({$or:busqueda})
+        return usuarios
+    }
+    catch(error){
+        console.log('error')
+        console.log(error)
+        throw error
     }
 }
 

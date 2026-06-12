@@ -176,3 +176,31 @@ exports.eliminarUsuarioService = async (pDNI) => {
         throw error
     }
 }
+
+exports.traerUsuarioService = async (parametro) => {
+    console.log('Usuarios Service - traerUsuarioService')
+    separador()
+
+    try{
+        let datos = parametro
+
+        if(!isNaN(parametro)){
+            Number(parametro)
+        }
+
+        if(parametro.includes("@")){
+            datos = normalizarEmail(datos)
+        }
+
+        else{
+            datos = normalizar(datos)
+        }
+        let respuesta = await usuariosRepository.traerUsuario(datos)
+        return JSON.stringify(respuesta)
+    }
+    catch(error){
+        console.log('error')
+        console.log(error)
+        throw error
+    }
+}

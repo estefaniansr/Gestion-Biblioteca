@@ -24,4 +24,6 @@ routerUsuarios.post('/modificar/:dni', usuariosController.modificarUsuarioContro
 
 routerUsuarios.delete('/borrar/:dni', usuariosController.borrarUsuario)
 
+routerUsuarios.get('/:buscar', usuariosController.traerUsuarioController)
+
 module.exports = { routerUsuarios }

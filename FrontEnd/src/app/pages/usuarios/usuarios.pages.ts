@@ -67,10 +67,10 @@ export class UsuariosComponent implements OnInit {
   textoBoton = '+ Nuevo' // titulo del btn x defecto
   modalAbierto = false // el modal esta cerrado x defecto
   filtroSeleccionado = 'nombre'
-  mensajeModal = 'HJOLA CHICOS'
-  paginaActual = 2 // la pag actual esta x defecto en la 1
+  mensajeModal = ''
+  paginaActual = 1 // la pag actual esta x defecto en la 1
 
-  columnas = [{key: 'nombre', label:'hola'}]
+  columnasUsuarios = [{key: 'nombre', label:'nombre'}, {key: 'apellido', label: 'apellido'}, {key: 'DNI', label:'DNI'}, {key:'email', label:'correo'}, {key:'telefono', label:'telefono'}]
   // campos
 
   CamposModal: Campo[] = [ // los campos que van al formulario del modal, editables
@@ -97,56 +97,64 @@ export class UsuariosComponent implements OnInit {
       
   }
 
-  async getTodosLosUsuarios(){
-    //Limpiamos la tabla de usuarios local, por si anteriormente añadimos un usuario, que no quede duplicado.
+async buscador(input:any) {
+  try { 
+    let res = await this.usuarioBusqueda(input);
+    this.usuariosTabla = res;
+  } catch (error) {
+    console.log('error al buscar');
+  }
+}
+
+  async obtenerUsuarios(){
     this.usuariosTabla = []
 
     try{
-    const respuesta = await fetch('http://127.0.0.1:3000/usuarios')
-    .then(respuesta => respuesta.json())
-    .then(data => {
-      this.usuariosLLamados = data
-      console.log(this.usuariosLLamados)
-      this.usuariosLLamados.forEach((dato)=>{
+      let respuesta = await fetch('http://127.0.0.1:3000/usuarios')
+      let datos = await respuesta.json()
+      this.usuariosLLamados = datos
+      this.usuariosLLamados.forEach((datos)=>{
         this.usuariosTabla.push({
-          _id: dato._id,
-          nombre: `${dato.nombre}\n ${dato.apellido}`,
-          campo2: `${dato.email}\n${dato.telefono}`,
-          campo3: `${dato.DNI}`
-        }
-        )
-        this.cantidadUsuarios = this.usuariosTabla.length
+          _id: datos._id,
+          nombre: `${datos.nombre}`,
+          apellido: `${datos.apellido}`,
+          DNI: `${datos.DNI}`,
+          email: `${datos.email}`,
+          telefono: `${datos.telefono}`
+        })
       })
-    })
-    .catch(error => {
-      console.log(error)
-    })
     }
     catch(error){
-      console.log('Error al traer los usuarios')
+      console.log('error al obtener usuarios')
     }
   }
 
-  async getUsuarioBusqueda() {
-        this.usuariosTabla = []
-        try{
-          await fetch(`http://127.0.0.1:3000/usuarios/obtener/${this.textoBusqueda}`)
-          .then(respuesta => respuesta.json())
-          .then(data => {
-            this.usuariosLLamados = data
-            this.usuariosLLamados.forEach((dato)=>{
-              this.usuariosTabla.push({
-                nombre: `${dato.nombre}\n ${dato.apellido}`,
-                campo2: `${dato.email}\n${dato.telefono}`,
-                campo3: `${dato.DNI}`
-              })
-            })
-          })
+  async usuarioBusqueda(input:string){
+    this.usuariosTabla = []
+
+    try{
+      let respuesta = await fetch(`http://127.0.0.1:3000/usuarios/${input}`)
+      let datos = await respuesta.json()
+      this.usuariosLLamados = datos
+      console.log(this.usuariosLLamados)
+      this.usuariosLLamados.forEach((dato)=>{
+        this.usuariosTabla = [{
+          _id: dato._id,
+          nombre: `${dato.nombre}`,
+          apellido: `${dato.apellido}`,
+          DNI: `${dato.DNI}`,
+          email: `${dato.email}`,
+          telefono: `${dato.telefono}`
         }
-        catch(error){
-          console.log(`Error al traer al usuario con el ${this.filtroSeleccionado} ${this.textoBusqueda}`)
-        }
+        ]
+
+      })
+      return datos
     }
+    catch(error){
+      console.log('error al buscar')
+    }
+  }
 
     async crearUsuario(){
       try{
@@ -170,7 +178,7 @@ export class UsuariosComponent implements OnInit {
           this.modalAbierto = false
           this.mensajeModal = `<h1>Usuario creado exitosamente</h1>`
           this.cartel = true
-          this.getTodosLosUsuarios()
+          this.obtenerUsuarios()
           setTimeout(()=>{
             this.cartel = false
           }, 3000)
@@ -193,7 +201,6 @@ export class UsuariosComponent implements OnInit {
       }
     }
 
-  // modal
 
   abrirModal() { // abre el modal
     this.modalAbierto = true
@@ -206,8 +213,10 @@ export class UsuariosComponent implements OnInit {
 
   // filtrado
 
-  filtrado(valor:any) { // recibe el texto emitido x el componente
-    this.textoBusqueda = valor // lo guarda en el componente
+  async filtrado(valor:string) { // recibe el texto emitido x el componente
+    let texto = valor
+    console.log(texto)
+    await this.usuarioBusqueda(texto)
   }
 
   onFiltrar(valor:any) { // pasa un valor x argumento
@@ -235,13 +244,19 @@ export class UsuariosComponent implements OnInit {
     this.usuarioFiltrado = this.usuariosLLamados.find(usuario => usuario._id == datos.id)
     console.log(this.usuarioFiltrado)
     this.CamposModalEditar[0].placeholder = this.usuarioFiltrado?.nombre
-    this.cartel = true
     this.mensajeModal = `'me encanta la hambuerguesa con papas'`
   }
 
   eliminarUsuarioBoton(id:String | Number) {
   this.usuarioFiltrado = this.usuariosLLamados.find(usuario => usuario._id == id)
-  console.log(this.usuarioFiltrado)
+  this.mensajeModal = `<h1>Desea borrar este usuario?</h1>
+  <br>
+  <h2>Nombre: ${this.usuarioFiltrado?.nombre}
+  <br>
+  Apellido: ${this.usuarioFiltrado?.apellido}
+  <br>
+  DNI: ${this.usuarioFiltrado?.DNI}
+  </h2>`
 
   this.abrirModalBorrar()
   }
@@ -258,7 +273,7 @@ export class UsuariosComponent implements OnInit {
         this.modalBorrarAbierto = false
         this.mensajeModal = `<h1>Usuario con DNI: ${this.usuarioFiltrado?.DNI} borrado exitosamente</h1>`
         this.cartel = true
-        this.getTodosLosUsuarios()
+        this.obtenerUsuarios()
         setTimeout(()=>{
           this.cartel = false
         }, 3000)

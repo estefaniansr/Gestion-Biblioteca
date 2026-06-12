@@ -2,19 +2,13 @@
     <!-- Pasas en [activo] el valor de TS  activo (linea 27) y el cambioTab genera un evento-->
 </app-header>
 
-<button (click)="getTodosLosUsuarios()">Traer Usuarios</button>
-<br>
-<br>
-<button (click)="getUsuarioBusqueda()">Usuario busqueda</button>
-<br>
-<br>
 <button (click)="abrirModalBorrar()">Probar MODAL</button>
 
   <div class="cont">
     <app-titulo [titulo]="titulo" [subtitulo]="subtitulo"></app-titulo>
     <!-- Pasa los @Input del componente titulo y entre "el nombre" -->
     <div class="acciones">
-      <app-filter [opciones]="['nombre', 'apellido', 'DNI', 'email', 'telefono']" (seleccionar)="onFiltrar($event)">
+      <app-filter [opciones]="['nombre', 'apellido', 'DNI', 'email', 'telefono']" (valorChange)="buscador($event)">
 
       </app-filter>
 
@@ -66,7 +60,7 @@
     </app-tags>
   </div>
 
-  <app-tabla [columnas]="columnas" [datos]="usuariosTabla" [mostrarEliminar]="true" [totalItems]="usuariosTabla.length" [itemsPorPagina]="10"
+  <app-tabla [columnas]="columnasUsuarios" [datos]="usuariosTabla" [mostrarEliminar]="true" [totalItems]="usuariosTabla.length" [itemsPorPagina]="10"
     [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event" (editar)="editarUsuario($event)" (eliminar)="eliminarUsuarioBoton($event)">
   </app-tabla>
 
