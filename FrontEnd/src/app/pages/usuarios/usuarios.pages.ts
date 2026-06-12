@@ -130,7 +130,7 @@ export class UsuariosComponent implements OnInit {
   async getUsuarioBusqueda() {
         this.usuariosTabla = []
         try{
-          await fetch(`http://127.0.0.1:3000/usuarios/${this.filtroSeleccionado}/${this.textoBusqueda}`)
+          await fetch(`http://127.0.0.1:3000/usuarios/obtener/${this.textoBusqueda}`)
           .then(respuesta => respuesta.json())
           .then(data => {
             this.usuariosLLamados = data
