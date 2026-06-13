@@ -74,9 +74,9 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
 
     constructor(private librosService: LibrosService) { } // servicio que se comunica con la API
 
-    recargarDatos() {
+    cargarDatos() {
         this.librosService.ObtenerLibros().subscribe({
-            next: (libros: FilaTabla[]) => {
+            next: (libros) => {
                 console.log(libros);
                 this.datosTablaArray = libros
                 this.cantidadTotal = libros.length
@@ -88,7 +88,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     }
 
     ngOnInit(): void { // se ejecuta automaticamente al cargar el componente
-        this.recargarDatos()
+        this.cargarDatos()
 
     }
 
@@ -107,7 +107,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
         this.librosService.CrearLibro(datos).subscribe({ // libroServices tiene el metodo CrearLibro que pasa por argumentos datos y ejecuta subscribe escucha la respuesta del http
             next: (res) => {  // se ejecuta cuando el servidor da ok
                 console.log('Libro creado', res) // depurar
-                this.recargarDatos() //  recarga la tabla
+                this.cargarDatos() //  recarga la tabla
                 this.modalAbierto = false // cierra el modal
             },
             error: (err: string) => { // si tira error el server
@@ -122,7 +122,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
         this.librosService.EliminarLibro(id).subscribe({
             next: (res) => {
                 console.log(res)
-                this.recargarDatos()
+                this.cargarDatos()
             },
             error: (err: string) => {
                 console.log(err)
@@ -133,7 +133,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
 
     Editar(id: string, datos: Record<string, TipoDato>) {
 
-        this.librosService.editarLibro(id, datos).subscribe({ 
+        this.librosService.editarLibro(id, datos).subscribe({
             /*
             * llama al servicio que hace la peticion put al back
             * se envia el id del libro y los nuevos datos actualizados
@@ -143,7 +143,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
 
                 console.log('Libro editado', res)
 
-                this.recargarDatos() // llama al metodo recargar datos
+                this.cargarDatos() // llama al metodo recargar datos
 
             },
 
@@ -157,21 +157,9 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
 
     }
 
-    /* Editar(id:string, datos: Record<string, TipoDato>) {
-        this.librosSerive.editarLibroEspecifico(id,datos).subscribe({p
-            next: (res:string) =>{
-            console.log(res)},
-        error: (err:string) =>{
-        console.log(err)}
-        })
-    }
-    
-    
-    */
-
     Buscador(input: string) {
         this.librosService.buscarLibro(input).subscribe({
-            next: (res: FilaTabla[]) => {
+            next: (res) => {
                 console.log(res)
                 this.datosTablaArray = res
             }, error: (err: string) => {

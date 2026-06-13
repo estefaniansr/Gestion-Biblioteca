@@ -20,8 +20,7 @@ export const routes: Routes = [
     //     component: PrestamosPages
     // },
     {
-        path: '',
-        redirectTo: 'libros',
-        pathMatch: 'full'
+        path: '**', // si es != a algun componente redirecciona
+        redirectTo: 'libros', // redirecciona a libros
     }
 ];
