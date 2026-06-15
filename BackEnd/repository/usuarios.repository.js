@@ -18,6 +18,103 @@ exports.traerTodosUsuariosRepository = async () => {
     }
 }
 
+exports.traerUsuario = async (parametro) => {
+    console.log('Usuarios Repository - traerUsuario')
+    separador()
+
+    try{
+
+        let datos = parametro
+
+        let busqueda = [
+            {nombre: parametro},
+            {apellido: parametro},
+            {email:parametro},    
+        ]
+
+        if(!isNaN(datos)){
+            busqueda.push({DNI: datos})
+            busqueda.push({telefono: datos})
+        }
+
+        let usuarios = await Usuarios.find({$or:busqueda})
+        return usuarios
+    }
+    catch(error){
+        console.log('error')
+        console.log(error)
+        throw error
+    }
+}
+
+exports.traerUsuarioId = async (pId) => {
+    console.log('Usuarios Repository - traerUsuarioId')
+    separador()
+
+    try{
+
+        let respuesta = await Usuarios.findById(pId)
+        return respuesta
+
+    }
+    catch(error){
+        console.log('Error en Repository - traerUsuarioId')
+        separador()
+        console.log(error)
+    }
+}
+
+exports.crearUsuario = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
+    console.log('Usuarios Repository - crearUsuario')
+    try{
+            let nuevo = await Usuarios.create({nombre: pNombre, apellido:pApellido, DNI:pDNI, email:pEmail, telefono:pTelefono})
+            console.log(nuevo)
+            return nuevo
+    }
+    catch(error){
+        console.log('ERROR en Usuarios Repository - crearUsuario')
+        throw error
+    }
+}
+
+exports.modificarUsuario = async (pDNI, parametroClave, parametroValor) => {
+    console.log('Usuarios Service - modificarUsuario')
+    try{
+        let usuarioModificado = {}
+
+        usuarioModificado.clave = parametroClave.toLowerCase()
+
+        usuarioModificado.valor = parametroValor.toLowerCase()
+
+        usuarioModificado.valor = usuarioModificado.valor.charAt(0).toUpperCase() + usuarioModificado.valor.slice(1)
+
+        let usuario_A_Modificar = await Usuarios.findOneAndUpdate({DNI: `${pDNI}`}, {$set: {[usuarioModificado.clave]: usuarioModificado.valor}}, {returnDocument: "after"})
+        
+        console.log(usuario_A_Modificar)
+        return usuario_A_Modificar
+    }
+    catch(error){
+        console.log('ERROR En Repository - modificarUsuario')
+        console.log(`No se modifico el usuario con el DNI${pDNI}`)
+        console.log('error')
+    }
+}
+
+exports.eliminarUsuario = async (pDNI) => {
+    console.log('Usuarios Repository - eliminarUsuario')
+    try{
+        let usuarioEliminar = await Usuarios.deleteOne({DNI: pDNI} , {returnDocument: "after"})
+        console.log(usuarioEliminar)
+        return usuarioEliminar
+    }
+    catch(error){
+        console.log('ERROR En Repository- eliminarUsuario')
+        console.log(error)
+    }
+}
+
+/* Estos metodos ya no se utilizan porque se implemento una busqueda flexible
+
 exports.traerUsuarioNombre = async (parametroNombre) => {
     console.log('Usuarios Repository - traerUsuarioNombre')
     try{
@@ -77,84 +174,4 @@ exports.traerUsuarioTelefono = async (parametroTelefono) => {
         throw Error(error)
     }
 }
-
-exports.crearUsuario = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
-    console.log('Usuarios Repository - crearUsuario')
-    try{
-            let nuevo = await Usuarios.create({nombre: pNombre, apellido:pApellido, DNI:pDNI, email:pEmail, telefono:pTelefono})
-            console.log(nuevo)
-            return nuevo
-    }
-    catch(error){
-        console.log('ERROR en Usuarios Repository - crearUsuario')
-        throw error
-    }
-}
-
-exports.modificarUsuario = async (pDNI, parametroClave, parametroValor) => {
-    console.log('Usuarios Service - modificarUsuario')
-    try{
-        let usuarioModificado = {}
-
-        usuarioModificado.clave = parametroClave.toLowerCase()
-
-        usuarioModificado.valor = parametroValor.toLowerCase()
-
-        usuarioModificado.valor = usuarioModificado.valor.charAt(0).toUpperCase() + usuarioModificado.valor.slice(1)
-
-        let usuario_A_Modificar = await Usuarios.findOneAndUpdate({DNI: `${pDNI}`}, {$set: {[usuarioModificado.clave]: usuarioModificado.valor}}, {returnDocument: "after"})
-        
-        console.log(usuario_A_Modificar)
-        return usuario_A_Modificar
-    }
-    catch(error){
-        console.log('ERROR En Repository - modificarUsuario')
-        console.log(`No se modifico el usuario con el DNI${pDNI}`)
-        console.log('error')
-    }
-}
-
-exports.eliminarUsuario = async (pDNI) => {
-    console.log('Usuarios Repository - eliminarUsuario')
-    try{
-        let usuarioEliminar = await Usuarios.deleteOne({DNI: pDNI} , {returnDocument: "after"})
-        console.log(usuarioEliminar)
-        return usuarioEliminar
-    }
-    catch(error){
-        console.log('ERROR En Repository- eliminarUsuario')
-        console.log(error)
-    }
-}
-
-exports.traerUsuario = async (parametro) => {
-    console.log('Usuarios Repository - traerUsuario')
-    separador()
-
-    try{
-
-        let datos = parametro
-
-        let busqueda = [
-            {nombre: parametro},
-            {apellido: parametro},
-            {email:parametro},    
-        ]
-
-        if(!isNaN(datos)){
-            busqueda.push({DNI: datos})
-            busqueda.push({telefono: datos})
-        }
-
-        let usuarios = await Usuarios.find({$or:busqueda})
-        return usuarios
-    }
-    catch(error){
-        console.log('error')
-        console.log(error)
-        throw error
-    }
-}
-
-
-
+*/

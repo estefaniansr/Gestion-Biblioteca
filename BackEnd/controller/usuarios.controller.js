@@ -20,6 +20,112 @@ exports.traerTodosUsuariosController = async (req,res) => {
     }
 }
 
+exports.traerUsuarioIdController = async(req,res) => {
+    console.log('Usuarios Controller - traerUsuarioId')
+    separador()
+
+    try{
+        let respuesta = await usuariosService.traerUsuarioIdService(req.params.id)
+        res.status(200)
+        res.send(respuesta)
+    }
+    catch(error){
+        console.log('Error en Controller - traerUsuarioId')
+        separador()
+        res.status(500).send({
+            code:500,
+            message:'Error al traer usuario por id'
+        })
+    }
+}
+
+exports.crearUsuarioController = async (req,res) =>{
+    console.log('Usuarios Controller - crearUsuarioController')
+    try{
+        let respuesta = await usuariosService.crearUsuarioService(req.body)
+        return res.status(200).send(respuesta)
+    }
+    catch(error){
+        console.log('ERROR en crearUsuarioController')
+        console.log(error)
+
+        if (error.code === 11000) {
+            return res.status(409).send({
+                code: 409,
+                message: "DNI DUPLICADO"
+            })
+        }
+
+        return res.status(500).send({
+            code: 500,
+            message: "ERROR interno del servidor"
+        })
+    }
+}
+
+exports.modificarUsuarioController = async (req,res) => {
+    console.log('Usuarios Controller - modificarUsuarioController')
+    try{
+        let dni = req.params.dni
+        let nuevo = req.body
+
+        let clave = Object.keys(nuevo)[0]
+        let valor = nuevo[clave]
+
+        console.log(`Clave: ${clave}, Valor: ${valor}`)
+
+        res.status(200)
+        res.send(await usuariosService.modificarUsuarioService(dni, clave, valor))
+    }
+    catch(error){
+        console.log('ERROR en Usuarios Controller - modificarUsuarioController')
+        console.log(error)
+        res.status(500).send({
+            code:500,
+            message:"ERROR en Usuarios Usuarios Controller - modificarUsuarioController"
+        })
+    }
+}
+
+exports.borrarUsuario = async (req,res) =>{
+    console.log('Usuarios Controller - modificarUsuarioController')
+    separador()
+
+    try{
+        res.status(200)
+        res.send(await usuariosService.eliminarUsuarioService(req.params.dni))
+    }
+    catch(error){
+        console.log('ERROR en Controller - borrarUsuario')
+        console.log(error)
+        res.status(500).send({
+            code:500,
+            message:"Error en borrarUsuario"
+        })
+    }
+}
+
+exports.traerUsuarioController = async (req,res) => {
+    console.log('tuvieja')
+    separador()
+    
+    try{
+        let datos = req.params.buscar
+        res.status(200)
+        res.send(await usuariosService.traerUsuarioService(datos))
+
+    }
+    catch(error){
+        console.log('error')
+        console.log(error)
+        res.status(500).send({
+            code:500,
+            message:'Error'
+        })
+    }
+}
+
+/*
 exports.traerUsuarioNombreController = async (req,res) => {
     console.log('Usuarios Controller - traerUsuarioNombre')
     separador()
@@ -111,89 +217,4 @@ exports.traerUsuarioTelefonoController = async (req,res) => {
         })
     }
 }
-
-exports.crearUsuarioController = async (req,res) =>{
-    console.log('Usuarios Controller - crearUsuarioController')
-    try{
-        let respuesta = await usuariosService.crearUsuarioService(req.body)
-        return res.status(200).send(respuesta)
-    }
-    catch(error){
-        console.log('ERROR en crearUsuarioController')
-        console.log(error)
-
-        if (error.code === 11000) {
-            return res.status(409).send({
-                code: 409,
-                message: "DNI DUPLICADO"
-            })
-        }
-
-        return res.status(500).send({
-            code: 500,
-            message: "ERROR interno del servidor"
-        })
-    }
-}
-
-exports.modificarUsuarioController = async (req,res) => {
-    console.log('Usuarios Controller - modificarUsuarioController')
-    try{
-        let dni = req.params.dni
-        let nuevo = req.body
-
-        let clave = Object.keys(nuevo)[0]
-        let valor = nuevo[clave]
-
-        console.log(`Clave: ${clave}, Valor: ${valor}`)
-
-        res.status(200)
-        res.send(await usuariosService.modificarUsuarioService(dni, clave, valor))
-    }
-    catch(error){
-        console.log('ERROR en Usuarios Controller - modificarUsuarioController')
-        console.log(error)
-        res.status(500).send({
-            code:500,
-            message:"ERROR en Usuarios Usuarios Controller - modificarUsuarioController"
-        })
-    }
-}
-
-exports.borrarUsuario = async (req,res) =>{
-    console.log('Usuarios Controller - modificarUsuarioController')
-    separador()
-
-    try{
-        res.status(200)
-        res.send(await usuariosService.eliminarUsuarioService(req.params.dni))
-    }
-    catch(error){
-        console.log('ERROR en Controller - borrarUsuario')
-        console.log(error)
-        res.status(500).send({
-            code:500,
-            message:"Error en borrarUsuario"
-        })
-    }
-}
-
-exports.traerUsuarioController = async (req,res) => {
-    console.log('tuvieja')
-    separador()
-    
-    try{
-        let datos = req.params.buscar
-        res.status(200)
-        res.send(await usuariosService.traerUsuarioService(datos))
-
-    }
-    catch(error){
-        console.log('error')
-        console.log(error)
-        res.status(500).send({
-            code:500,
-            message:'Error'
-        })
-    }
-}
+*/

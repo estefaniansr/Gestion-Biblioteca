@@ -36,4 +36,7 @@ Content-Type: application/json
 DELETE http://127.0.0.1:3000/usuarios/borrar/4144151 HTTP/1.1
 
 ###
-GET http://127.0.0.1:3000/usuarios/facundo HTTP/1.1
+GET http://127.0.0.1:3000/usuarios/buscar/facundo HTTP/1.1
+
+###
+GET http://127.0.0.1:3000/usuarios/id/6a2c82d6736ed5f23354bc96

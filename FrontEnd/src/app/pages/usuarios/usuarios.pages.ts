@@ -15,16 +15,8 @@ import { TipoDato } from "../../models/TipoDato.type";
 import { FilaTabla } from "../../models/filaTabla.type";
 import { using } from 'rxjs';
 import { CampoInput } from '../../models/campoInput.interface';
-
-
-interface Usuario {
-  _id: Number,
-  nombre: string,
-  apellido: string,
-  DNI: number,
-  email:string,
-  telefono:string
-}
+import { Usuario } from '../../models/usuarios.model';
+import { UsuariosService } from '../services/usuarios.services';
 
 @Component({
   selector: 'app-usuarios',
@@ -41,6 +33,8 @@ export class UsuariosComponent implements OnInit {
     console.log('Hola, esto deberia verse al cargar la pagina')
   }
 
+  constructor(private usuarioService:UsuariosService){}
+
   usuariosLLamados:Usuario[] = []
 
   usuariosTabla: any[] = [
@@ -51,12 +45,12 @@ export class UsuariosComponent implements OnInit {
   subtitulo = 'nada x ahora'
   cantidadUsuarios = this.usuariosTabla.length
   datosdeModal:Usuario = {
-    _id: 0,
+    _id: '0',
     nombre: '',
     apellido: '',
     DNI: 0,
     email: '',
-    telefono: '',
+    telefono: 0,
   }
   modalBorrarAbierto = false
   usuarioFiltrado?:Usuario
@@ -94,7 +88,7 @@ export class UsuariosComponent implements OnInit {
   ];
 
     async probandoCosas(){
-      
+      await this.usuarioService.obtenerUsuarios(this.usuariosTabla)
   }
 
 async buscador(input:any) {
@@ -232,7 +226,7 @@ async buscador(input:any) {
     this.datosdeModal.apellido = String(datos["Apellido"])
     this.datosdeModal.DNI = Number(datos["DNI"])
     this.datosdeModal.email = String(datos["Email"])
-    this.datosdeModal.telefono = String(datos["Telefono Celular"])
+    this.datosdeModal.telefono = Number(datos["Telefono Celular"])
 
     await this.crearUsuario()
 

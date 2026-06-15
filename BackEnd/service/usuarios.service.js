@@ -21,87 +21,21 @@ exports.traerTodosUsuariosService = async () => {
     }
 }
 
-exports.traerUsuarioNombreService = async (parametroNombre) => {
-    console.log('Usuarios Service - traerUsuarioNombre')
+exports.traerUsuarioIdService = async (pId) => {
+    console.log('Usuarios Repository - traerUsuarioId')
     separador()
 
     try{
-        let datos = normalizar(parametroNombre)
-        let respuesta = await usuariosRepository.traerUsuarioNombre(datos)
-        return JSON.stringify(respuesta)
+
+        let datos = await usuariosRepository.traerUsuarioId(pId)
+        
+        return JSON.stringify(datos)
+        
     }
     catch(error){
-        console.log('ERROR en Service - traerUsuarioNombreService')
+        console.log('Error en Service - traerUsuarioIdService')
         separador()
         console.log(error)
-        throw error
-    }
-}
-
-exports.traerUsuarioApellidoService = async (parametroApellido) => {
-    console.log('Usuarios Service - traerUsuarioApellido')
-    separador()
-
-    try{
-        let datos = normalizar(parametroApellido)
-        let respuesta = await usuariosRepository.traerUsuarioApellido(datos)
-        return JSON.stringify(respuesta)
-    }
-    catch(error){
-        console.log('ERROR en Service - traerUsuarioApellidoService')
-        separador()
-        console.log(error)
-        throw error
-    }
-}
-
-exports.traerUsuarioDNIService = async (parametroDNI) => {
-    console.log('Usuarios Service - traerUsuarioDNI')
-    separador()
-
-    try{
-        let datos = Number(parametroDNI)
-        let respuesta = await usuariosRepository.traerUsuarioDNI(datos)
-        return JSON.stringify(respuesta)
-    }
-    catch(error){
-        console.log('ERROR en Service - traerUsuarioDNIService')
-        separador()
-        console.log(error)
-        throw error
-    }
-}
-
-exports.traerUsuarioEmailService = async (parametroEmail) => {
-    console.log('Usuarios Service - traerUsuarioEmail')
-    separador()
-
-    try{
-        let datos = normalizarEmail(parametroEmail)
-        let respuesta = await usuariosRepository.traerUsuarioEmail(datos)
-        return JSON.stringify(respuesta)
-    }
-    catch(error){
-        console.log('ERROR en Service - traerUsuarioEmailService')
-        separador()
-        console.log(error)
-        throw error
-    }
-}
-
-exports.traerUsuarioTelefonoService = async (parametroTelefono) => {
-    console.log('Usuarios Service - UsuarioTelefono')
-    separador()
-    try{
-        let datos = Number(parametroTelefono)
-        let respuesta = await usuariosRepository.traerUsuarioTelefono(datos)
-        return JSON.stringify(respuesta)
-    }
-    catch(error){
-        console.log('ERROR en Service - traerUsuarioTelefonoService')
-        separador()
-        console.log(error)
-        throw error
     }
 }
 
@@ -204,3 +138,89 @@ exports.traerUsuarioService = async (parametro) => {
         throw error
     }
 }
+
+/*
+exports.traerUsuarioNombreService = async (parametroNombre) => {
+    console.log('Usuarios Service - traerUsuarioNombre')
+    separador()
+
+    try{
+        let datos = normalizar(parametroNombre)
+        let respuesta = await usuariosRepository.traerUsuarioNombre(datos)
+        return JSON.stringify(respuesta)
+    }
+    catch(error){
+        console.log('ERROR en Service - traerUsuarioNombreService')
+        separador()
+        console.log(error)
+        throw error
+    }
+}
+
+exports.traerUsuarioApellidoService = async (parametroApellido) => {
+    console.log('Usuarios Service - traerUsuarioApellido')
+    separador()
+
+    try{
+        let datos = normalizar(parametroApellido)
+        let respuesta = await usuariosRepository.traerUsuarioApellido(datos)
+        return JSON.stringify(respuesta)
+    }
+    catch(error){
+        console.log('ERROR en Service - traerUsuarioApellidoService')
+        separador()
+        console.log(error)
+        throw error
+    }
+}
+
+exports.traerUsuarioDNIService = async (parametroDNI) => {
+    console.log('Usuarios Service - traerUsuarioDNI')
+    separador()
+
+    try{
+        let datos = Number(parametroDNI)
+        let respuesta = await usuariosRepository.traerUsuarioDNI(datos)
+        return JSON.stringify(respuesta)
+    }
+    catch(error){
+        console.log('ERROR en Service - traerUsuarioDNIService')
+        separador()
+        console.log(error)
+        throw error
+    }
+}
+
+exports.traerUsuarioEmailService = async (parametroEmail) => {
+    console.log('Usuarios Service - traerUsuarioEmail')
+    separador()
+
+    try{
+        let datos = normalizarEmail(parametroEmail)
+        let respuesta = await usuariosRepository.traerUsuarioEmail(datos)
+        return JSON.stringify(respuesta)
+    }
+    catch(error){
+        console.log('ERROR en Service - traerUsuarioEmailService')
+        separador()
+        console.log(error)
+        throw error
+    }
+}
+
+exports.traerUsuarioTelefonoService = async (parametroTelefono) => {
+    console.log('Usuarios Service - UsuarioTelefono')
+    separador()
+    try{
+        let datos = Number(parametroTelefono)
+        let respuesta = await usuariosRepository.traerUsuarioTelefono(datos)
+        return JSON.stringify(respuesta)
+    }
+    catch(error){
+        console.log('ERROR en Service - traerUsuarioTelefonoService')
+        separador()
+        console.log(error)
+        throw error
+    }
+}
+*/
