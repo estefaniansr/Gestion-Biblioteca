@@ -33,7 +33,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://127.0.0.1:3000/usuarios/borrar/4144151 HTTP/1.1
+DELETE http://127.0.0.1:3000/usuarios/borrar/6a2c84da736ed5f23354bc97 HTTP/1.1
 
 ###
 GET http://127.0.0.1:3000/usuarios/buscar/facundo HTTP/1.1

@@ -63,44 +63,36 @@ exports.crearUsuarioService = async (parametroBody) => {
     }
 }
 
-exports.modificarUsuarioService = async (pDNI, parametroClave, parametroValor) =>{
+exports.modificarUsuarioService = async (pId, pDatos) =>{
     console.log('Usuarios Service - modificarUsuarioService')
     separador()
 
     try{
-        let datos = 
-        {
-            DNI: Number(pDNI),
-            parametroClave: normalizarEmail(parametroClave),
-            parametroValor: parametroValor
-        }
+        let datos = pDatos
 
-        if(datos.parametroClave == 'email'){
-            datos.parametroValor = normalizarEmail(datos.parametroValor)
+        if(datos){
+            datos.nombre = normalizar(datos.nombre),
+            datos.apellido = normalizar(datos.apellido)
+            datos.email = normalizarEmail(datos.email)
         }
-        else {
-            datos.parametroValor = normalizar(datos.parametroValor)
-        }
-
-        let respuesta = await usuariosRepository.modificarUsuario(datos.DNI, datos.parametroClave, datos.parametroValor)
-        return JSON.stringify(respuesta)
+        let usuario = await usuariosRepository.modificarUsuario(pId, pDatos)
+        return JSON.stringify(usuario)
 
     }
+
     catch(error){
         console.log('ERROR en Service - modificarUsuarioService')
         separador()
         console.log(error)
-        throw error
     }
 }
 
-exports.eliminarUsuarioService = async (pDNI) => {
+exports.eliminarUsuarioService = async (pId) => {
     console.log('Usuarios Service - eliminarUsuarioService')
     separador()
 
     try{   
-        let datos = Number(pDNI)
-        let respuesta = await usuariosRepository.eliminarUsuario(datos)
+        let respuesta = await usuariosRepository.eliminarUsuario(pId)
         return JSON.stringify(respuesta)
     }
     catch(error){

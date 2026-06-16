@@ -77,7 +77,23 @@ exports.crearUsuario = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
     }
 }
 
-exports.modificarUsuario = async (pDNI, parametroClave, parametroValor) => {
+exports.modificarUsuario = async (pId, pDatos) => {
+   console.log('Usuarios Service - modificarUsuario')
+   separador()
+   
+   try{
+
+    let usuario = await Usuarios.findByIdAndUpdate(pId, pDatos, {returnDocument: "after"})
+    return usuario
+}
+   catch(error){
+    console.log('Error en Repository - modificarUsuario')
+    separador()
+    console.log(error)
+   }
+}
+
+/* exports.modificarUsuario = async (pDNI, parametroClave, parametroValor) => {
     console.log('Usuarios Service - modificarUsuario')
     try{
         let usuarioModificado = {}
@@ -98,12 +114,12 @@ exports.modificarUsuario = async (pDNI, parametroClave, parametroValor) => {
         console.log(`No se modifico el usuario con el DNI${pDNI}`)
         console.log('error')
     }
-}
+} */
 
-exports.eliminarUsuario = async (pDNI) => {
+exports.eliminarUsuario = async (pId) => {
     console.log('Usuarios Repository - eliminarUsuario')
     try{
-        let usuarioEliminar = await Usuarios.deleteOne({DNI: pDNI} , {returnDocument: "after"})
+        let usuarioEliminar = await Usuarios.findByIdAndDelete(pId)
         console.log(usuarioEliminar)
         return usuarioEliminar
     }

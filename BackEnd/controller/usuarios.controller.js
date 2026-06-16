@@ -66,16 +66,14 @@ exports.crearUsuarioController = async (req,res) =>{
 exports.modificarUsuarioController = async (req,res) => {
     console.log('Usuarios Controller - modificarUsuarioController')
     try{
-        let dni = req.params.dni
-        let nuevo = req.body
+        let id = req.params.id
+        let datos = req.body
 
-        let clave = Object.keys(nuevo)[0]
-        let valor = nuevo[clave]
-
-        console.log(`Clave: ${clave}, Valor: ${valor}`)
-
+        console.log(`Id: ${id}, datos: ${datos}`)
+        let usuario = await usuariosService.modificarUsuarioService(id,datos)
         res.status(200)
-        res.send(await usuariosService.modificarUsuarioService(dni, clave, valor))
+        res.send(usuario)
+        
     }
     catch(error){
         console.log('ERROR en Usuarios Controller - modificarUsuarioController')
@@ -93,7 +91,7 @@ exports.borrarUsuario = async (req,res) =>{
 
     try{
         res.status(200)
-        res.send(await usuariosService.eliminarUsuarioService(req.params.dni))
+        res.send(await usuariosService.eliminarUsuarioService(req.params.id))
     }
     catch(error){
         console.log('ERROR en Controller - borrarUsuario')

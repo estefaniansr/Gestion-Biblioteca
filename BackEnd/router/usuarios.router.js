@@ -12,9 +12,9 @@ routerUsuarios.get('/id/:id', usuariosController.traerUsuarioIdController)
 
 routerUsuarios.post('/crear', usuariosController.crearUsuarioController)
 
-routerUsuarios.post('/modificar/:dni', usuariosController.modificarUsuarioController)
+routerUsuarios.put('/modificar/:id', usuariosController.modificarUsuarioController)
 
-routerUsuarios.delete('/borrar/:dni', usuariosController.borrarUsuario)
+routerUsuarios.delete('/borrar/:id', usuariosController.borrarUsuario)
 
 routerUsuarios.get('/buscar/:buscar', usuariosController.traerUsuarioController)
 
