@@ -14,7 +14,7 @@ export class FilterComponent {
 
     @Output() seleccionar = new EventEmitter<string>()
     // emite la opción elegida al padre
-
+    
     abierto = false
     // controla el selects
 

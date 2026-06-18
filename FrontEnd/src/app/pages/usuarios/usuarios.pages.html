@@ -2,19 +2,13 @@
     <!-- Pasas en [activo] el valor de TS  activo (linea 27) y el cambioTab genera un evento-->
 </app-header>
 
-<button (click)="getTodosLosUsuarios()">Traer Usuarios</button>
-<br>
-<br>
-<button (click)="getUsuarioBusqueda()">Usuario busqueda</button>
-<br>
-<br>
-<button (click)="crearUsuario()">Crear usuario</button>
+<button (click)="probandoCosas()">Probar MODAL</button>
 
   <div class="cont">
     <app-titulo [titulo]="titulo" [subtitulo]="subtitulo"></app-titulo>
     <!-- Pasa los @Input del componente titulo y entre "el nombre" -->
     <div class="acciones">
-      <app-filter [opciones]="['nombre', 'apellido', 'DNI', 'email', 'telefono']" (seleccionar)="onFiltrar($event)">
+      <app-filter [opciones]="['nombre', 'apellido', 'DNI', 'email', 'telefono']" (valorChange)="buscador($event)">
 
       </app-filter>
 
@@ -24,8 +18,21 @@
     </div>
   </div>
 
-  <app-modal titulo="Nuevo ej" [abierto]="modalAbierto" [campos]="CamposModal" (guardar)="Guardar($event)"
+  @if(modalAbierto){
+    <app-modal titulo="Nuevo usuario" [abierto]="modalAbierto" [campos]="CamposModal" (guardar)="guardarModalUsuario($event)"
     (cancelar)="modalAbierto = false" />
+  }
+
+  @if(modalBorrarAbierto){
+    <app-modal titulo="¿Borrar usuario?" [abierto]="modalBorrarAbierto" (guardar)="guardarModalBorrar($event)"
+    (cancelar)="modalBorrarAbierto = false" [mensaje]="mensajeModal"/>
+  }
+
+  @if(cartel){
+    <app-modal titulo="Cambio realizado" [abierto]="cartel"
+    (cancelar)="cartel = false" [mensaje]="mensajeModal"/>
+  }
+
 
   <div class="tags-container">
     <app-tags titulo="Usuarios" [cantidad]="cantidadUsuarios">
@@ -53,12 +60,8 @@
     </app-tags>
   </div>
 
-  <app-tabla [columnas]="[
-    { key: 'campo1', label: 'Nombre completo' },
-    { key: 'campo2',  label: 'Contacto'  },
-    { key: 'campo3', label: 'DNI' },
-  ]" [datos]="usuariosTabla" [mostrarEliminar]="true" [totalItems]="usuariosTabla.length" [itemsPorPagina]="10"
-    [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event" (editar)="Editar($event)">
+  <app-tabla [columnas]="columnasUsuarios" [datos]="usuariosTabla" [mostrarEliminar]="true" [totalItems]="usuariosTabla.length" [itemsPorPagina]="10"
+    [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event" (editar)="editarUsuario($event)" (eliminar)="eliminarUsuarioBoton($event)">
   </app-tabla>
 
 

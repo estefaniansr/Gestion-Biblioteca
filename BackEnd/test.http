@@ -1,7 +1,7 @@
 ###
 GET http://127.0.0.1:3000/usuarios HTTP/1.1
 ###
-GET http://127.0.0.1:3000/usuarios/nombre/2 HTTP/1.1
+GET http://127.0.0.1:3000/usuarios/nombre/JUAN HTTP/1.1
 ###
 GET http://127.0.0.1:3000/usuarios/apellido/martinez HTTP/1.1
 ###
@@ -17,10 +17,10 @@ POST http://127.0.0.1:3000/usuarios/crear/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "nombre":"Facundo",
-    "apellido": "Martinez",
-    "DNI": "4095470332141243124214124141242144214",
-    "email": "tuvieja4@gmail.com",
+    "nombre":"gerardo",
+    "apellido": "perez",
+    "DNI": "39625167",
+    "email": "facundoemanuel73@gmail.com",
     "telefono":"1173639902"
 }
 
@@ -31,3 +31,12 @@ Content-Type: application/json
 {
     "apellido":"Bueno, vamos"
 }
+
+###
+DELETE http://127.0.0.1:3000/usuarios/borrar/6a2c84da736ed5f23354bc97 HTTP/1.1
+
+###
+GET http://127.0.0.1:3000/usuarios/buscar/facundo HTTP/1.1
+
+###
+GET http://127.0.0.1:3000/usuarios/id/6a2c82d6736ed5f23354bc96

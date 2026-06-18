@@ -35,8 +35,11 @@
                         </ng-container>
                         <!-- modo editar -->
                         <ng-template #editMode>
-                            <!-- Input ligado al objeto de edición temporal -->
-                            <input [(ngModel)]="editCache[col.key]" class="input-edicion" />
+                            <!-- Input ligado al objeto de fila editando -->
+                            <input [(ngModel)]="filaEditando![col.key]" [disabled]="esCampoBloqueado(col.key)"
+                                (ngModelChange)="filaEditando![col.key] = $event" class="input-edicion" />
+                            <!-- [(ngModel)] muestra el valor -->
+                            <!-- (ngModelChange) -> actualiza el objeto, ! si existe -->
                         </ng-template>
 
                     </div>
@@ -81,7 +84,7 @@
                         <!-- modo edicion-->
                         <ng-template #editActions>
 
-                            <button class="btn-accion" (click)="guardarEdicion()" title="Guardar">
+                            <button class="btn-accion" type="button" (click)="guardarEdicion()" title="Guardar">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
                                     fill="var(--texto)">
                                     <g clip-path="url(#clip0_4418_7375)">
@@ -126,8 +129,8 @@
 
                         <button *ngIf="mostrarEliminar" class="btn-accion eliminar" (click)="onEliminar(fila)"
                             title="Eliminar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                                viewBox="0 0 24 24" fill="var(--texto)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="var(--texto)">
                                 <g clip-path="url(#clip0_4418_7385)">
                                     <path
                                         d="M20.9999 6.73046C20.9799 6.73046 20.9499 6.73046 20.9199 6.73046C15.6299 6.20046 10.3499 6.00046 5.11992 6.53046L3.07992 6.73046C2.65992 6.77046 2.28992 6.47046 2.24992 6.05046C2.20992 5.63046 2.50992 5.27046 2.91992 5.23046L4.95992 5.03046C10.2799 4.49046 15.6699 4.70046 21.0699 5.23046C21.4799 5.27046 21.7799 5.64046 21.7399 6.05046C21.7099 6.44046 21.3799 6.73046 20.9999 6.73046Z"
@@ -177,7 +180,12 @@
 
             <button class="btn-pag" (click)="anterior()" [disabled]="paginaActual === 1">
 
-                <svg width="12" height="12"></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M14.9998 19.9201L8.47984 13.4001C7.70984 12.6301 7.70984 11.3701 8.47984 10.6001L14.9998 4.08008"
+                        stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
 
             </button>
 
@@ -195,7 +203,12 @@
 
             <button class="btn-pag" (click)="siguiente()" [disabled]="paginaActual === totalPaginas">
 
-                <svg width="12" height="12"></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M8.90991 19.9201L15.4299 13.4001C16.1999 12.6301 16.1999 11.3701 15.4299 10.6001L8.90991 4.08008"
+                        stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
 
             </button>
 
