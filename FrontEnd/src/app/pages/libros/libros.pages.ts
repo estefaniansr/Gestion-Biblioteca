@@ -5,7 +5,6 @@ import { Component, OnInit } from "@angular/core";
 import { headerComponente } from "../../components/header/header.component"; // importar el header
 import { BuscadorComponente } from "../../components/buscador/buscador.component"; // importar el buscador
 import { BotonComponente } from "../../components/boton/boton.component"; // importar el boton
-import { FilterComponent } from "../../components/filter/filter.component"; // importar filter
 import { TituloComponent } from "../../components/titulo/titulo.component"; // importar titulo
 import { TagComponent } from "../../components/tags/tags.component"; // importar tags
 import { TablaComponent } from "../../components/tabla/tabla.component"; // importar tabla
@@ -15,14 +14,18 @@ import { ModalComponent } from "../../components/modal/modal.component"; // impo
 import { Campo } from "../../models/campo.type";
 import { TipoDato } from "../../models/TipoDato.type";
 import { FilaTabla } from "../../models/filaTabla.type";
+import { CampoSelect } from "../../models/campoSelect.interface";
+import { Categoria } from "../../models/categoria.interface";
 
 // services
 import { LibrosService } from "../services/libros.services";
+import { CategoriasService } from "../services/categorias.services";
+import { PrestamosService } from "../services/prestamos.services";
 
 @Component({
     selector: 'app-libros',
     standalone: true,
-    imports: [headerComponente, BuscadorComponente, BotonComponente, FilterComponent, TituloComponent, TagComponent, TablaComponent, ModalComponent], // importas los componentess
+    imports: [headerComponente, BuscadorComponente, BotonComponente, TituloComponent, TagComponent, TablaComponent, ModalComponent], // importas los componentess
     templateUrl: './libros.pages.html',
     styleUrl: './libros.pages.css'
 })
@@ -36,6 +39,9 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     filtroSeleccionado = '' // el filtro seleccionado esta vacio x defecto
     paginaActual = 1 // la pag actual esta x defecto en la 1
     cantidadTotal = 2
+    totalPrestados = 0
+    totalDevueltos = 100
+    cantidadTotalCategoria = 0
     cantidad = 0
     columnas = [
         { key: 'libro', label: 'Libro' },
@@ -51,10 +57,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
             nombre: 'categoria',
             label: 'Categoria',
             requerido: true,
-            opciones: [
-                { valor: 'Novela', texto: 'Novela' },
-                { valor: 'Novela', texto: 'Novela' },
-            ]
+            opciones: []
         }
     ];
     opcionFilter = [
@@ -67,12 +70,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
         'No func'
     ]
 
-
-
-
-
-
-    constructor(private librosService: LibrosService) { } // servicio que se comunica con la API
+    constructor(private librosService: LibrosService, private categoriasService: CategoriasService, private prestamosService: PrestamosService) { } // servicio que se comunica con la API
 
     cargarDatos() {
         this.librosService.ObtenerLibros().subscribe({
@@ -87,8 +85,55 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
         });
     }
 
+    cargarPrestados() {
+        this.prestamosService.ObtenerPrestamos().subscribe({
+            next: (prestamo) => {
+                console.log(prestamo)
+                const activo = prestamo.filter(
+                    p => p.estado === 'Activo'
+                )
+                this.totalPrestados = activo.length
+            }
+        })
+    }
+
+    cargarDevueltos() {
+        this.prestamosService.ObtenerPrestamos().subscribe({
+            next: (prestamo) => {
+                console.log(prestamo)
+                const activo = prestamo.filter(
+                    p => p.estado === 'Devuelto'
+                )
+                this.totalDevueltos = activo.length
+            }
+        })
+    }
+
+    cargarCategorias() {
+        this.categoriasService.ObtenerCategorias().subscribe({
+            next: (cate) => {
+                console.log(cate)
+                this.cantidadTotalCategoria = cate.length
+
+                const campoCategoria = this.CamposModal.find( // crea un const que busca en el campo modal el nombre categoria
+                    campo => campo.nombre === 'categoria'
+                ) as CampoSelect // find devuelve campoSelect
+
+                if (campoCategoria) { // si existe
+                    campoCategoria.opciones = cate.map(categoria => ({
+                        valor: categoria.nombre,
+                        texto: categoria.nombre
+                    }))
+                }
+            }, error: (e) => console.error(e)
+        })
+    }
+
     ngOnInit(): void { // se ejecuta automaticamente al cargar el componente
         this.cargarDatos()
+        this.cargarCategorias()
+        this.cargarPrestados()
+        this.cargarDevueltos()
 
     }
 

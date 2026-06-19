@@ -1,5 +1,5 @@
 
-const Usuarios = require('../model/usuariosModel')
+const Usuarios = require('../model/usuarios.model')
 
 
 exports.traerTodosUsuariosRepository = async () => {
