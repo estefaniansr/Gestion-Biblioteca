@@ -1,0 +1,51 @@
+ a {
+    text-decoration: none !important;
+ }
+
+ .test {
+    background: var(--fondo-componente);
+    padding: 100px;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--gris);
+    color: var(--texto);
+    height: 1200px;
+ }
+
+ .cont {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1%;
+ }
+
+ .tags-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 5%;
+ }
+
+ .acciones {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+ }
+
+
+ app-tabla {
+    display: block;
+    padding: 0 20px 20px;
+ }
+
+ @media (max-width: 768px) {
+
+    .tags-container {
+       display: flex;
+       flex-wrap: nowrap;
+       overflow-x: auto;
+       gap: 10px;
+       padding-bottom: 10px;
+       scroll-behavior: smooth;
+    }
+
+ }

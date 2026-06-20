@@ -1,26 +1,23 @@
 const express = require('express')
 const dotenv = require('dotenv').config()
 const cors = require('cors')
-const { routerPrestamos } = require('./router/prestamos.router')
 
 const app = express()
 app.use(cors())
 app.use(express.json())
 
-const HOSTNAME = process.env.HOSTNAME
-
+const HOSTNAME = 'localhost'
 const PORT = process.env.PORT
 
 const { routerUsuarios } = require('./router/usuarios.router')
-
-app.use(cors())
+const { routerPrestamos } = require('./router/prestamos.router')
 
 app.use('/usuarios', routerUsuarios)
 app.use('/prestamos', routerPrestamos)
 
-const { routerLibros } = require('./router/libros.router')
+//const { routerLibros } = require('./router/libros.router')
 
-app.use('/libros', routerLibros)
+//app.use('/libros', routerLibros)
 
 // server
 app.get('/', (req, res) => {

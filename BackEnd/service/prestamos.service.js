@@ -1,33 +1,47 @@
 const prestamosRepository = require('../repository/prestamos.repository')
 
 exports.traerTodosPrestamosService = async () => {
-    console.log('Prestamos Service - traerTodosPrestamosService')
     try {
-        let datos = await prestamosRepository.traerTodosPrestamosRepository()
-        return JSON.stringify(datos)
+        console.log('Prestamos Service - traerTodosPrestamosService')
+        return await prestamosRepository.traerTodosPrestamosRepository()
     } catch (error) {
-        console.log('ERROR en Service - traerTodosPrestamosService')
-        console.log(error)
+        console.log('ERROR en Service - traerTodosPrestamosService', error)
+    }
+}
+
+exports.traerPrestamoPorIdService = async (pId) => {
+    try {
+        console.log('Prestamos Service - traerPrestamoPorIdService')
+        return await prestamosRepository.traerPrestamoPorIdRepository(pId)
+    } catch (error) {
+        console.log('ERROR en Service - traerPrestamoPorIdService', error)
+    }
+}
+
+exports.obtenerEstadisticasService = async () => {
+    try {
+        console.log('Prestamos Service - obtenerEstadisticasService')
+        return await prestamosRepository.obtenerEstadisticasRepository()
+    } catch (error) {
+        console.log('Error en obtenerEstadisticasService', error)
     }
 }
 
 exports.crearPrestamoService = async (pUsuarioId, pLibroId) => {
-    console.log('Prestamos Service - crearPrestamoService')
     try {
+        console.log('Prestamos Service - crearPrestamoService')
         const fechaPrestamo = new Date()
         const fechaVencimiento = new Date()
         fechaVencimiento.setDate(fechaVencimiento.getDate() + 30) // suma 30 dias
 
-        let datos = await prestamosRepository.crearPrestamoRepository(
+        return await prestamosRepository.crearPrestamoRepository(
             pUsuarioId,
             pLibroId,
             fechaPrestamo,
             fechaVencimiento
         )
-        return JSON.stringify(datos)
     } catch (error) {
-        console.log('ERROR en Service - crearPrestamoService')
-        console.log(error)
+        console.log('ERROR en Service - crearPrestamoService', error)
     }
 }
 
@@ -43,23 +57,11 @@ exports.devolverLibroService = async (pId) => {
 }
 
 exports.eliminarPrestamoService = async (pId) => {
-    console.log('Prestamos Service - eliminarPrestamoService')
     try {
-        let datos = await prestamosRepository.eliminarPrestamoRepository(pId)
-        return JSON.stringify(datos)
+        console.log('Prestamos Service - eliminarPrestamoService')
+        return await prestamosRepository.eliminarPrestamoRepository(pId)
     } catch (error) {
-        console.log('ERROR en Service - eliminarPrestamoService')
-        console.log(error)
+        console.log('ERROR en Service - eliminarPrestamoService', error)
     }
 }
 
-exports.traerPrestamoPorIdService = async (pId) => {
-    console.log('Prestamos Service - traerPrestamoPorIdService')
-    try {
-        let datos = await prestamosRepository.traerPrestamoPorIdRepository(pId)
-        return JSON.stringify(datos)
-    } catch (error) {
-        console.log('ERROR en Service - traerPrestamoPorIdService')
-        console.log(error)
-    }
-}

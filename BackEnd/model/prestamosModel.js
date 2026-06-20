@@ -2,17 +2,13 @@ const mongoose = require('mongoose')
 
 const prestamosSchema = mongoose.Schema(
     {
-        _id: { 
-            type: Number, 
-            required: false 
-        },
         usuarioId: {
-            type: Number,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Usuarios',
             required: true
         },
         libroId: {
-            type: Number,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Libros',
             required: true
         },
@@ -35,8 +31,7 @@ const prestamosSchema = mongoose.Schema(
             default: 'Activo',
             required: true
         }
-    },
-    { strict: false, versionKey: false }
+    }
 )
 
 module.exports = mongoose.model('Prestamos', prestamosSchema, 'prestamos')

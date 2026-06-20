@@ -1,60 +1,86 @@
 const { conexionAMongo } = require('../database/conect')
 const Prestamos = require('../model/prestamosModel')
-const mongoose = require('mongoose')
+const Libros = require('../model/libros.model')
 
 conexionAMongo()
 
-async function sumarUno() {
+exports.traerTodosPrestamosRepository = async () => {
     try {
-        let contador = await Prestamos.findOneAndUpdate(
-            { contador: 'prestamos' },
-            { $inc: { valor: 1 } },
-            { returnDocument: 'after' }
-        )
-        return contador.valor
+        console.log('Prestamos Repository - traerTodosPrestamos')
+        const prestamos = await Prestamos.find()
+            //.populate('usuarioId', 'nombre apellido')
+            .populate('libroId', 'libro autor')
+        return prestamos
     } catch (error) {
-        console.log(error)
+        console.log('Error, no encontré préstamos', error)
+        throw error
     }
 }
 
-exports.traerTodosPrestamosRepository = async () => {
-    console.log('Prestamos Repository - traerTodosPrestamos')
+exports.traerPrestamoPorIdRepository = async (pId) => {
     try {
-        const prestamos = await Prestamos.find(
-            { contador: { $exists: false } }
-        )
-        .populate('usuarioId', 'nombre apellido')
-        .populate('libroId', 'titulo autor')
-        return prestamos
+    console.log('Prestamos Repository - traerPrestamoPorId')
+        const prestamo = await Prestamos.findById(pId)
+            //.populate('usuarioId', 'nombre apellido')
+            .populate('libroId', 'libro autor')
+
+            if (!prestamo) {
+            return null
+        }
+        return prestamo
     } catch (error) {
-        console.log('Error, no encontré préstamos')
-        throw Error(error)
+        console.log('ERROR en Prestamos Repository - traerPrestamoPorId', error)
+        throw error
+    }
+}
+
+exports.obtenerEstadisticasRepository = async () => {
+    try {
+        console.log('Prestamos Repository - obtenerEstadisticasRepository')
+        const hoy = new Date()
+
+        const total = await Prestamos.countDocuments()
+        const activos = await Prestamos.countDocuments({
+            estado: 'Activo',
+            fechaVencimiento: { $gte: hoy }
+        })
+        const entregados = await Prestamos.countDocuments({
+            estado: 'Devuelto'
+        })
+        const vencidos = await Prestamos.countDocuments({
+            estado: 'Activo',
+            fechaVencimiento: { $lt: hoy }
+        })
+
+        return { total, activos, entregados, vencidos }
+    } catch (error) {
+        console.log('Error en obtenerEstadisticasRepository', error)
+        throw error
     }
 }
 
 exports.crearPrestamoRepository = async (pUsuarioId, pLibroId, pFechaPrestamo, pFechaVencimiento) => {
-    console.log('Prestamos Repository - crearPrestamo')
     try {
-        let contador = await sumarUno()
-        let nuevo = await Prestamos.create({
-            _id: contador,
+        console.log('Prestamos Repository - crearPrestamo')
+        const nuevoPrestamo = await Prestamos.create({
             usuarioId: pUsuarioId,
             libroId: pLibroId,
             fechaPrestamo: pFechaPrestamo,
             fechaVencimiento: pFechaVencimiento,
             estado: 'Activo'
         })
-        return nuevo
+        await nuevoPrestamo.save()
+        return nuevoPrestamo
     } catch (error) {
-        console.log('ERROR en Prestamos Repository - crearPrestamo')
-        throw Error(error)
+        console.log('ERROR en Prestamos Repository - crearPrestamo', error)
+        throw error
     }
 }
 
 exports.devolverLibroRepository = async (pId) => {
-    console.log('Prestamos Repository - devolverLibro')
     try {
-        let prestamo = await Prestamos.findByIdAndUpdate(
+        console.log('Prestamos Repository - devolverLibro')
+        const prestamo = await Prestamos.findByIdAndUpdate(
             pId,
             {
                 $set: {
@@ -62,35 +88,34 @@ exports.devolverLibroRepository = async (pId) => {
                     fechaDevolucion: new Date()
                 }
             },
-            { returnDocument: 'after' }
+            { new: true }
         )
+
+        if (!prestamo) {
+            return null
+        }
+
         return prestamo
     } catch (error) {
-        console.log('ERROR en Prestamos Repository - devolverLibro')
-        throw Error(error)
+        console.log('ERROR en Prestamos Repository - devolverLibro', error)
+        throw error
     }
 }
 
 exports.eliminarPrestamoRepository = async (pId) => {
-    console.log('Prestamos Repository - eliminarPrestamo')
     try {
-        let prestamo = await Prestamos.findByIdAndDelete(pId)
+        console.log('Prestamos Repository - eliminarPrestamo')
+        const prestamo = await Prestamos.findByIdAndDelete(pId)
+
+        if(!prestamo){
+            return null
+        }
+
         return prestamo
     } catch (error) {
-        console.log('ERROR en Prestamos Repository - eliminarPrestamo')
-        throw Error(error)
+        console.log('ERROR en Prestamos Repository - eliminarPrestamo', error)
+        throw error
     }
 }
 
-exports.traerPrestamoPorIdRepository = async (pId) => {
-    console.log('Prestamos Repository - traerPrestamoPorId')
-    try {
-        let prestamo = await Prestamos.findById(pId)
-            .populate('usuarioId', 'nombre apellido')
-            .populate('libroId', 'titulo autor')
-        return prestamo
-    } catch (error) {
-        console.log('ERROR en Prestamos Repository - traerPrestamoPorId')
-        throw Error(error)
-    }
-}
+
