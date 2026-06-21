@@ -1,0 +1,98 @@
+import { Component, OnInit } from "@angular/core";
+
+
+// componentes
+import { headerComponente } from "../../components/header/header.component"; // importar el header
+import { BuscadorComponente } from "../../components/buscador/buscador.component"; // importar el buscador
+import { BotonComponente } from "../../components/boton/boton.component"; // importar el boton
+import { TituloComponent } from "../../components/titulo/titulo.component"; // importar titulo
+import { TagComponent } from "../../components/tags/tags.component"; // importar tags
+import { TablaComponent } from "../../components/tabla/tabla.component"; // importar tabla
+import { ModalComponent } from "../../components/modal/modal.component"; // importar modal
+
+// types e interfaces
+import { Campo } from "../../models/campo.type";
+import { TipoDato } from "../../models/TipoDato.type";
+import { FilaTabla } from "../../models/filaTabla.type";
+import { CampoSelect } from "../../models/campoSelect.interface";
+import { Categoria } from "../../models/categoria.interface";
+// services
+import { LibrosService } from "../services/libros.services";
+import { CategoriasService } from "../services/categorias.services";
+import { PrestamosService } from "../services/prestamos.services";
+@Component({
+    selector: 'app-libros',
+    standalone: true,
+    imports: [headerComponente, BuscadorComponente, BotonComponente, TituloComponent, TagComponent, TablaComponent, ModalComponent], // importas los componentess
+    templateUrl: './categorias.pages.html',
+    styleUrl: './categorias.pages.css'
+})
+
+export class CategoriasPages implements OnInit {
+    columnas = [
+        {
+            key: 'nombre',
+            label: 'Categoría'
+        },
+        {
+            key:'descripcion',
+            label: 'Descripcion'
+        }
+    ]
+    paginaActual = 1
+    cantidadTotal= 0
+        modalAbierto = false
+    CamposModal: Campo[] = [
+        {
+            tipo: 'text',
+            nombre: 'nombre',
+            label: 'Categoría',
+            placeholder: 'Novela',
+            requerido: true
+        },
+        {
+             tipo: 'text',
+        nombre: 'descripcion',
+        label: 'Descripción',
+        placeholder: 'Libros de ficción',
+        requerido: false
+        }
+    ]
+
+    constructor(private librosService: LibrosService, private categoriasService: CategoriasService, private prestamosService: PrestamosService) { } // servicio que se comunica con la API
+    
+cargarDatos() {
+    this.categoriasService.ObtenerCategorias().subscribe({
+        next: (categorias) => {
+            this.datosTablaArray = categorias.map(categoria => ({
+                _id: categoria._id,
+                nombre: categoria.nombre,
+                descripcion: categoria.descripcion ?? ''
+            }));
+            this.cantidadTotal=categorias.length
+        },
+        error: (error) => {
+            console.error(error);
+        }
+    });
+}
+guardar(datos: Record<string,TipoDato>){
+    this.categoriasService.crearCategorias(datos).subscribe({
+        next:()=>{
+            this.cargarDatos();
+            this.modalAbierto=false
+        },error:(error)=>{
+            console.log(error)
+        }
+    })
+}
+    ngOnInit() {
+        this.cargarDatos()
+    }
+    datosTablaArray: FilaTabla[] = []
+    get EjPaginado(): FilaTabla[] {
+    const indice = (this.paginaActual - 1) * 10;
+    return this.datosTablaArray.slice(indice, indice + 10);
+}
+
+}

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Categoria } from '../../models/categoria.interface';
-
+import { TipoDato } from '../../models/TipoDato.type';
 @Injectable({
     providedIn: 'root' // el servicio esta disponible globalmente
 })
@@ -15,5 +15,7 @@ export class CategoriasService {
     public ObtenerCategorias(): Observable<Categoria[]> {
         return this.http.get<Categoria[]>(this.apiUrl);
     }
-
+public crearCategorias (datos: Record<string,TipoDato>) {
+    return this.http.post(this.apiUrl,datos)
+} 
 }

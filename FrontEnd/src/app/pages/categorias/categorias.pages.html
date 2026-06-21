@@ -1,0 +1,18 @@
+<app-boton
+    [texto]="'Nueva categoría'"
+    (abrir)="modalAbierto = true">
+</app-boton>
+ <app-modal titulo="Nueva categoria"
+  [abierto]="modalAbierto" 
+  [campos]="CamposModal" 
+  (guardar)="guardar($event)"
+    (cancelar)="modalAbierto = false" />
+<app-tabla
+    [columnas]="columnas"
+    [datos]="EjPaginado"
+    [mostrarEliminar]="false"
+    [totalItems]="datosTablaArray.length"
+    [itemsPorPagina]="10"
+    [paginaActual]="paginaActual"
+    (cambioPagina)="paginaActual = $event">
+</app-tabla>
