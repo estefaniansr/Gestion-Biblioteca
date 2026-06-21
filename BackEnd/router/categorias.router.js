@@ -2,7 +2,7 @@ const express = require('express')
 const routerCategorias=express.Router();
 routerCategorias.use(express.json())
 const categoriasController=require('../controller/categorias.controller');
-const { ReturnDocument } = require('mongodb');
+
 
 //get
 routerCategorias.get('/' , categoriasController.traerTodasCategoriasController)

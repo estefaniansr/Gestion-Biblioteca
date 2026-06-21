@@ -1,7 +1,7 @@
-const {ReturnDocument} =require ('mongodb')
+
 const { conexionAMongo } = require('../database/conect')
 const Categorias=require('../model/categoriasModel')
-conexionAMongo()
+
 
 exports.traerTodasCategoriasRepository = async () => {
 

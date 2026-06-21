@@ -61,15 +61,19 @@ export class CategoriasPages implements OnInit {
     ]
 
     constructor(private librosService: LibrosService, private categoriasService: CategoriasService, private prestamosService: PrestamosService) { } // servicio que se comunica con la API
-    
+    private convertirAFilaTabla(categorias: Categoria[]): //recibe como parametro array de obj. categoria
+    FilaTabla[] //devuelve array de obj. filatabla
+     {
+    return categorias.map(categoria => ({ // recorre todos los elementos del array y devuelve un nuevo array
+        _id: categoria._id,
+        nombre: categoria.nombre,
+        descripcion: categoria.descripcion ?? '' // los signos son para indicar, si lo que esta del lado izquierdo es undefined usar lo de la derecha
+    })); // crea un nuevo objeto con esos campos
+}
 cargarDatos() {
     this.categoriasService.ObtenerCategorias().subscribe({
         next: (categorias) => {
-            this.datosTablaArray = categorias.map(categoria => ({
-                _id: categoria._id,
-                nombre: categoria.nombre,
-                descripcion: categoria.descripcion ?? ''
-            }));
+            this.datosTablaArray = this.convertirAFilaTabla(categorias);
             this.cantidadTotal=categorias.length
         },
         error: (error) => {
@@ -98,11 +102,7 @@ buscar(input: string) {
     console.log(input)
     this.categoriasService.buscarCategorias(input).subscribe({
         next: (res) => {
-            this.datosTablaArray = res.map(categoria => ({
-                _id: categoria._id,
-                nombre: categoria.nombre,
-                descripcion: categoria.descripcion ?? ''
-            }));
+           this.datosTablaArray = this.convertirAFilaTabla(res);
         },
         error: (err) => {
             console.error(err);
