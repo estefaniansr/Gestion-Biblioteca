@@ -2,11 +2,12 @@
 <app-buscador
 placeholder="Buscar categoría..."
 (valorChange)="buscar($event)"></app-buscador>
-<app-tags titulo="Categorías" [cantidad]="cantidadTotal"></app-tags>
 <app-boton
     [texto]="'Nueva categoría'"
     (abrir)="modalAbierto = true">
 </app-boton>
+<app-tags titulo="Categorías" [cantidad]="cantidadTotal"></app-tags>
+
 
  <app-modal titulo="Nueva categoria"
   [abierto]="modalAbierto" 
