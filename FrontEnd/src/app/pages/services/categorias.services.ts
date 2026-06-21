@@ -18,4 +18,12 @@ export class CategoriasService {
 public crearCategorias (datos: Record<string,TipoDato>) {
     return this.http.post(this.apiUrl,datos)
 } 
+public editarCategorias(id:string, datos : Record <string,TipoDato>){
+        return this.http.put(`${this.apiUrl}/${id}`,datos)
+}
+public buscarCategorias(input: string){
+     return this.http.get<Categoria[]>(`${this.apiUrl}/buscar`,{
+ params: { input }
+     });
+}
 }

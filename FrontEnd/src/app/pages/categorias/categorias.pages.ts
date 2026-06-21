@@ -39,6 +39,7 @@ export class CategoriasPages implements OnInit {
             label: 'Descripcion'
         }
     ]
+    activo='categorias'
     paginaActual = 1
     cantidadTotal= 0
         modalAbierto = false
@@ -85,6 +86,28 @@ guardar(datos: Record<string,TipoDato>){
             console.log(error)
         }
     })
+}
+editar(id:string,datos:Record<string,TipoDato>){
+    this.categoriasService.editarCategorias(id,datos).subscribe({
+        next:()=>this.cargarDatos(),
+        error: error=>console.log(error)
+        
+    })
+}
+buscar(input: string) {
+    console.log(input)
+    this.categoriasService.buscarCategorias(input).subscribe({
+        next: (res) => {
+            this.datosTablaArray = res.map(categoria => ({
+                _id: categoria._id,
+                nombre: categoria.nombre,
+                descripcion: categoria.descripcion ?? ''
+            }));
+        },
+        error: (err) => {
+            console.error(err);
+        }
+    });
 }
     ngOnInit() {
         this.cargarDatos()

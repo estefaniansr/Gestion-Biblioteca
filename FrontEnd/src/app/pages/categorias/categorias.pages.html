@@ -1,7 +1,13 @@
+<app-header [activo]="activo"></app-header>
+<app-buscador
+placeholder="Buscar categoría..."
+(valorChange)="buscar($event)"></app-buscador>
+<app-tags titulo="Categorías" [cantidad]="cantidadTotal"></app-tags>
 <app-boton
     [texto]="'Nueva categoría'"
     (abrir)="modalAbierto = true">
 </app-boton>
+
  <app-modal titulo="Nueva categoria"
   [abierto]="modalAbierto" 
   [campos]="CamposModal" 
@@ -14,5 +20,7 @@
     [totalItems]="datosTablaArray.length"
     [itemsPorPagina]="10"
     [paginaActual]="paginaActual"
-    (cambioPagina)="paginaActual = $event">
+    (cambioPagina)="paginaActual = $event"
+    (editar)="editar($event.id,$event.datos)">
+    
 </app-tabla>

@@ -6,6 +6,7 @@ const { ReturnDocument } = require('mongodb');
 
 //get
 routerCategorias.get('/' , categoriasController.traerTodasCategoriasController)
+routerCategorias.get('/buscar', categoriasController.buscarCategoriaController)
 //put
 routerCategorias.put('/:id', categoriasController.editarCategoriaController)
 
