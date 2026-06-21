@@ -3,9 +3,9 @@
     <div class="cont">
         <app-titulo [titulo]="'Libros'" [subtitulo]="'Gestiona y organiza tus libros.'"></app-titulo>
         <div class="acciones">
-            <app-filter [opciones]="opcionFilter" (seleccionar)="onFiltrar($event)" />
 
-            <app-buscador placeholder="Buscar libros por nombre, autor o categorías..." (valorChange)="Buscador($event)" />
+            <app-buscador placeholder="Buscar libros por nombre, autor o categorías..."
+                (valorChange)="Buscador($event)" />
 
             <app-boton [texto]="'Nuevo libro'" (abrir)="modalAbierto = true"></app-boton>
         </div>
@@ -43,7 +43,7 @@
             </svg>
 
         </app-tags>
-        <app-tags titulo="Sin prestar no func" [cantidad]="cantidad">
+        <app-tags titulo="Devueltos" [cantidad]="totalDevueltos">
             <svg width="40" height="40" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_11_625)">
                     <mask id="mask0_11_625" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0"
@@ -71,7 +71,7 @@
             </svg>
 
         </app-tags>
-        <app-tags titulo="Prestados no func" [cantidad]="cantidad">
+        <app-tags titulo="Prestados" [cantidad]="totalPrestados">
             <svg width="40" height="40" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_11_646)">
                     <mask id="mask0_11_646" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0"
@@ -100,7 +100,7 @@
             </svg>
 
         </app-tags>
-        <app-tags titulo="Categorías  no func" [cantidad]="cantidad">
+        <app-tags titulo="Categorías" [cantidad]="cantidadTotalCategoria">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
                 class="icon-header movilNo">
                 <g clip-path="url(#clip0_4418_169837)">
@@ -123,7 +123,8 @@
 
     <app-tabla [columnas]="columnas" [datos]="EjPaginado" [mostrarEliminar]="true" [totalItems]="datosTablaArray.length"
         [itemsPorPagina]="10" [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event"
-        (editar)="Editar($event['id'], $event['datos'])" (eliminar)="Eliminar($event)" [camposBloqueados]="['libro']">
+        (editar)="Editar($event['id'], $event['datos'])" (eliminar)="Eliminar($event)"
+        [camposBloqueados]="['categoria']">
     </app-tabla>
 
 

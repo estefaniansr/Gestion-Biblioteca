@@ -12,3 +12,4 @@ module.exports={routerCategorias}
 routerCategorias.post('/', categoriasController.crearCategoriaController)
 //delete
 routerCategorias.delete('/:id',categoriasController.eliminarCategoriaController)
+

@@ -13,7 +13,7 @@ export class LibrosService {
 
     constructor(private http: HttpClient) { }  // inyecta HttpClient para realizar peticiones HTTP al back
 
-    ObtenerLibros(): Observable<FilaTabla[]> {
+    public ObtenerLibros(): Observable<FilaTabla[]> {
         /*
         * Observable -> flujo de datos asincronicos
         * filaTabla[] -> devuelve un array de filas
@@ -22,17 +22,17 @@ export class LibrosService {
         return this.http.get<FilaTabla[]>(this.apiUrl);
 
     }
-    buscarLibro(input: string) {
+    public buscarLibro(input: string) {
         return this.http.get<FilaTabla[]>(`${this.apiUrl}/buscar`, {
             params: { input } // convierte el input en query string
         });
     }
 
-    CrearLibro(datos: Record<string, TipoDato>) { // POST -> crea un nuevo libro
+    public CrearLibro(datos: Record<string, TipoDato>) { // POST -> crea un nuevo libro
         return this.http.post(this.apiUrl, datos);
     }
 
-    editarLibro(id: string, datos: Record<string, TipoDato>) {
+    public editarLibro(id: string, datos: Record<string, TipoDato>) {
 
         return this.http.put(`${this.apiUrl}/${id}`, datos)
         /**
@@ -42,7 +42,7 @@ export class LibrosService {
     }
 
 
-    EliminarLibro(id: string) { // DELETE -> elimina un libro
+    public EliminarLibro(id: string) { // DELETE -> elimina un libro
         return this.http.delete(`${this.apiUrl}/${id}`);
     }
 }

@@ -1,4 +1,5 @@
 const categoriasService = require('../service/categorias.service')
+
 exports.traerTodasCategoriasController = async (req, res) => {
     try {
         console.log("controller - traerTodasCategoriasController")
@@ -69,4 +70,5 @@ exports.buscarCategoriaController = async (req,res) =>{
             message: "error al buscar categoría"
         })
     }
+
 }

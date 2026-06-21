@@ -1,17 +1,20 @@
+
 const categoriasRepository= require ('../repository/categorias.repository')
 exports.traerTodasCategoriasService = async () =>{
     try {
     console.log('SERVICE - traerTodasCategoriasService')
     return await categoriasRepository.traerTodasCategoriasRepository()    
+
     } catch (error) {
         console.log("ERROR SERVICE - traerTodasCategoriasService")
         throw Error("ERROR SERVICE - traerTodasCategoriasService")
     }
+
 }
 exports.editarCategoriaService = async (id,datos)=>{
 try {
     console.log(`Service editarCategoriaService`)
-    return await categoriasRepository.EditarCategoriaRepository(id,datos)
+    return await categoriasRepository.editarCategoriaRepository(id,datos)
 } catch (error) {
     console.log(`Error en editarCategoriaService ${error}`)
 }
@@ -43,4 +46,5 @@ exports.buscarCategoriaService =async (input) =>{
         console.error('ERROR en Service BuscarCategoriaService')
         console.error(error)
     }
+
 }

@@ -1,9 +1,17 @@
+
 const {ReturnDocument} =require ('mongodb')
 const { conexionAMongo } = require('../database/conect')
 
 const Categorias=require('../model/categoriasModel')
 conexionAMongo()
-exports.traerTodasCategoriasRepository = async ()=>{
+
+const { ReturnDocument } = require('mongodb')
+const { conexionAMongo } = require('../database/conect')
+
+const Categorias = require('../model/categorias.model')
+
+exports.traerTodasCategoriasRepository = async () => {
+
     console.log("Entrando a MONGO DB REPO - traeTodasCategoriasRepository")
     try {
         const categorias = await Categorias.find();
@@ -15,7 +23,7 @@ exports.traerTodasCategoriasRepository = async ()=>{
         
     }
 }
-exports.EditarCategoriaRepository=async (id,datos)=>{
+exports.editarCategoriaRepository=async (id,datos)=>{
 console.log(`Se va a editar el libro con Id: ${id}`)
 try {
     const categoriaActualizada = await Categorias.findByIdAndUpdate(id,datos,{ new : true}) 
@@ -24,7 +32,7 @@ if (!categoriaActualizada) {
 }
 return categoriaActualizada;
 } catch (error) {
-    console.log(`Error en EditarCategoriaRepository ${error}`)
+    console.log(`Error en editarCategoriaRepository ${error}`)
 }
 }
 exports.crearCategoriaRepository = async (datos)=>{
@@ -70,5 +78,8 @@ exports.buscarCategoriaRepository = async (input) =>{
     } catch (error) {
           console.log("error no se pudo buscar la categoria")
         throw Error(error)
+
+
+
     }
 }
