@@ -20,7 +20,7 @@ exports.obtenerLibrosRepository = async () => {
 
         console.error('Error, no encontre libros')
 
-        throw Error(error) // lanza el err para que pueda manejarse en otras capas
+        throw Error(error) // lanza el err para que pueda manejarse en otras capas, corta le ejecucion
     }
 }
 

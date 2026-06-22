@@ -19,9 +19,8 @@ export const routes: Routes = [
     //     path: 'prestamos',
     //     component: PrestamosPages
     // },
-      {
-        path: '',
-        redirectTo: 'libros',
-        pathMatch: 'full'
+    {
+        path: '**', // si es != a algun componente redirecciona
+        redirectTo: 'libros', // redirecciona a libros
     }
 ];

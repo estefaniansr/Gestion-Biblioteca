@@ -20,6 +20,14 @@ const { routerLibros } = require('./router/libros.router')
 
 app.use('/libros', routerLibros)
 
+// categorias
+const { routerCategorias } = require('./router/categorias.router')
+app.use('/categorias', routerCategorias)
+
+// prestamos
+const { routerPrestamos } = require('./router/prestamos.router')
+app.use('/prestamos', routerPrestamos)
+
 // server
 app.get('/', (req, res) => {
     res.status(200)
