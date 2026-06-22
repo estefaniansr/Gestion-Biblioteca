@@ -35,8 +35,7 @@ export class UsuariosComponent implements OnInit {
 
   usuariosLLamados:Usuario[] = []
 
-  usuariosTabla: any[] = [
-  ];
+  usuariosTabla: Usuario[] = [];
 
   titulo = 'Usuarios'
   tituloModal = ''
@@ -50,6 +49,7 @@ export class UsuariosComponent implements OnInit {
     email: '',
     telefono: 0,
   }
+
   modalBorrarAbierto = false
   usuarioFiltrado?:Usuario
   cartel = false
@@ -75,14 +75,6 @@ export class UsuariosComponent implements OnInit {
 
     CamposModalEditar: CampoInput[] = [ // los campos que van al formulario del modal, editables
     { tipo: 'text', nombre: 'Nombre', label: 'Nombre', placeholder: 'Juan', requerido: true },
-  ];
-
-  CamposModalBorrar: any[] = [ // los campos que van al formulario del modal, editables
-    'hola'
-  ];
-
-  CamposCard: Campo[] = [ // campos que van cuandoe editas las card
-    { tipo: 'text', nombre: 'titulo', label: 'Nombre', requerido: true },
   ];
 
   async actualizar(){
