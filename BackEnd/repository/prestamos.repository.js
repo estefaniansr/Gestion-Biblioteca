@@ -6,7 +6,7 @@ exports.traerTodosPrestamosRepository = async () => {
     try {
         console.log('Prestamos Repository - traerTodosPrestamos')
         const prestamos = await Prestamos.find()
-            //.populate('usuarioId', 'nombre apellido')
+            .populate('usuarioId', 'nombre apellido')
             .populate('libroId', 'libro autor')
         return prestamos
     } catch (error) {
@@ -19,7 +19,7 @@ exports.traerPrestamoPorIdRepository = async (pId) => {
     try {
     console.log('Prestamos Repository - traerPrestamoPorId')
         const prestamo = await Prestamos.findById(pId)
-            //.populate('usuarioId', 'nombre apellido')
+            .populate('usuarioId', 'nombre apellido')
             .populate('libroId', 'libro autor')
 
             if (!prestamo) {

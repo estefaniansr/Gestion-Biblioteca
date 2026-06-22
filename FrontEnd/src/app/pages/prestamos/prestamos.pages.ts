@@ -154,6 +154,7 @@ export class PrestamosPages implements OnInit {
     this.http.get<any[]>('http://localhost:3000/usuarios').subscribe({
         next: (data) => {
             this.usuarios = data
+            this.actualizarCamposModal()
         },
         error: (err) => {
             console.error('Error al cargar usuarios', err)
@@ -165,6 +166,7 @@ cargarLibros() {
     this.http.get<any[]>('http://localhost:3000/libros').subscribe({
         next: (data) => {
             this.libros = data
+            this.actualizarCamposModal()
         },
         error: (err) => {
             console.error('Error al cargar libros', err)
@@ -186,8 +188,9 @@ Guardar(datos: Record<string, any>) {
     })
 }
 
-get CamposModal(): Campo[] {
-    return [
+actualizarCamposModal() {
+    if (this.usuarios.length === 0 || this.libros.length === 0) return
+    this.CamposModal = [
         {
             tipo: 'select',
             nombre: 'usuarioId',
@@ -210,4 +213,6 @@ get CamposModal(): Campo[] {
         }
     ]
 }
+
+CamposModal: Campo[] = []
 }
