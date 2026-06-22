@@ -61,7 +61,7 @@
   </div>
 
   <app-tabla [columnas]="columnasUsuarios" [datos]="usuariosTabla" [mostrarEliminar]="true" [totalItems]="usuariosTabla.length" [itemsPorPagina]="10"
-    [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event" (editar)="editarUsuario($event)" (eliminar)="eliminarUsuarioBoton($event)">
+    [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event" (editar)="editarUsuario($event)" (eliminar)="eliminarUsuarioBoton($event)" [camposBloqueados]="['DNI']">
   </app-tabla>
 
 
