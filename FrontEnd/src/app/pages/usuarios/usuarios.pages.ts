@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { headerComponente } from "../../components/header/header.component"; // importar el header
 import { BuscadorComponente } from "../../components/buscador/buscador.component"; // importar el buscador
 import { BotonComponente } from "../../components/boton/boton.component"; // importar el boton
-import { FilterComponent } from "../../components/filter/filter.component"; // importar filter
 import { TituloComponent } from "../../components/titulo/titulo.component"; // importar titulo
 import { TagComponent } from "../../components/tags/tags.component"; // importar tags
 import { TablaComponent } from "../../components/tabla/tabla.component"; // importar tabla
@@ -19,7 +18,7 @@ import { UsuariosService } from '../services/usuarios.services';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [headerComponente, ModalComponent, BuscadorComponente, TituloComponent, FilterComponent, BotonComponente, TagComponent, TablaComponent],
+  imports: [headerComponente, ModalComponent, BuscadorComponente, TituloComponent, BotonComponente, TagComponent, TablaComponent],
   templateUrl: './usuarios.pages.html',
   styleUrl: './usuarios.pages.css'
 })
