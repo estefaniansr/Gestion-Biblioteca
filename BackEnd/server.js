@@ -6,15 +6,18 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-const HOSTNAME = process.env.HOSTNAME
+const HOST = process.env.HOST
 
 const PORT = process.env.PORT
 
-const { routerUsuarios } = require('./router/usuarios.router')
+const {routerUsuarios} = require('./router/usuarios.router')
+
+
 
 app.use(cors())
 
 app.use('/usuarios', routerUsuarios)
+
 
 const { routerLibros } = require('./router/libros.router')
 
@@ -34,6 +37,6 @@ app.get('/', (req, res) => {
     res.send(`<h1 style="color: green">El servidor esta funcionando, por ahora</h1>`)
 })
 
-app.listen(PORT, HOSTNAME, (req, res) => {
-    console.log(`Servidor express corriendo en http://${HOSTNAME}:${PORT}`)
+app.listen(PORT, HOST, (req, res) => {
+    console.log(`Servidor express corriendo en http://${HOST}:${PORT}`)
 })

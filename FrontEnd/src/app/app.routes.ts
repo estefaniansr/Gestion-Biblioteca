@@ -15,6 +15,12 @@ export const routes: Routes = [
         path: 'usuarios',
         component: UsuariosComponent
         },
+        {
+    path: 'categorias',
+    loadComponent: () =>
+        import('./pages/categorias/categorias.pages')
+            .then(m => m.CategoriasPages)
+},
     // {
     //     path: 'prestamos',
     //     component: PrestamosPages
