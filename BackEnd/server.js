@@ -1,5 +1,8 @@
 const express = require('express')
 const dotenv = require('dotenv').config()
+
+const {conexionAMongo} = require('./database/conect')
+
 const cors = require('cors')
 
 const app = express()
@@ -29,6 +32,8 @@ app.get('/', (req, res) => {
     res.status(200)
     res.send(`<h1 style="color: green">El servidor esta funcionando, por ahora</h1>`)
 })
+
+conexionAMongo()
 
 app.listen(PORT, HOST, (req, res) => {
     console.log(`Servidor express corriendo en http://${HOST}:${PORT}`)

@@ -2,8 +2,6 @@ const { conexionAMongo } = require('../database/conect')
 const Prestamos = require('../model/prestamosModel')
 const Libros = require('../model/libros.model')
 
-conexionAMongo()
-
 exports.traerTodosPrestamosRepository = async () => {
     try {
         console.log('Prestamos Repository - traerTodosPrestamos')
