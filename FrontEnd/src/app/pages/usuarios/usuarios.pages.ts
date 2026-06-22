@@ -41,8 +41,8 @@ export class UsuariosComponent implements OnInit {
 
   titulo = 'Usuarios'
   tituloModal = ''
-  subtitulo = 'nada x ahora'
-  cantidadUsuarios = this.usuariosTabla.length
+  subtitulo = 'Crear, buscar, editar y eliminar usuarios'
+  cantidadUsuarios = 0
   datosdeModal:Usuario = {
     _id: '0',
     nombre: '',
@@ -86,11 +86,6 @@ export class UsuariosComponent implements OnInit {
     { tipo: 'text', nombre: 'titulo', label: 'Nombre', requerido: true },
   ];
 
-  async probandoCosas(){
-      this.usuariosLLamados = await this.usuarioService.obtenerUsuarios()
-      this.usuariosTabla = this.usuariosLLamados
-  }
-
   async actualizar(){
     this.usuariosTabla = []
     this.usuariosLLamados = []
@@ -98,6 +93,8 @@ export class UsuariosComponent implements OnInit {
     this.usuariosLLamados = await this.usuarioService.obtenerUsuarios()
 
     this.usuariosTabla = this.usuariosLLamados
+
+    this.cantidadUsuarios = this.usuariosLLamados.length
   }
 
 async buscador(input:any) {

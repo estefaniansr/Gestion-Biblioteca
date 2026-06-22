@@ -2,15 +2,10 @@
     <!-- Pasas en [activo] el valor de TS  activo (linea 27) y el cambioTab genera un evento-->
 </app-header>
 
-<button (click)="probandoCosas()">Probar MODAL</button>
-
   <div class="cont">
     <app-titulo [titulo]="titulo" [subtitulo]="subtitulo"></app-titulo>
     <!-- Pasa los @Input del componente titulo y entre "el nombre" -->
     <div class="acciones">
-      <app-filter [opciones]="['nombre', 'apellido', 'DNI', 'email', 'telefono']" (valorChange)="buscador($event)">
-
-      </app-filter>
 
       <app-buscador placeholder="{{filtroSeleccionado}}" (valorChange)="filtrado($event)"></app-buscador>
 

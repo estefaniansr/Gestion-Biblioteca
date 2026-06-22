@@ -75,7 +75,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     cargarDatos() {
         this.librosService.ObtenerLibros().subscribe({
             next: (libros) => {
-                console.log(libros);
+                // console.log(libros);
                 this.datosTablaArray = libros
                 this.cantidadTotal = libros.length
             },
@@ -88,7 +88,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     cargarPrestados() {
         this.prestamosService.ObtenerPrestamos().subscribe({
             next: (prestamo) => {
-                console.log(prestamo)
+                // console.log(prestamo)
                 const activo = prestamo.filter(
                     p => p.estado === 'Activo'
                 )
@@ -100,7 +100,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     cargarDevueltos() {
         this.prestamosService.ObtenerPrestamos().subscribe({
             next: (prestamo) => {
-                console.log(prestamo)
+                // console.log(prestamo)
                 const activo = prestamo.filter(
                     p => p.estado === 'Devuelto'
                 )
@@ -112,7 +112,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     cargarCategorias() {
         this.categoriasService.ObtenerCategorias().subscribe({
             next: (cate) => {
-                console.log(cate)
+                // console.log(cate)
                 this.cantidadTotalCategoria = cate.length
 
                 const campoCategoria = this.CamposModal.find( // crea un const que busca en el campo modal el nombre categoria
@@ -143,7 +143,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     }
 
     GuardarModal() { // guarda los cambios del modal
-        console.log('Libro guardado');
+        // console.log('Libro guardado');
     }
 
     // acciones 
@@ -151,7 +151,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     Guardar(datos: Record<string, TipoDato>) {
         this.librosService.CrearLibro(datos).subscribe({ // libroServices tiene el metodo CrearLibro que pasa por argumentos datos y ejecuta subscribe escucha la respuesta del http
             next: (res) => {  // se ejecuta cuando el servidor da ok
-                console.log('Libro creado', res) // depurar
+                // console.log('Libro creado', res) // depurar
                 this.cargarDatos() //  recarga la tabla
                 this.modalAbierto = false // cierra el modal
             },
@@ -166,7 +166,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     Eliminar(id: string) {
         this.librosService.EliminarLibro(id).subscribe({
             next: (res) => {
-                console.log(res)
+                // console.log(res)
                 this.cargarDatos()
             },
             error: (err: string) => {
@@ -186,7 +186,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
 
             next: (res) => { // se ejecuta cuando el backend responde correctamente
 
-                console.log('Libro editado', res)
+                // console.log('Libro editado', res)
 
                 this.cargarDatos() // llama al metodo recargar datos
 
@@ -205,7 +205,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     Buscador(input: string) {
         this.librosService.buscarLibro(input).subscribe({
             next: (res) => {
-                console.log(res)
+                // console.log(res)
                 this.datosTablaArray = res
             }, error: (err: string) => {
                 console.log(err)
