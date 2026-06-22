@@ -10,12 +10,11 @@ const HOST = '127.0.0.1'
 const PORT = process.env.PORT
 
 const { routerUsuarios } = require('./router/usuarios.router')
+const { routerLibros } = require('./router/libros.router')
 
 app.use('/usuarios', routerUsuarios)
 
-//const { routerLibros } = require('./router/libros.router')
-
-//app.use('/libros', routerLibros)
+app.use('/libros', routerLibros)
 
 // categorias
 const { routerCategorias } = require('./router/categorias.router')
