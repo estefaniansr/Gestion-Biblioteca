@@ -6,14 +6,12 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-const HOSTNAME = 'localhost'
+const HOST = '127.0.0.1'
 const PORT = process.env.PORT
 
 const { routerUsuarios } = require('./router/usuarios.router')
-const { routerPrestamos } = require('./router/prestamos.router')
 
 app.use('/usuarios', routerUsuarios)
-app.use('/prestamos', routerPrestamos)
 
 //const { routerLibros } = require('./router/libros.router')
 

@@ -1,7 +1,7 @@
 const { ReturnDocument } = require('mongodb')
 const { conexionAMongo } = require('../database/conect')
 
-const Usuarios = require('../model/usuariosModel')
+const Usuarios = require('../model/usuarios.model')
 const { separador } = require('../utils/separador')
 
 conexionAMongo()
