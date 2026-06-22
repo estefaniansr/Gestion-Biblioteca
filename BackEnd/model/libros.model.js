@@ -1,25 +1,25 @@
 const mongoose = require('mongoose')
 
 
-const librosSchema = mongoose.Schema({ // collecion o schema de libros
+const librosSchema = mongoose.Schema({ 
 
     libro: {
         type: String,
-        required: true // obligatorio
+        required: true
     },
     autor: {
         type: String,
         required: true,
 
     },
-    categoria: { // array de categorias
+    categoria: { 
         type: [String],
         required: true
     },
     fechaCreacion: {
         type: Date,
         required: true,
-        default: Date.now // x defecto fecha de hoy
+        default: Date.now 
     }
 })
 

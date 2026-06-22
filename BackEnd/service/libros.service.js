@@ -1,11 +1,11 @@
 const librosRepository = require('../repository/libros.repository')
 
-exports.obtenerLibrosService = async () => { // exporta funcion asyncronica
+exports.obtenerLibrosService = async () => { 
 
-    try { // manejo err
+    try {
         console.log('Service traerTodosUsuariosService')
-        let libros = await librosRepository.obtenerLibrosRepository() // espera respuesta y ejecuta obtenerLibrosRepository
-        return JSON.stringify(libros) // JSON.stringify -> transfmra en objeto a json
+        let libros = await librosRepository.obtenerLibrosRepository()
+        return JSON.stringify(libros) 
     }
 
     catch (err) {

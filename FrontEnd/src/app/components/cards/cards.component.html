@@ -1,13 +1,11 @@
 <div class="card">
     <div class="card-info">
-        <span class="card-titulo">{{ titulo }}</span> <!--Muestra el titulo del ts, que pasa el padre-->
+        <span class="card-titulo">{{ titulo }}</span>
         <span class="card-sub">{{ cantLibros }} {{ cantLibros === 1 ? 'libro' : 'libros' }}</span>
-        <!-- Cantidad de libros, que lo pasas al padre en ts, y un if si es mas de 1 libro se escriba cantidad libro sino libros -->
     </div>
 
     <div class="card-acciones">
-        <button class="btn-accion" title="Editar" (click)="abrirModal()">  
-            <!--Boton que al hacer click llama al metodo abrirModal-->
+        <button class="btn-accion" title="Editar" (click)="abrirModal()">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none">
                 <g clip-path="url(#clip0_4418_9713)">
                     <path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke="var(--texto)"
@@ -27,7 +25,6 @@
             </svg>
         </button>
         <button class="btn-accion" title="Eliminar" (click)="onEliminar()">
-            <!--Boton que al hacer click llama al metodo onEliminar-->
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none">
                 <g clip-path="url(#clip0_4418_9808)">
                     <path
@@ -55,4 +52,3 @@
 
 <app-modal titulo="Editar colección" [abierto]="modalAbierto" [campos]="campos" (guardar)="confirmar($event)"
     (cancelar)="cerrarModal()" />
-<!-- Componente app-modal que pasas el titulo, [abierto] -> controla si el modal esta visible, [campos] -> campos que se muestran en el form, (guardar) -> recibe los datos editados desde el modal y ejecuta el metodo confirmar del padre (cards), (cerrar) -> ejecuta el metodo cerrar -->

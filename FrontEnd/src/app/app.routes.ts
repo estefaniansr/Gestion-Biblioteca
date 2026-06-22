@@ -6,10 +6,10 @@ import { LibrosPages } from './pages/libros/libros.pages';
 
 export const routes: Routes = [
     {
-        path: 'libros', // url
-        loadComponent: () =>  // carga el componente cuando entra a la ruta
-            import('./pages/libros/libros.pages')// importa el archivo
-                .then(m => m.LibrosPages) // obtiene y devuelve el componente 
+        path: 'libros',
+        loadComponent: () =>
+            import('./pages/libros/libros.pages')
+                .then(m => m.LibrosPages)
     },
     // {
     //     path: 'usuarios',
@@ -20,7 +20,7 @@ export const routes: Routes = [
     //     component: PrestamosPages
     // },
     {
-        path: '**', // si es != a algun componente redirecciona
-        redirectTo: 'libros', // redirecciona a libros
+        path: '**',
+        redirectTo: 'libros',
     }
 ];

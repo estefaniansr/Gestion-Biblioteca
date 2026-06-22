@@ -25,19 +25,19 @@ import { PrestamosService } from "../services/prestamos.services";
 @Component({
     selector: 'app-libros',
     standalone: true,
-    imports: [headerComponente, BuscadorComponente, BotonComponente, TituloComponent, TagComponent, TablaComponent, ModalComponent], // importas los componentess
+    imports: [headerComponente, BuscadorComponente, BotonComponente, TituloComponent, TagComponent, TablaComponent, ModalComponent],
     templateUrl: './libros.pages.html',
     styleUrl: './libros.pages.css'
 })
 
-export class LibrosPages implements OnInit { // implementa la interfaz onInit de angular para que poder usar sus metodos
-    // inicializacion 
+export class LibrosPages implements OnInit {
+    // implementa la interfaz onInit de angular para que poder usar sus metodos
 
-    activo = 'libros'// estado general de la app
-    textoBusqueda = '' // guarda lo que escribe el user
-    modalAbierto = false // el modal esta cerrado x defecto
-    filtroSeleccionado = '' // el filtro seleccionado esta vacio x defecto
-    paginaActual = 1 // la pag actual esta x defecto en la 1
+    activo = 'libros'
+    textoBusqueda = ''
+    modalAbierto = false
+    filtroSeleccionado = ''
+    paginaActual = 1
     cantidadTotal = 2
     totalPrestados = 0
     totalDevueltos = 100
@@ -49,7 +49,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
         { key: 'categoria', label: 'Categoría' },
     ]
 
-    CamposModal: Campo[] = [ // los campos que van al formulario del modal, editables
+    CamposModal: Campo[] = [
         { tipo: 'text', nombre: 'libro', label: 'Nombre', placeholder: 'El principito', requerido: true },
         { tipo: 'text', nombre: 'autor', label: 'Autor', placeholder: 'Antoine de Saint-Exupéry', requerido: true },
         {
@@ -70,7 +70,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
         'No func'
     ]
 
-    constructor(private librosService: LibrosService, private categoriasService: CategoriasService, private prestamosService: PrestamosService) { } // servicio que se comunica con la API
+    constructor(private librosService: LibrosService, private categoriasService: CategoriasService, private prestamosService: PrestamosService) { } // servicio que se comunica con el service
 
     cargarDatos() {
         this.librosService.ObtenerLibros().subscribe({
@@ -115,11 +115,11 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
                 console.log(cate)
                 this.cantidadTotalCategoria = cate.length
 
-                const campoCategoria = this.CamposModal.find( // crea un const que busca en el campo modal el nombre categoria
+                const campoCategoria = this.CamposModal.find(
                     campo => campo.nombre === 'categoria'
-                ) as CampoSelect // find devuelve campoSelect
+                ) as CampoSelect
 
-                if (campoCategoria) { // si existe
+                if (campoCategoria) {
                     campoCategoria.opciones = cate.map(categoria => ({
                         valor: categoria.nombre,
                         texto: categoria.nombre
@@ -129,7 +129,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
         })
     }
 
-    ngOnInit(): void { // se ejecuta automaticamente al cargar el componente
+    ngOnInit(): void { //  cuando carga el componente
         this.cargarDatos()
         this.cargarCategorias()
         this.cargarPrestados()
@@ -137,25 +137,23 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
 
     }
 
-    // modal
-    abrirModal() { // abre el modal
+    abrirModal() {
         this.modalAbierto = true
     }
 
-    GuardarModal() { // guarda los cambios del modal
+    GuardarModal() {
         console.log('Libro guardado');
     }
 
-    // acciones 
 
     Guardar(datos: Record<string, TipoDato>) {
-        this.librosService.CrearLibro(datos).subscribe({ // libroServices tiene el metodo CrearLibro que pasa por argumentos datos y ejecuta subscribe escucha la respuesta del http
-            next: (res) => {  // se ejecuta cuando el servidor da ok
-                console.log('Libro creado', res) // depurar
-                this.cargarDatos() //  recarga la tabla
-                this.modalAbierto = false // cierra el modal
+        this.librosService.CrearLibro(datos).subscribe({
+            next: (res) => {
+                console.log('Libro creado', res)
+                this.cargarDatos()
+                this.modalAbierto = false
             },
-            error: (err: string) => { // si tira error el server
+            error: (err: string) => {
                 console.log("Error al crear el libro", err)
             }
         }
@@ -179,16 +177,12 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     Editar(id: string, datos: Record<string, TipoDato>) {
 
         this.librosService.editarLibro(id, datos).subscribe({
-            /*
-            * llama al servicio que hace la peticion put al back
-            * se envia el id del libro y los nuevos datos actualizados
-             */
-
-            next: (res) => { // se ejecuta cuando el backend responde correctamente
+          
+            next: (res) => { 
 
                 console.log('Libro editado', res)
 
-                this.cargarDatos() // llama al metodo recargar datos
+                this.cargarDatos() 
 
             },
 
@@ -214,24 +208,16 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     }
 
 
-
-    // filtrado
-
-
-    onFiltrar(valor: string) { // pasa un valor x argumento
-        this.filtroSeleccionado = valor // y el filtro seleccionado se le pone el valor del argumento
+    onFiltrar(valor: string) { 
+        this.filtroSeleccionado = valor 
     }
 
 
-
-
-    // paginas
-
     datosTablaArray: FilaTabla[] = []
 
-    get EjPaginado(): FilaTabla[] { //datos paginados, maximo 10
-        const indice = (this.paginaActual - 1) * 10; //  calcula el indice segun la pag igual (-1 asi es 0) * 10
-        return this.datosTablaArray.slice(indice, indice + 10); // recorre el array y devuelve solo 10 elementos, desde indice hasta indice + 10
+    get EjPaginado(): FilaTabla[] { 
+        const indice = (this.paginaActual - 1) * 10; 
+        return this.datosTablaArray.slice(indice, indice + 10); 
     }
 
 }

@@ -2,28 +2,28 @@ import { Component, Input, Output, EventEmitter } from '@angular/core'
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'app-header', // nombre de la etiqueta html <app-header />
-    standalone: true, // no necesita declarse
-    templateUrl: './header.component.html', // html que contiene la vista
+    selector: 'app-header',
+    standalone: true,
+    templateUrl: './header.component.html',
     imports: [RouterLink],
-    styleUrl: './header.component.css' // css que tiene el estilo
+    styleUrl: './header.component.css'
 })
 
-export class headerComponente { // clase principal
-    @Input() activo: string = '' // permite recibir datos desde el componente padre
-    oscuro: boolean = false // tema actual
+export class headerComponente {
+    @Input() activo: string = ''
+    oscuro: boolean = false
 
     // Inyeccion del servicio Router para navegar entre páginas
     constructor(private router: Router) { }
 
-    cambiarTema() { // funcion
-        this.oscuro = !this.oscuro // cambia de true a false
+    cambiarTema() {
+        this.oscuro = !this.oscuro
 
-        document.body.classList.toggle('dark') // agrega la clase dark
+        document.body.classList.toggle('dark')
     }
 
 
-    seleccionarTab(tab: string) { // seleccionar tab, es un string
-        this.router.navigate([tab]) // Navega hacia la ruta indicada
+    seleccionarTab(tab: string) {
+        this.router.navigate([tab])
     }
 }

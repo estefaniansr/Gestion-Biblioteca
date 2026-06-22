@@ -6,17 +6,14 @@ const cors = require('cors')
 const app = express()
 app.use(cors())
 app.use(express.json())
-conexionAMongo('GestionBiblioteca') // ejecuta la conexion a la bd libros
+conexionAMongo('GestionBiblioteca')
 
 
 const HOSTNAME = process.env.HOSTNAME
 
 const PORT = process.env.PORT
 
-// usuarios
 
-// prueba
-// require('./insertPrueba/libros.insert')
 const { routerUsuarios } = require('./router/usuarios.router')
 
 app.use('/usuarios', routerUsuarios)
