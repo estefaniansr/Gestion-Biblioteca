@@ -24,9 +24,8 @@ export const routes: Routes = [
         path: 'categorias',
         component:CategoriasPages
        },
-      {
-        path: '',
+        {
+        path: '**',
         redirectTo: 'libros',
-        pathMatch: 'full'
-    }
+        }
 ];
