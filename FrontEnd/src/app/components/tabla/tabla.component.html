@@ -21,23 +21,30 @@
 
             <tr>
                 @for (columnas of columnasLimitadas(); track columnas) {
-
                 <td class="celda">
 
                     <div class="celda-contenido">
 
                         @if (filaEditando !== fila) {
                         {{ fila[columnas.key] }}
+                        } @else {
+
+                        @if (columnas.key === 'categoria') {
+                        <select [(ngModel)]="filaEditando[columnas.key]" class="input-edicion">
+                            @for (op of opciones; track op.valor) {
+                            <option [value]="op.valor">{{ op.texto }}</option>
+                            }
+                        </select>
+                        } @else {
+                        <input [(ngModel)]="filaEditando[columnas.key]" [disabled]="esCampoBloqueado(columnas.key)"
+                            class="input-edicion" />
                         }
 
-                        @else {
-                        <input [(ngModel)]="filaEditando![columnas.key]" [disabled]="esCampoBloqueado(columnas.key)"
-                            (ngModelChange)="filaEditando![columnas.key] = $event" class="input-edicion" />
                         }
+
                     </div>
 
-                </td>
-                }
+                </td> }
 
                 <td class="td-acciones">
 

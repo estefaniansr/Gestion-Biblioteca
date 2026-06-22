@@ -123,8 +123,7 @@
 
     <app-tabla [columnas]="columnas" [datos]="EjPaginado" [mostrarEliminar]="true" [totalItems]="datosTablaArray.length"
         [itemsPorPagina]="10" [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event"
-        (editar)="Editar($event['id'], $event['datos'])" (eliminar)="Eliminar($event)"
-        [camposBloqueados]="['categoria']">
+        (editar)="Editar($event['id'], $event['datos'])" (eliminar)="Eliminar($event)" [opciones]="opcionesLibros">
     </app-tabla>
 
 

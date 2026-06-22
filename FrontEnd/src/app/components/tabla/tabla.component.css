@@ -181,6 +181,12 @@ td.td-acciones .acciones-grupo {
     outline: none;
 }
 
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
 .input-edicion:focus {
     box-shadow: var(--box-shadow);
     border-color: var(--texto-gris);

@@ -34,6 +34,8 @@ export class LibrosPages implements OnInit {
     // implementa la interfaz onInit de angular para que poder usar sus metodos
 
     activo = 'libros'
+    opciones = [];
+    opcionesLibros: { valor: string; texto: string }[] = [];
     textoBusqueda = ''
     modalAbierto = false
     filtroSeleccionado = ''
@@ -115,16 +117,19 @@ export class LibrosPages implements OnInit {
                 console.log(cate)
                 this.cantidadTotalCategoria = cate.length
 
+                const opciones = cate.map(categoria => ({
+                    valor: categoria.nombre,
+                    texto: categoria.nombre
+                }))
+
                 const campoCategoria = this.CamposModal.find(
                     campo => campo.nombre === 'categoria'
                 ) as CampoSelect
 
                 if (campoCategoria) {
-                    campoCategoria.opciones = cate.map(categoria => ({
-                        valor: categoria.nombre,
-                        texto: categoria.nombre
-                    }))
+                    campoCategoria.opciones = opciones;
                 }
+                this.opcionesLibros = opciones;
             }, error: (e) => console.error(e)
         })
     }
@@ -176,13 +181,17 @@ export class LibrosPages implements OnInit {
 
     Editar(id: string, datos: Record<string, TipoDato>) {
 
+        const campo = this.CamposModal.find(c => c.nombre === 'categoria')
+        if (campo) {
+            campo.tipo = 'select'
+        }
         this.librosService.editarLibro(id, datos).subscribe({
-          
-            next: (res) => { 
+
+            next: (res) => {
 
                 console.log('Libro editado', res)
 
-                this.cargarDatos() 
+                this.cargarDatos()
 
             },
 
@@ -208,16 +217,16 @@ export class LibrosPages implements OnInit {
     }
 
 
-    onFiltrar(valor: string) { 
-        this.filtroSeleccionado = valor 
+    onFiltrar(valor: string) {
+        this.filtroSeleccionado = valor
     }
 
 
     datosTablaArray: FilaTabla[] = []
 
-    get EjPaginado(): FilaTabla[] { 
-        const indice = (this.paginaActual - 1) * 10; 
-        return this.datosTablaArray.slice(indice, indice + 10); 
+    get EjPaginado(): FilaTabla[] {
+        const indice = (this.paginaActual - 1) * 10;
+        return this.datosTablaArray.slice(indice, indice + 10);
     }
 
 }

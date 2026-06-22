@@ -18,9 +18,8 @@ export class TablaComponent {
     @Input() columnas: columnaTabla[] = [];
 
     @Input() camposBloqueados: string[] = [];
-
+    @Input() opciones: { valor: string; texto: string }[] = [];
     @Input() datos: FilaTabla[] = [];
-
     @Input() mostrarEliminar: boolean = false;
 
     @Input() totalItems: number = 0;
