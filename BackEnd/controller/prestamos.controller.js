@@ -1,14 +1,13 @@
 const prestamosService = require('../service/prestamos.service')
 
 exports.traerTodosPrestamosController = async (req, res) => {
-    console.log('Prestamos Controller - traerTodosPrestamosController')
     try {
+        console.log('Prestamos Controller - traerTodosPrestamosController')
+        const prestamos = await prestamosService.traerTodosPrestamosService()
         res.setHeader('Content-Type', 'application/json')
-        res.status(200)
-        res.send(await prestamosService.traerTodosPrestamosService())
+        res.status(200).send(JSON.stringify(prestamos))
     } catch (error) {
-        console.log('ERROR en Prestamos Controller - traerTodosPrestamosController')
-        console.log(error)
+        console.log('ERROR en Prestamos Controller - traerTodosPrestamosController', error)
         res.status(500).send({
             code: 500,
             message: "ERROR en Prestamos Controller - traerTodosPrestamosController"
@@ -17,15 +16,17 @@ exports.traerTodosPrestamosController = async (req, res) => {
 }
 
 exports.traerPrestamoPorIdController = async (req, res) => {
-    console.log('Prestamos Controller - traerPrestamoPorIdController')
     try {
-        let id = req.params.id
+        console.log('Prestamos Controller - traerPrestamoPorIdController')
+        const id = req.params.id
+        const prestamo = await prestamosService.traerPrestamoPorIdService(id)
+        if (!prestamo) {
+            return res.status(404).send(`No se encontró el préstamo con id: ${id}`)
+        }
         res.setHeader('Content-Type', 'application/json')
-        res.status(200)
-        res.send(await prestamosService.traerPrestamoPorIdService(id))
+        res.status(200).send(JSON.stringify(prestamo))
     } catch (error) {
-        console.log('ERROR en Prestamos Controller - traerPrestamoPorIdController')
-        console.log(error)
+        console.log('ERROR en Prestamos Controller - traerPrestamoPorIdController', error)
         res.status(500).send({
             code: 500,
             message: "ERROR en Prestamos Controller - traerPrestamoPorIdController"
@@ -33,18 +34,32 @@ exports.traerPrestamoPorIdController = async (req, res) => {
     }
 }
 
-exports.crearPrestamoController = async (req, res) => {
-    console.log('Prestamos Controller - crearPrestamoController')
+exports.obtenerEstadisticasController = async (req, res) => {
     try {
-        let nuevo = req.body
-        res.status(200)
-        res.send(await prestamosService.crearPrestamoService(
-            nuevo.usuarioId,
-            nuevo.libroId
-        ))
+        console.log('Prestamos Controller - obtenerEstadisticasController')
+        const estadisticas = await prestamosService.obtenerEstadisticasService()
+        res.setHeader('Content-Type', 'application/json')
+        res.status(200).send(JSON.stringify(estadisticas))
     } catch (error) {
-        console.log('ERROR en Prestamos Controller - crearPrestamoController')
-        console.log(error)
+        console.log('Error en obtenerEstadisticasController', error)
+        res.status(500).send({
+            code: 500,
+            message: "Error al obtener las estadísticas"
+        })
+    }
+}
+
+exports.crearPrestamoController = async (req, res) => {
+    try {
+        console.log('Prestamos Controller - crearPrestamoController')
+        const nuevoPrestamo = req.body
+        const prestamo = await prestamosService.crearPrestamoService(
+            nuevoPrestamo.usuarioId,
+            nuevoPrestamo.libroId
+        )
+        res.status(200).send(JSON.stringify(prestamo))
+    } catch (error) {
+        console.log('ERROR en Prestamos Controller - crearPrestamoController', error)
         res.status(500).send({
             code: 500,
             message: "ERROR en Prestamos Controller - crearPrestamoController"
@@ -53,14 +68,16 @@ exports.crearPrestamoController = async (req, res) => {
 }
 
 exports.devolverLibroController = async (req, res) => {
-    console.log('Prestamos Controller - devolverLibroController')
     try {
-        let id = req.params.id
-        res.status(200)
-        res.send(await prestamosService.devolverLibroService(id))
+        console.log('Prestamos Controller - devolverLibroController')
+        const id = req.params.id
+        const prestamo = await prestamosService.devolverLibroService(id)
+        if (!prestamo) {
+            return res.status(404).send(`No se encontró el préstamo con id: ${id}`)
+        }
+        res.status(200).send(JSON.stringify(prestamo))
     } catch (error) {
-        console.log('ERROR en Prestamos Controller - devolverLibroController')
-        console.log(error)
+        console.log('ERROR en Prestamos Controller - devolverLibroController', error)
         res.status(500).send({
             code: 500,
             message: "ERROR en Prestamos Controller - devolverLibroController"
@@ -69,14 +86,17 @@ exports.devolverLibroController = async (req, res) => {
 }
 
 exports.eliminarPrestamoController = async (req, res) => {
-    console.log('Prestamos Controller - eliminarPrestamoController')
     try {
-        let id = req.params.id
-        res.status(200)
-        res.send(await prestamosService.eliminarPrestamoService(id))
+        console.log('Prestamos Controller - eliminarPrestamoController')
+        const id = req.params.id
+        const prestamo = await prestamosService.eliminarPrestamoService(id)
+
+        if (!prestamo) {
+            return res.status(404).send(`No se encontró el préstamo con id: ${id}`)
+        }
+        res.status(200).send(JSON.stringify(prestamo))
     } catch (error) {
-        console.log('ERROR en Prestamos Controller - eliminarPrestamoController')
-        console.log(error)
+        console.log('ERROR en Prestamos Controller - eliminarPrestamoController', error)
         res.status(500).send({
             code: 500,
             message: "ERROR en Prestamos Controller - eliminarPrestamoController"

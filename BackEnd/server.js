@@ -6,22 +6,18 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-const HOST = process.env.HOST
-
+const HOSTNAME = 'localhost'
 const PORT = process.env.PORT
 
-const {routerUsuarios} = require('./router/usuarios.router')
-
-
-
-app.use(cors())
+const { routerUsuarios } = require('./router/usuarios.router')
+const { routerPrestamos } = require('./router/prestamos.router')
 
 app.use('/usuarios', routerUsuarios)
+app.use('/prestamos', routerPrestamos)
 
+//const { routerLibros } = require('./router/libros.router')
 
-const { routerLibros } = require('./router/libros.router')
-
-app.use('/libros', routerLibros)
+//app.use('/libros', routerLibros)
 
 // categorias
 const { routerCategorias } = require('./router/categorias.router')
