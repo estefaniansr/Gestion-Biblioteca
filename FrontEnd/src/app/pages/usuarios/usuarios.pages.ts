@@ -28,7 +28,6 @@ export class UsuariosPages implements OnInit {
     await this.actualizar()
   }
 
-
   usuariosLLamados: Usuario[] = []
 
   usuariosTabla: Usuario[] = [];
@@ -84,24 +83,30 @@ export class UsuariosPages implements OnInit {
   buscador(input: string) {
     if(input == ''){
       this.usuariosTabla = this.usuariosLLamados
+      return;
     }
     this.usuarioService.usuarioBusqueda(input).subscribe(usuarios => {
       this.usuariosTabla = usuarios
+      return
     })
   }
 
   guardarModalUsuario(datos: Record<string, TipoDato>){
-    this.datosdeModal.nombre = String(datos["Nombre"])
-    this.datosdeModal.apellido = String(datos["Apellido"])
-    this.datosdeModal.DNI = Number(datos["DNI"])
-    this.datosdeModal.email = String(datos["Email"])
-    this.datosdeModal.telefono = Number(datos["Telefono Celular"])
-    this.usuarioService.crearUsuario(this.datosdeModal.nombre, this.datosdeModal.apellido, this.datosdeModal.DNI, this.datosdeModal.email, this.datosdeModal.telefono).subscribe((next) => {
+    let usuario = {
+      nombre: String(datos["Nombre"]),
+      apellido: String(datos["Apellido"]),
+      DNI: Number(datos["DNI"]),
+      email: String(datos["Email"]),
+      telefono: String(datos["Telefono Celular"])
+    }
+
+    this.usuarioService.crearUsuario(usuario).subscribe((next)=>{
       setTimeout(()=>{
         this.modalAbierto = false
         this.actualizar()
-      },250)
+      }, 250)
     })
+    
   }
 
   editarUsuario(event: { id: string; datos: Record<string, TipoDato> }) {

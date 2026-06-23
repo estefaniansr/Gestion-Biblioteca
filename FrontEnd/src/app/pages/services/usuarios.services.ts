@@ -21,21 +21,25 @@ export class UsuariosService {
         return this.http.get<Usuario[]>(`${this.apiUrl}/buscar/${input}`);
     }
 
-    public crearUsuario(
-        pNombre: string,
-        pApellido: string,
-        pDNI: string | number,
-        pEmail: string,
-        pTelefono: string | number
-    ) {
-        return this.http.post(`${this.apiUrl}/crear`, {
-            nombre: pNombre,
-            apellido: pApellido,
-            DNI: Number(pDNI),
-            email: pEmail,
-            telefono: Number(pTelefono)
-        });
+    public crearUsuario(datos: Record<string, TipoDato>) {
+        return this.http.post<Usuario[]>(`${this.apiUrl}/crear`, datos);
     }
+
+    // public crearUsuario(
+    //     pNombre: string,
+    //     pApellido: string,
+    //     pDNI: string | number,
+    //     pEmail: string,
+    //     pTelefono: string | number
+    // ) {
+    //     return this.http.post(`${this.apiUrl}/crear`, {
+    //         nombre: pNombre,
+    //         apellido: pApellido,
+    //         DNI: Number(pDNI),
+    //         email: pEmail,
+    //         telefono: Number(pTelefono)
+    //     });
+    // }
 
     public editarUsuario(id: string, datos: Record<string, TipoDato>) {
         return this.http.put(`${this.apiUrl}/modificar/${id}`, datos);

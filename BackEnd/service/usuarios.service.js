@@ -52,7 +52,7 @@ exports.crearUsuarioService = async (parametroBody) => {
             telefono: Number(parametroBody.telefono)
         }
 
-        let respuesta = await usuariosRepository.crearUsuario(datos.nombre, datos.apellido, datos.DNI, datos.email, datos.telefono)
+        let respuesta = await usuariosRepository.crearUsuario(datos)
         return JSON.stringify(respuesta)
     }
     catch(error){
@@ -109,10 +109,6 @@ exports.traerUsuarioService = async (parametro) => {
 
     try{
         let datos = parametro
-
-        if(!isNaN(parametro)){
-            Number(parametro)
-        }
 
         if(parametro.includes("@")){
             datos = normalizarEmail(datos)

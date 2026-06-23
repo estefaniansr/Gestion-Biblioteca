@@ -62,10 +62,10 @@ exports.traerUsuarioId = async (pId) => {
     }
 }
 
-exports.crearUsuario = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
+exports.crearUsuario = async (datos) => {
     console.log('Usuarios Repository - crearUsuario')
     try{
-            let nuevo = await Usuarios.create({nombre: pNombre, apellido:pApellido, DNI:pDNI, email:pEmail, telefono:pTelefono})
+            let nuevo = await Usuarios.create({nombre: datos.nombre, apellido:datos.apellido, DNI:datos.DNI, email:datos.email, telefono:datos.telefono})
             console.log(nuevo)
             return nuevo
     }
