@@ -8,7 +8,7 @@ import { Component, Input } from "@angular/core";
 })
 
 export class TituloComponent {
-    @Input() titulo: string = ''// paso el titulo al componente padre
-    @Input() subtitulo: string = ''// paso el subtitulo al componente padre
+    @Input() titulo: string = ''
+    @Input() subtitulo: string = ''
 
 }

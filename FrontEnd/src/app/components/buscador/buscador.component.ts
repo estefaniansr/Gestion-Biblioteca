@@ -10,13 +10,13 @@ import { FormsModule } from "@angular/forms";
 })
 
 export class BuscadorComponente {
-    @Input() placeholder: string = 'Buscar...' // recibe texto placeholder desde el componente padre
-    @Output() valorChange = new EventEmitter<string>() // evento que envia al padre, tipo de dato string
+    @Input() placeholder: string = 'Buscar...'
+    @Output() valorChange = new EventEmitter<string>()
 
-    valor: string = '' // valor actual del input
+    valor: string = ''
 
     buscar() {
-        this.valorChange.emit(this.valor) // cada cambio lo manda al componente padre
+        this.valorChange.emit(this.valor)
     }
 
 }

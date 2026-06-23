@@ -15,7 +15,7 @@ import { FilaTabla } from "../../models/filaTabla.type";
 import { ModalComponent } from "../../components/modal/modal.component";
 
 // services
-import { PrestamosService } from "../services/prestamos.service";
+import { PrestamosService } from "../services/prestamos.services";
 import { HttpClient } from "@angular/common/http";
 import { Campo } from "../../models/campo.type";
 
@@ -92,15 +92,15 @@ export class PrestamosPages implements OnInit {
   Editar(id: string, datos: Record<string, any>) {
     const nuevoEstado = datos['estado']
     this.prestamosService.ActualizarEstado(id, nuevoEstado).subscribe({
-        next: (res) => {
-            this.cargarPrestamos()
-            this.cargarEstadisticas()
-        },
-        error: (err) => {
-            console.log('Error al actualizar estado', err)
-        }
+      next: (res) => {
+        this.cargarPrestamos()
+        this.cargarEstadisticas()
+      },
+      error: (err) => {
+        console.log('Error al actualizar estado', err)
+      }
     })
-}
+  }
 
   transformarParaTabla(prestamos: Prestamo[]): FilaTabla[] {
     return prestamos.map(p => ({
@@ -152,66 +152,66 @@ export class PrestamosPages implements OnInit {
 
   cargarUsuarios() {
     this.http.get<any[]>('http://localhost:3000/usuarios').subscribe({
-        next: (data) => {
-            this.usuarios = data
-            this.actualizarCamposModal()
-        },
-        error: (err) => {
-            console.error('Error al cargar usuarios', err)
-        }
+      next: (data) => {
+        this.usuarios = data
+        this.actualizarCamposModal()
+      },
+      error: (err) => {
+        console.error('Error al cargar usuarios', err)
+      }
     })
-}
+  }
 
-cargarLibros() {
+  cargarLibros() {
     this.http.get<any[]>('http://localhost:3000/libros').subscribe({
-        next: (data) => {
-            this.libros = data
-            this.actualizarCamposModal()
-        },
-        error: (err) => {
-            console.error('Error al cargar libros', err)
-        }
+      next: (data) => {
+        this.libros = data
+        this.actualizarCamposModal()
+      },
+      error: (err) => {
+        console.error('Error al cargar libros', err)
+      }
     })
-}
+  }
 
-Guardar(datos: Record<string, any>) {
+  Guardar(datos: Record<string, any>) {
     this.prestamosService.CrearPrestamo(datos['usuarioId'], datos['libroId']).subscribe({
-        next: (res) => {
-            this.cargarPrestamos()
-            this.cargarEstadisticas()
-            this.modalAbierto = false
-        },
-        error: (err) => {
-            console.log('Error al crear el préstamo', err)
-        }
+      next: (res) => {
+        this.cargarPrestamos()
+        this.cargarEstadisticas()
+        this.modalAbierto = false
+      },
+      error: (err) => {
+        console.log('Error al crear el préstamo', err)
+      }
     })
-}
+  }
 
-actualizarCamposModal() {
+  actualizarCamposModal() {
     if (this.usuarios.length === 0 || this.libros.length === 0) return
     this.CamposModal = [
-        {
-            tipo: 'select',
-            nombre: 'usuarioId',
-            label: 'Usuario',
-            requerido: true,
-            opciones: this.usuarios.map(u => ({
-                valor: u._id,
-                texto: `${u.nombre} ${u.apellido}`
-            }))
-        },
-        {
-            tipo: 'select',
-            nombre: 'libroId',
-            label: 'Libro',
-            requerido: true,
-            opciones: this.libros.map(l => ({
-                valor: l._id,
-                texto: l.libro
-            }))
-        }
+      {
+        tipo: 'select',
+        nombre: 'usuarioId',
+        label: 'Usuario',
+        requerido: true,
+        opciones: this.usuarios.map(u => ({
+          valor: u._id,
+          texto: `${u.nombre} ${u.apellido}`
+        }))
+      },
+      {
+        tipo: 'select',
+        nombre: 'libroId',
+        label: 'Libro',
+        requerido: true,
+        opciones: this.libros.map(l => ({
+          valor: l._id,
+          texto: l.libro
+        }))
+      }
     ]
-}
+  }
 
-CamposModal: Campo[] = []
+  CamposModal: Campo[] = []
 }

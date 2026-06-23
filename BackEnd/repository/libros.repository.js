@@ -1,26 +1,21 @@
 
-const libros = require('../model/libros.model') // importar el objeto de libros
+const libros = require('../model/libros.model')
 
-// Exporta una función asíncrona
 exports.obtenerLibrosRepository = async () => {
 
     console.log('MongoDB Repository - obtener libros')
 
-    try { // manejo de errores
+    try {
 
         const resultadoLibros = await libros.find()
-        /*
-        * busca todo los documentos de la coleccion
-        * await espera la res de mongoDB
-        * find() devuelve un array
-        */
-        return resultadoLibros // retorna los libros encontrados
+
+        return resultadoLibros
 
     } catch (error) {
 
         console.error('Error, no encontre libros')
 
-        throw Error(error) // lanza el err para que pueda manejarse en otras capas, corta le ejecucion
+        throw Error(error)
     }
 }
 
@@ -30,8 +25,8 @@ exports.editarLibroRepository = async (id, datos) => {
     console.table(datos)
 
     try {
-        const libroEditado = await libros.findByIdAndUpdate( // busca en el objeto libros por ID y lo actualiza
-            id, datos, // le pasa el id que busca y los datos que actualiza
+        const libroEditado = await libros.findByIdAndUpdate(
+            id, datos,
             {
                 returnDocument: 'after'
             }
@@ -50,7 +45,7 @@ exports.crearLibroRepository = async (datos) => {
     console.log(' repository crear libro')
 
     try {
-        const nuevoLibro = await libros.create({ // .create crea un nuevo documento
+        const nuevoLibro = await libros.create({
             libro: datos.libro,
             autor: datos.autor,
             categoria: datos.categoria,
@@ -66,7 +61,7 @@ exports.crearLibroRepository = async (datos) => {
 exports.eliminarLibroRepository = async (id) => {
     console.log('Repository eliminar libro')
     try {
-        const libroEliminado = await libros.findByIdAndDelete(id) // Busca un libro por su ID y lo elimina 
+        const libroEliminado = await libros.findByIdAndDelete(id)
 
         if (!libroEliminado) throw new Error('Libro no encontrado')
     } catch (err) {

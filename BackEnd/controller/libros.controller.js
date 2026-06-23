@@ -1,15 +1,11 @@
 const librosService = require('../service/libros.service')
 
 exports.obtenerLibrosController = async (req, res) => {
-    /*
-    * exporta una funcion asyncronica
-    * parametros -> req = request, res = response
-     */
 
     try {
-        res.setHeader('Content-Type', 'application/json') // topo contenido de la res http
-        res.status(200).send( // devuelve estado 200 y envia
-            await librosService.obtenerLibrosService() // espera y ejecuta el obtenerLibrosService
+        res.setHeader('Content-Type', 'application/json')
+        res.status(200).send(
+            await librosService.obtenerLibrosService()
         )
     }
 
@@ -26,7 +22,7 @@ exports.obtenerLibrosController = async (req, res) => {
 exports.crearLibroController = async (req, res) => {
     try {
         res.setHeader('Content-Type', 'application/json')
-        const nuevoLibro = await librosService.crearLibroService(req.body) // espera la respuesta pasando los datos del front req.body
+        const nuevoLibro = await librosService.crearLibroService(req.body)
         res.status(200).send(nuevoLibro)
     } catch (err) {
         console.error('Err en crearLibroController ', err)
@@ -40,8 +36,8 @@ exports.crearLibroController = async (req, res) => {
 exports.editarLibroController = async (req, res) => {
     try {
         res.setHeader('Content-Type', 'application/json')
-        const id = req.params.id // saca el id de los parametros de la URL
-        const datos = req.body // obtiene los datos enviados desde el front en forma de objeto
+        const id = req.params.id
+        const datos = req.body
         const libtoEditado = await librosService.editarLibroService(id, datos)
         res.status(200).send(libtoEditado)
     } catch (err) {
@@ -53,7 +49,7 @@ exports.editarLibroController = async (req, res) => {
 exports.eliminarLibroController = async (req, res) => {
     try {
         res.setHeader('Content-Type', 'application/json')
-        const id = req.params.id // toma el id desde la url /libros/:id
+        const id = req.params.id
         res.status(200).send(await librosService.eliminarLibroService(id))
     } catch (err) {
         console.error('Err en eliminarLibroController ', err)
@@ -70,7 +66,6 @@ exports.buscarLibroController = async (req, res) => {
         const { input = '' } = req.query
         /* 
         * {input = ''} -> destructuring, si no existe el input, usa el string vacio
-        *  req.query -> trae los parametros de la url
         */
         const libroBuscado = await librosService.buscarLibroService(input)
         res.status(200).send(libroBuscado)

@@ -9,15 +9,15 @@ import { Usuario } from '../../models/usuarios.model';
 export class UsuariosService {
     private url = 'http://127.0.0.1:3000/usuarios'
 
-    async obtenerUsuarios(){
-        try{
+    async obtenerUsuarios() {
+        try {
             let respuesta = await fetch(this.url)
             let datos = await respuesta.json()
             let usuariosLLamados = datos
-            let arrayEscribir:Usuario[] = []
-            usuariosLLamados.forEach((datos:Usuario)=>{
+            let arrayEscribir: Usuario[] = []
+            usuariosLLamados.forEach((datos: Usuario) => {
                 arrayEscribir.push({
-                    _id:datos._id,
+                    _id: datos._id,
                     nombre: `${datos.nombre}`,
                     apellido: `${datos.apellido}`,
                     DNI: Number(`${datos.DNI}`),
@@ -27,43 +27,43 @@ export class UsuariosService {
             })
             return arrayEscribir
         }
-        catch(error){
+        catch (error) {
             return []
         }
     }
 
-    async usuarioBusqueda(input:string){
+    async usuarioBusqueda(input: string) {
         try {
-            
+
             let respuesta = await fetch(`${this.url}/buscar/${input}`)
             let datos = await respuesta.json()
 
             let usuariosLLamados = datos
-            let arrayEscribir:Usuario[] = []
+            let arrayEscribir: Usuario[] = []
 
-            usuariosLLamados.forEach(( dato:Usuario ) => {
+            usuariosLLamados.forEach((dato: Usuario) => {
                 arrayEscribir.push({
                     _id: dato._id,
                     nombre: `${dato.nombre}`,
                     apellido: `${dato.apellido}`,
                     DNI: Number(`${dato.DNI}`),
                     email: `${dato.email}`,
-                    telefono: Number(`${dato.telefono}` )
+                    telefono: Number(`${dato.telefono}`)
                 })
             })
             return arrayEscribir
         }
-        catch(error){
+        catch (error) {
             return []
         }
     }
 
-    async crearUsuario(pNombre:string, pApellido:string, pDNI:string | number, pEmail:string, pTelefono:string | number):Promise<Response>{
-        try{
-            let respuesta = await fetch(`${this.url}/crear`,{
+    async crearUsuario(pNombre: string, pApellido: string, pDNI: string | number, pEmail: string, pTelefono: string | number): Promise<Response> {
+        try {
+            let respuesta = await fetch(`${this.url}/crear`, {
                 method: "POST",
-                headers:{
-                    "Content-Type" : "application/json"
+                headers: {
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     nombre: pNombre,
@@ -75,39 +75,35 @@ export class UsuariosService {
             })
             return respuesta
         }
-        catch(error){
+        catch (error) {
             throw error
         }
     }
-
-  async editarUsuario(pId:string, datos:Record<string, TipoDato>){
-    try{
-      let respuesta = await   fetch(`${this.url}/modificar/${pId}`, {
-        method:"PUT",
-        headers:{
-          "Content-Type" : "application/json"
+    async editarUsuario(pId: string, datos: Usuario) {
+        try {
+            const respuesta = await fetch(`${this.url}/modificar/${pId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
                 },
-        body: JSON.stringify(datos)
-      })
+                body: JSON.stringify(datos)
+            });
 
-      return respuesta
-
+            return respuesta;
+        } catch (error) {
+            throw error;
+        }
     }
-    catch(error){
-      throw error
+    async borrarUsuario(datos: string) {
+        let datoTest = datos
+        try {
+            let respuesta = await fetch(`${this.url}/borrar/${datoTest}`, {
+                method: "DELETE"
+            })
+            return respuesta
+        }
+        catch (error) {
+            throw error
+        }
     }
-  }
-  
-  async borrarUsuario(datos:string){
-    let datoTest = datos
-    try{
-      let respuesta = await fetch(`${this.url}/borrar/${datoTest}`, {
-        method: "DELETE"
-      })
-      return respuesta
-    }
-    catch(error){
-      throw error
-    }
-  }
 }
