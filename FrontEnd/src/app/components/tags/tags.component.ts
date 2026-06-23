@@ -10,6 +10,6 @@ import { CommonModule } from "@angular/common";
 })
 
 export class TagComponent {
-    @Input() titulo: string = '' // paso el titulo al componente padre
-    @Input() cantidad: number = 0 // lo mismo con cantidad
+    @Input() titulo: string = ''
+    @Input() cantidad: number = 0
 }

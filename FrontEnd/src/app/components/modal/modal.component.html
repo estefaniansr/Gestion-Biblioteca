@@ -1,61 +1,45 @@
 @if (abierto) {
-<!-- lo muestra si abierto es true -->
 
 <div class="overlay" (click)="cerrar()">
-    <!-- al hacer click afuera de modal se cierra ejecutando cerrar -->
 
     <div class="modal" (click)="$event.stopPropagation()">
-        <!-- event.stopPropagation evita que el click dentro del modal cierre overlay -->
 
         <div class="modal-header">
 
-            <!-- Título dinámico recibido por el padre -->
             <div class="modal-titulo">
                 {{ titulo }}
             </div>
 
-            <!-- Botón de cerrar modal, con el click ejecuta cerrar -->
             <button class="btn-cerrar" (click)="cerrar()" title="Cerrar">✕</button>
 
         </div>
 
         <div class="modal-body">
 
-            @if (mensaje){
-                <div [innerHTML]="mensaje"></div>
-            }
-
-            <!-- Recorre todos los campos del formulario -->
             @for (campo of campos; track campo.nombre) {
 
             <div>
 
-                <!-- Label del campo -->
                 <label [for]="campo.nombre" class="label">
 
                     {{ campo.label }}
 
-                    <!-- Asterisco si el campo es obligatorio -->
                     @if (campo.requerido) {
                     <span class="asterisco">*</span>
                     }
 
                 </label>
 
-                <!-- Si el campo es tipo select -->
                 @if (esSelect(campo)) {
 
                 <select class="select" [id]="campo.nombre" [(ngModel)]="valores[campo.nombre]"
                     [required]="campo.requerido ?? false" [class.requerido]="campo.requerido">
 
-                    <!-- opción por defecto -->
                     <option value="" disabled>Seleccioná una opción</option>
 
                     @for (opciones of campo.opciones; track opciones.valor) {
-                    <!-- un for que recorre el array opciones, el track sirve para usar opcion como identificador unico -->
 
                     <option [value]="opciones.valor">{{ opciones.texto }}
-                        <!-- usa el track opcion -->
                     </option>
                     }
 
@@ -66,21 +50,17 @@
                 <input class="input" [id]="campo.nombre" [type]="campo.tipo" [placeholder]="campo.placeholder ?? ''"
                     [required]="campo.requerido ?? false" [(ngModel)]="valores[campo.nombre]"
                     [class.requerido]="campo.requerido" />
-                <!-- pasa todo del padre donde lo usa -->
                 }
 
             </div>
-
             }
 
         </div>
 
         <div class="modal-botones">
 
-            <!-- al hacer click emite el metodo cerrar -->
             <button class="btn-cancelar" (click)="cerrar()">Cancelar</button>
 
-            <!-- al hacer click emite el metodo confirmar -->
             <button class="btn-guardar" (click)="confirmar()" [disabled]="valido()">Guardar</button>
 
         </div>

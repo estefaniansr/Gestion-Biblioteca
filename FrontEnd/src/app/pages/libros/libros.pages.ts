@@ -1,41 +1,46 @@
 import { Component, OnInit } from "@angular/core";
 
 
-// componentes
-import { headerComponente } from "../../components/header/header.component"; // importar el header
-import { BuscadorComponente } from "../../components/buscador/buscador.component"; // importar el buscador
-import { BotonComponente } from "../../components/boton/boton.component"; // importar el boton
-import { FilterComponent } from "../../components/filter/filter.component"; // importar filter
-import { TituloComponent } from "../../components/titulo/titulo.component"; // importar titulo
-import { TagComponent } from "../../components/tags/tags.component"; // importar tags
-import { TablaComponent } from "../../components/tabla/tabla.component"; // importar tabla
-import { ModalComponent } from "../../components/modal/modal.component"; // importar modal
+import { headerComponente } from "../../components/header/header.component";
+import { BuscadorComponente } from "../../components/buscador/buscador.component";
+import { BotonComponente } from "../../components/boton/boton.component";
+import { TituloComponent } from "../../components/titulo/titulo.component";
+import { TagComponent } from "../../components/tags/tags.component";
+import { TablaComponent } from "../../components/tabla/tabla.component";
+import { ModalComponent } from "../../components/modal/modal.component";
 
-// types e interfaces
 import { Campo } from "../../models/campo.type";
 import { TipoDato } from "../../models/TipoDato.type";
 import { FilaTabla } from "../../models/filaTabla.type";
+import { CampoSelect } from "../../models/campoSelect.interface";
+import { Categoria } from "../../models/categoria.interface";
 
-// services
 import { LibrosService } from "../services/libros.services";
+import { CategoriasService } from "../services/categorias.services";
+import { PrestamosService } from "../services/prestamos.services";
 
 @Component({
     selector: 'app-libros',
     standalone: true,
-    imports: [headerComponente, BuscadorComponente, BotonComponente, FilterComponent, TituloComponent, TagComponent, TablaComponent, ModalComponent], // importas los componentess
+    imports: [headerComponente, BuscadorComponente, BotonComponente, TituloComponent, TagComponent, TablaComponent, ModalComponent],
     templateUrl: './libros.pages.html',
     styleUrl: './libros.pages.css'
 })
 
-export class LibrosPages implements OnInit { // implementa la interfaz onInit de angular para que poder usar sus metodos
-    // inicializacion 
+export class LibrosPages implements OnInit {
+    
 
-    activo = 'libros'// estado general de la app
-    textoBusqueda = '' // guarda lo que escribe el user
-    modalAbierto = false // el modal esta cerrado x defecto
-    filtroSeleccionado = '' // el filtro seleccionado esta vacio x defecto
-    paginaActual = 1 // la pag actual esta x defecto en la 1
+    activo = 'libros'
+    opciones = [];
+    opcionesLibros: { valor: string; texto: string }[] = [];
+    textoBusqueda = ''
+    modalAbierto = false
+    filtroSeleccionado = ''
+    paginaActual = 1
     cantidadTotal = 2
+    totalPrestados = 0
+    totalDevueltos = 100
+    cantidadTotalCategoria = 0
     cantidad = 0
     columnas = [
         { key: 'libro', label: 'Libro' },
@@ -43,7 +48,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
         { key: 'categoria', label: 'Categoría' },
     ]
 
-    CamposModal: Campo[] = [ // los campos que van al formulario del modal, editables
+    CamposModal: Campo[] = [
         { tipo: 'text', nombre: 'libro', label: 'Nombre', placeholder: 'El principito', requerido: true },
         { tipo: 'text', nombre: 'autor', label: 'Autor', placeholder: 'Antoine de Saint-Exupéry', requerido: true },
         {
@@ -51,10 +56,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
             nombre: 'categoria',
             label: 'Categoria',
             requerido: true,
-            opciones: [
-                { valor: 'Novela', texto: 'Novela' },
-                { valor: 'Novela', texto: 'Novela' },
-            ]
+            opciones: []
         }
     ];
     opcionFilter = [
@@ -67,16 +69,11 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
         'No func'
     ]
 
+    constructor(private librosService: LibrosService, private categoriasService: CategoriasService, private prestamosService: PrestamosService) { } 
 
-
-
-
-
-    constructor(private librosService: LibrosService) { } // servicio que se comunica con la API
-
-    recargarDatos() {
+    cargarDatos() {
         this.librosService.ObtenerLibros().subscribe({
-            next: (libros: FilaTabla[]) => {
+            next: (libros) => {
                 console.log(libros);
                 this.datosTablaArray = libros
                 this.cantidadTotal = libros.length
@@ -87,30 +84,78 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
         });
     }
 
-    ngOnInit(): void { // se ejecuta automaticamente al cargar el componente
-        this.recargarDatos()
+    cargarPrestados() {
+        this.prestamosService.ObtenerPrestamos().subscribe({
+            next: (prestamo) => {
+                console.log(prestamo)
+                const activo = prestamo.filter(
+                    p => p.estado === 'Activo'
+                )
+                this.totalPrestados = activo.length
+            }
+        })
+    }
+
+    cargarDevueltos() {
+        this.prestamosService.ObtenerPrestamos().subscribe({
+            next: (prestamo) => {
+                console.log(prestamo)
+                const activo = prestamo.filter(
+                    p => p.estado === 'Devuelto'
+                )
+                this.totalDevueltos = activo.length
+            }
+        })
+    }
+
+    cargarCategorias() {
+        this.categoriasService.ObtenerCategorias().subscribe({
+            next: (cate) => {
+                console.log(cate)
+                this.cantidadTotalCategoria = cate.length
+
+                const opciones = cate.map(categoria => ({
+                    valor: categoria.nombre,
+                    texto: categoria.nombre
+                }))
+
+                const campoCategoria = this.CamposModal.find(
+                    campo => campo.nombre === 'categoria'
+                ) as CampoSelect
+
+                if (campoCategoria) {
+                    campoCategoria.opciones = opciones;
+                }
+                this.opcionesLibros = opciones;
+            }, error: (e) => console.error(e)
+        })
+    }
+
+    ngOnInit(): void { 
+        this.cargarDatos()
+        this.cargarCategorias()
+        this.cargarPrestados()
+        this.cargarDevueltos()
 
     }
 
-    // modal
-    abrirModal() { // abre el modal
+    abrirModal() {
         this.modalAbierto = true
     }
 
-    GuardarModal() { // guarda los cambios del modal
+    GuardarModal() {
         console.log('Libro guardado');
     }
 
-    // acciones 
 
     Guardar(datos: Record<string, TipoDato>) {
-        this.librosService.CrearLibro(datos).subscribe({ // libroServices tiene el metodo CrearLibro que pasa por argumentos datos y ejecuta subscribe escucha la respuesta del http
-            next: (res) => {  // se ejecuta cuando el servidor da ok
-                console.log('Libro creado', res) // depurar
-                this.recargarDatos() //  recarga la tabla
-                this.modalAbierto = false // cierra el modal
+        this.librosService.CrearLibro(datos).subscribe({
+            next: (res) => {
+                console.log('Libro creado', res)
+                this.cargarDatos()
+                this.modalAbierto = false
             },
-            error: (err: string) => { // si tira error el server
+            error: (err: string) => {
                 console.log("Error al crear el libro", err)
             }
         }
@@ -122,7 +167,7 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
         this.librosService.EliminarLibro(id).subscribe({
             next: (res) => {
                 console.log(res)
-                this.recargarDatos()
+                this.cargarDatos()
             },
             error: (err: string) => {
                 console.log(err)
@@ -133,17 +178,17 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
 
     Editar(id: string, datos: Record<string, TipoDato>) {
 
-        this.librosService.editarLibro(id, datos).subscribe({ 
-            /*
-            * llama al servicio que hace la peticion put al back
-            * se envia el id del libro y los nuevos datos actualizados
-             */
+        const campo = this.CamposModal.find(c => c.nombre === 'categoria')
+        if (campo) {
+            campo.tipo = 'select'
+        }
+        this.librosService.editarLibro(id, datos).subscribe({
 
-            next: (res) => { // se ejecuta cuando el backend responde correctamente
+            next: (res) => {
 
                 console.log('Libro editado', res)
 
-                this.recargarDatos() // llama al metodo recargar datos
+                this.cargarDatos()
 
             },
 
@@ -157,21 +202,9 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
 
     }
 
-    /* Editar(id:string, datos: Record<string, TipoDato>) {
-        this.librosSerive.editarLibroEspecifico(id,datos).subscribe({p
-            next: (res:string) =>{
-            console.log(res)},
-        error: (err:string) =>{
-        console.log(err)}
-        })
-    }
-    
-    
-    */
-
     Buscador(input: string) {
         this.librosService.buscarLibro(input).subscribe({
-            next: (res: FilaTabla[]) => {
+            next: (res) => {
                 console.log(res)
                 this.datosTablaArray = res
             }, error: (err: string) => {
@@ -181,35 +214,16 @@ export class LibrosPages implements OnInit { // implementa la interfaz onInit de
     }
 
 
-
-    // filtrado
-
-
-    onFiltrar(valor: string) { // pasa un valor x argumento
-        this.filtroSeleccionado = valor // y el filtro seleccionado se le pone el valor del argumento
+    onFiltrar(valor: string) {
+        this.filtroSeleccionado = valor
     }
 
-
-
-
-    // paginas
 
     datosTablaArray: FilaTabla[] = []
 
-    get EjPaginado(): FilaTabla[] { //datos paginados, maximo 10
-        const indice = (this.paginaActual - 1) * 10; //  calcula el indice segun la pag igual (-1 asi es 0) * 10
-        return this.datosTablaArray.slice(indice, indice + 10); // recorre el array y devuelve solo 10 elementos, desde indice hasta indice + 10
+    get EjPaginado(): FilaTabla[] {
+        const indice = (this.paginaActual - 1) * 10;
+        return this.datosTablaArray.slice(indice, indice + 10);
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-

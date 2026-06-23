@@ -1,0 +1,62 @@
+<main>
+  <app-header [activo]="activo"></app-header>
+  <div class="cont">
+    <app-titulo [titulo]="'Préstamos'" [subtitulo]="'Gestiona los préstamos realizados.'"></app-titulo>
+    <div class="acciones">
+      <app-buscador placeholder="Buscar préstamos..." (valorChange)="Buscador($event)" />
+      <app-boton [texto]="'Nuevo préstamo'" (abrir)="modalAbierto = true"></app-boton>
+    </div>
+  </div>
+
+  <app-modal titulo="Nuevo préstamo" [abierto]="modalAbierto" [campos]="CamposModal" (guardar)="Guardar($event)"
+    (cancelar)="modalAbierto = false" />
+
+  <div class="tags-container">
+
+    <app-tags titulo="Total préstamos" [cantidad]="estadisticas.total">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3 17V7C3 5.89543 3.89543 5 5 5H9L11 7H19C20.1046 7 21 7.89543 21 9V17C21 18.1046 20.1046 19 19 19H5C3.89543 19 3 18.1046 3 17Z"
+          stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </app-tags>
+
+    <app-tags titulo="Activos" [cantidad]="estadisticas.activos">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2V12L16 14" stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+        <circle cx="12" cy="12" r="9" stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </app-tags>
+
+    <app-tags titulo="Entregados" [cantidad]="estadisticas.entregados">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 12L9 16L19 6" stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+    </app-tags>
+
+    <app-tags titulo="Vencidos" [cantidad]="estadisticas.vencidos">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 8V12L14.5 14.5" stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+        <path
+          d="M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
+          stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M3 6L1 8" stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round" />
+        <path d="M21 6L23 8" stroke="var(--acento)" stroke-width="1.5" stroke-linecap="round" />
+      </svg>
+    </app-tags>
+
+  </div>
+
+  <app-tabla [columnas]="columnas" [datos]="EjPaginado"
+    [camposBloqueados]="['libro', 'usuario', 'fechaAlta', 'fechaVenc']" [mostrarEliminar]="false"
+    [totalItems]="datosTablaArray.length" [itemsPorPagina]="10" [paginaActual]="paginaActual" [opciones]="[
+      { valor: 'Activo', texto: 'Activo' },
+      { valor: 'Devuelto', texto: 'Devuelto' },
+      { valor: 'Vencido', texto: 'Vencido' }
+    ]" (cambioPagina)="paginaActual = $event" (editar)="Editar($event['id'], $event['datos'])">
+  </app-tabla>
+</main>

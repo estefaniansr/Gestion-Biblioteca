@@ -1,27 +1,28 @@
-
 import { Routes } from '@angular/router';
 import { LibrosPages } from './pages/libros/libros.pages';
-import { UsuariosComponent } from './pages/usuarios/usuarios.pages';
-// import { PrestamosPages } from './pages/prestamos/prestamos.pages';
+import { UsuariosPages } from './pages/usuarios/usuarios.pages';
+import { PrestamosPages } from './pages/prestamos/prestamos.pages';
+import { CategoriasPages } from './pages/categorias/categorias.pages';
 
 export const routes: Routes = [
     {
-        path: 'libros', // url
-        loadComponent: () =>  // carga el componente cuando entra a la ruta
-            import('./pages/libros/libros.pages')// importa el archivo
-                .then(m => m.LibrosPages) // obtiene y devuelve el componente 
+        path: 'libros',
+        component: LibrosPages
     },
     {
         path: 'usuarios',
-        component: UsuariosComponent
-        },
-    // {
-    //     path: 'prestamos',
-    //     component: PrestamosPages
-    // },
-      {
-        path: '',
+        component: UsuariosPages
+    },
+    {
+        path: 'prestamos',
+        component: PrestamosPages
+    },
+    {
+        path: 'categorias',
+        component: CategoriasPages
+    },
+    {
+        path: '**',
         redirectTo: 'libros',
-        pathMatch: 'full'
     }
 ];

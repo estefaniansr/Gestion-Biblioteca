@@ -1,0 +1,21 @@
+GET http://desktop-nmmj6c9:3000/categorias HTTP/1.1
+###
+PUT http://desktop-nmmj6c9:3000/categorias/6a2789e2ff68af03f60437 HTTP/1,1
+Content-Type: application/json
+
+{
+   "nombre": "Programación 2",
+    "descripcion": "Libros relacionados con desarrollo de software tomo 2"
+}
+###
+POST http://desktop-nmmj6c9:3000/categorias/ HTTP/1,1
+Content-Type: application/json
+
+{
+   "nombre": "Novela",
+    "descripcion": "Novela de drama"
+}
+###
+DELETE http://desktop-nmmj6c9:3000/categorias/6a362cdb629ca4b4d77d4a20 HTTP/1,1
+Content-Type: application/json
+

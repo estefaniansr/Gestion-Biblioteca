@@ -1,10 +1,8 @@
 const { ReturnDocument } = require('mongodb')
 const { conexionAMongo } = require('../database/conect')
 
-const Usuarios = require('../model/usuariosModel')
+const Usuarios = require('../model/usuarios.model')
 const { separador } = require('../utils/separador')
-
-conexionAMongo()
 
 exports.traerTodosUsuariosRepository = async () => {
     console.log('Usuarios Repository - traerTodosUsuarios')
@@ -24,17 +22,17 @@ exports.traerUsuario = async (parametro) => {
 
     try{
 
-        let datos = parametro
+        let flexible = new RegExp(parametro, 'i')
 
         let busqueda = [
-            {nombre: parametro},
-            {apellido: parametro},
-            {email:parametro},    
+            {nombre: flexible},
+            {apellido: flexible},
+            {email:flexible},    
         ]
 
-        if(!isNaN(datos)){
-            busqueda.push({DNI: datos})
-            busqueda.push({telefono: datos})
+        if(!isNaN(parametro)){
+            busqueda.push({DNI: parametro})
+            busqueda.push({telefono: parametro})
         }
 
         let usuarios = await Usuarios.find({$or:busqueda})
@@ -64,10 +62,10 @@ exports.traerUsuarioId = async (pId) => {
     }
 }
 
-exports.crearUsuario = async (pNombre, pApellido, pDNI, pEmail, pTelefono) => {
+exports.crearUsuario = async (datos) => {
     console.log('Usuarios Repository - crearUsuario')
     try{
-            let nuevo = await Usuarios.create({nombre: pNombre, apellido:pApellido, DNI:pDNI, email:pEmail, telefono:pTelefono})
+            let nuevo = await Usuarios.create({nombre: datos.nombre, apellido:datos.apellido, DNI:datos.DNI, email:datos.email, telefono:datos.telefono})
             console.log(nuevo)
             return nuevo
     }

@@ -33,10 +33,31 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://127.0.0.1:3000/usuarios/borrar/6a2c84da736ed5f23354bc97 HTTP/1.1
+DELETE http://127.0.0.1:3000/usuarios/borrar/4144151 HTTP/1.1
 
-###
-GET http://127.0.0.1:3000/usuarios/buscar/facundo HTTP/1.1
 
-###
-GET http://127.0.0.1:3000/usuarios/id/6a2c82d6736ed5f23354bc96
+// Pantalla de prestamos
+
+### PRESTAMOS - Traer todos (debería devolver [])
+GET http://DESKTOP-TRDB359:3000/prestamos HTTP/1.1
+
+### PRESTAMOS - Estadisticas
+GET http://DESKTOP-TRDB359:3000/prestamos/estadisticas HTTP/1.1
+
+### PRESTAMOS - Crear préstamo
+POST http://DESKTOP-TRDB359:3000/prestamos HTTP/1.1
+Content-Type: application/json
+
+{
+    "usuarioId": "6a2c82d6736ed5f23354bc96",
+    "libroId": "6a221557e105f786110ae39a"
+}
+
+### PRESTAMOS - Traer por ID (reemplazás el id por el que devolvió el POST)
+GET http://DESKTOP-TRDB359:3000/prestamos/6a2ed36878dd467447751989 HTTP/1.1
+
+### PRESTAMOS - Devolver libro
+PATCH http://127.0.0.1:3000/prestamos/ID_DEL_PRESTAMO HTTP/1.1
+
+### PRESTAMOS - Eliminar préstamo
+DELETE http://DESKTOP-TRDB359:3000/prestamos/6a2ed36878dd467447751989 HTTP/1.1
