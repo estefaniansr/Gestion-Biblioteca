@@ -8,7 +8,6 @@ import { TagComponent } from "../../components/tags/tags.component"; // importar
 import { TablaComponent } from "../../components/tabla/tabla.component"; // importar tabla
 import { ModalComponent } from "../../components/modal/modal.component"; // importar modal
 
-// types e interfaces
 import { Campo } from "../../models/campo.type";
 import { TipoDato } from "../../models/TipoDato.type";
 import { FilaTabla } from "../../models/filaTabla.type";
@@ -23,11 +22,9 @@ import { UsuariosService } from '../../pages/services/usuarios.services';
   styleUrl: './usuarios.pages.css'
 })
 
-
 export class UsuariosPages implements OnInit {
 
-  //ngOnInit ejecuta un codigo una vez cargo la pagina.
-  async ngOnInit(): Promise<void> {
+  async ngOnInit() {
     await this.actualizar()
   }
 
@@ -53,18 +50,17 @@ export class UsuariosPages implements OnInit {
   modalBorrarAbierto = false
   usuarioFiltrado?: Usuario
   cartel = false
-  //cosas necesarias por componentes, no declarado por UsuariosComponent:
-  activo = 'usuarios'; // estado general de la app
-  textoBusqueda = '' // guarda lo que escribe el user
-  textoBoton = '+ Nuevo' // titulo del btn x defecto
-  modalAbierto = false // el modal esta cerrado x defecto
+  activo = 'usuarios';
+  textoBusqueda = ''
+  textoBoton = '+ Nuevo'
+  modalAbierto = false
   mensajeModal = ''
-  paginaActual = 1 // la pag actual esta x defecto en la 1
+  paginaActual = 1
 
   columnasUsuarios = [{ key: 'nombre', label: 'nombre' }, { key: 'apellido', label: 'apellido' }, { key: 'DNI', label: 'DNI' }, { key: 'email', label: 'correo' }, { key: 'telefono', label: 'telefono' }]
-  // campos
 
-  CamposModal: Campo[] = [ // los campos que van al formulario del modal, editables
+
+  CamposModal: Campo[] = [
     { tipo: 'text', nombre: 'Nombre', label: 'Nombre', placeholder: 'Juan', requerido: true },
     { tipo: 'text', nombre: 'Apellido', label: 'Apellido', placeholder: 'Perez', requerido: true },
     { tipo: 'number', nombre: 'DNI', label: 'Numero de DNI', placeholder: '40123456', requerido: true },
@@ -72,7 +68,7 @@ export class UsuariosPages implements OnInit {
     { tipo: 'text', nombre: 'Telefono Celular', label: 'Telefono Celular', placeholder: '1124559071', requerido: true },
   ];
 
-  CamposModalEditar: CampoInput[] = [ // los campos que van al formulario del modal, editables
+  CamposModalEditar: CampoInput[] = [
     { tipo: 'text', nombre: 'Nombre', label: 'Nombre', placeholder: 'Juan', requerido: true },
   ];
 
@@ -96,7 +92,7 @@ export class UsuariosPages implements OnInit {
     }
   }
 
-  abrirModal() { // abre el modal
+  abrirModal() {
     this.modalAbierto = true
   }
 
@@ -105,9 +101,7 @@ export class UsuariosPages implements OnInit {
     this.modalAbierto = false
   }
 
-  // filtrado
-
-  async filtrado(valor: string) { // recibe el texto emitido x el componente
+  async filtrado(valor: string) {
     let texto = valor
     this.usuariosTabla = await this.usuarioService.usuarioBusqueda(texto)
 
@@ -116,9 +110,7 @@ export class UsuariosPages implements OnInit {
     }
   }
 
-  // acciones
-
-  async guardarModalUsuario(datos: Record<string, TipoDato>) { // pasa datos que es una clave string y un valor de la interfaz
+  async guardarModalUsuario(datos: Record<string, TipoDato>) {
     this.datosdeModal.nombre = String(datos["Nombre"])
     this.datosdeModal.apellido = String(datos["Apellido"])
     this.datosdeModal.DNI = Number(datos["DNI"])
@@ -207,11 +199,9 @@ export class UsuariosPages implements OnInit {
     }, 2500)
   }
 
-  // paginas
-
-  get EjPaginado(): FilaTabla[] { //datos paginados, maximo 10
-    const indice = (this.paginaActual - 1) * 10; //  calcula el indice segun la pag igual (-1 asi es 0) * 10
-    return this.usuariosTabla.slice(indice, indice + 10); // recorre el array y devuelve solo 10 elementos, desde indice hasta indice + 10
+  get EjPaginado(): FilaTabla[] {
+    const indice = (this.paginaActual - 1) * 10; 
+    return this.usuariosTabla.slice(indice, indice + 10);
   }
 
 }
