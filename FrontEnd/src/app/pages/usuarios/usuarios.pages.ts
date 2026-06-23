@@ -88,7 +88,7 @@ export class UsuariosComponent implements OnInit {
     this.cantidadUsuarios = this.usuariosLLamados.length
   }
 
-async buscador(input:any) {
+async buscador(input:string) {
   try { 
     let respuesta = await this.usuarioService.usuarioBusqueda(input);
     this.usuariosTabla = respuesta;
@@ -117,8 +117,7 @@ async buscador(input:any) {
     }
   }
 
-  onFiltrar(valor:any) { // pasa un valor x argumento
-    
+  onFiltrar(valor:string) { // pasa un valor x argumento
     this.filtroSeleccionado = valor // y el filtro seleccionado se le pone el valor del argumento
   }
 
@@ -157,10 +156,9 @@ async buscador(input:any) {
     this.actualizar()
   }
 
-  async editarUsuario(datos:any){
-
+  async editarUsuario(datos:{_id:string; datos:Usuario}){
+    console.log(typeof datos)
     await this.usuarioService.editarUsuario(datos.datos._id, datos.datos)
-
   }
 
   eliminarUsuarioBoton(id:String | Number) {
