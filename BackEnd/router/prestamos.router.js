@@ -10,6 +10,7 @@ routerPrestamos.get('/estadisticas', prestamosController.obtenerEstadisticasCont
 routerPrestamos.get('/:id', prestamosController.traerPrestamoPorIdController)
 routerPrestamos.post('/', prestamosController.crearPrestamoController)
 routerPrestamos.patch('/:id', prestamosController.devolverLibroController)
+routerPrestamos.patch('/:id/estado', prestamosController.actualizarEstadoController)
 routerPrestamos.delete('/:id', prestamosController.eliminarPrestamoController)
 
 module.exports = { routerPrestamos }

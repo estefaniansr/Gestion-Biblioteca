@@ -90,17 +90,18 @@ export class PrestamosPages implements OnInit {
   }
 
   Editar(id: string, datos: Record<string, any>) {
-    this.prestamosService.DevolverPrestamo(id).subscribe({
-      next: (res) => {
-        console.log('Préstamo devuelto', res)
-        this.cargarPrestamos()
-        this.cargarEstadisticas()
-      },
-      error: (err) => {
-        console.log('Error al devolver el préstamo', err)
-      }
+    const nuevoEstado = datos['estado']
+    this.prestamosService.ActualizarEstado(id, nuevoEstado).subscribe({
+        next: (res) => {
+            console.log('Estado actualizado', res)
+            this.cargarPrestamos()
+            this.cargarEstadisticas()
+        },
+        error: (err) => {
+            console.log('Error al actualizar estado', err)
+        }
     })
-  }
+}
 
   transformarParaTabla(prestamos: Prestamo[]): FilaTabla[] {
     return prestamos.map(p => ({

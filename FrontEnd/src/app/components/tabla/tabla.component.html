@@ -1,224 +1,223 @@
 <div class="tabla-contenedor">
 
-    <!-- Tabla principal -->
-    <table class="tabla">
+  <!-- Tabla principal -->
+  <table class="tabla">
 
-        <!-- Cabecera de la tabla -->
-        <thead>
-            <tr>
-                @for (columnas of columnasLimitadas; track columnas) {
+    <!-- Cabecera de la tabla -->
+    <thead>
+      <tr>
+        @for (columnas of columnasLimitadas; track columnas) {
 
-                <!-- Renderiza dinámicamente las columnas visibles de columnasLimitadas ts -->
-                <th>
-                    {{ columnas.label }}
-                </th>
-                }
+        <!-- Renderiza dinámicamente las columnas visibles de columnasLimitadas ts -->
+        <th>
+          {{ columnas.label }}
+        </th>
+        }
 
-                <!-- Columna fija de acciones -->
-                <th class="th-acciones">Acciones</th>
+        <!-- Columna fija de acciones -->
+        <th class="th-acciones">Acciones</th>
 
-            </tr>
-        </thead>
+      </tr>
+    </thead>
 
-        <!-- Cuerpo de la tabla -->
-        <tbody>
-            @for (fila of datos; track fila){
+    <!-- Cuerpo de la tabla -->
+    <tbody>
+      @for (fila of datos; track fila){
 
-            <!-- Recorre cada fila de datos -->
-            <tr>
-                <!-- Recorre cada columna para mostrar su valor -->
-                @for (columnas of columnasLimitadas; track columnas) {
+      <!-- Recorre cada fila de datos -->
+      <tr>
+        <!-- Recorre cada columna para mostrar su valor -->
+        @for (columnas of columnasLimitadas; track columnas) {
 
-                <td class="celda">
+        <td class="celda">
 
-                    <div class="celda-contenido">
+          <div class="celda-contenido">
 
-                        <!-- modo ver muestra el valor de la celda segun la clave de la columna -->
-                        @if (filaEditando !== fila) {
-                        {{ fila[columnas.key] }}
-                        }
-
-                        @else {
-                        <!-- modo editar -->
-                        <!-- Input ligado al objeto de fila editando -->
-                        <input [(ngModel)]="filaEditando![columnas.key]" [disabled]="esCampoBloqueado(columnas.key)"
-                            (ngModelChange)="filaEditando![columnas.key] = $event" class="input-edicion" />
-                        <!-- [(ngModel)] muestra el valor -->
-                        <!-- (ngModelChange) -> actualiza el objeto, ! si existe -->
-                        }
-                    </div>
-
-                </td>
-                }
-
-                <td class="td-acciones">
-
-                    <div class="acciones-grupo">
-                        @if (filaEditando !== fila) {
-
-                        <!-- (sin editar) -->
-                        <!-- Botón editar, con el click ejecuta onEditar pasando argumento fila -->
-                        <button class="btn-accion" (click)="onEditar(fila)" title="Editar">
-
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-                                fill="none">
-                                <g clip-path="url(#clip0_4418_6054)">
-                                    <path
-                                        d="M13.2599 3.59924L5.04985 12.2892C4.73985 12.6192 4.43985 13.2692 4.37985 13.7192L4.00985 16.9592C3.87985 18.1292 4.71985 18.9292 5.87985 18.7292L9.09985 18.1792C9.54985 18.0992 10.1799 17.7692 10.4899 17.4292L18.6999 8.73924C20.1199 7.23924 20.7599 5.52924 18.5499 3.43924C16.3499 1.36924 14.6799 2.09924 13.2599 3.59924Z"
-                                        stroke="var(--texto)" stroke-width="1.5" stroke-miterlimit="10"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                    <path opacity="0.4"
-                                        d="M11.8901 5.05078C12.3201 7.81078 14.5601 9.92078 17.3401 10.2008"
-                                        stroke="var(--texto)" stroke-width="1.5" stroke-miterlimit="10"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                    <path opacity="0.4" d="M3 22H21" stroke="var(--texto)" stroke-width="1.5"
-                                        stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_4418_6054">
-                                        <rect width="24" height="24" fill="var(--texto)" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-
-                        </button>
-                        }
-
-                        @else {
-                        <!-- modo edicion-->
-
-                        <button class="btn-accion" type="button" (click)="guardarEdicion()" title="Guardar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-                                fill="var(--texto)">
-                                <g clip-path="url(#clip0_4418_7375)">
-                                    <path
-                                        d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z"
-                                        fill="var(--texto)" style="fill: var(--fillg);" />
-                                    <path
-                                        d="M10.5799 15.5796C10.3799 15.5796 10.1899 15.4996 10.0499 15.3596L7.21994 12.5296C6.92994 12.2396 6.92994 11.7596 7.21994 11.4696C7.50994 11.1796 7.98994 11.1796 8.27994 11.4696L10.5799 13.7696L15.7199 8.62961C16.0099 8.33961 16.4899 8.33961 16.7799 8.62961C17.0699 8.91961 17.0699 9.39961 16.7799 9.68961L11.1099 15.3596C10.9699 15.4996 10.7799 15.5796 10.5799 15.5796Z"
-                                        fill="var(--texto)" style="fill: var(--fillg);" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_4418_7375">
-                                        <rect width="24" height="24" fill="var(--texto)" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </button>
-
-                        <button class="btn-accion" (click)="cancelarEdicion()" title="Cancelar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-                                fill="var(--texto)">
-                                <g clip-path="url(#clip0_4418_7347)">
-                                    <path
-                                        d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z"
-                                        fill="var(--texto)" style="fill: var(--fillg);" />
-                                    <path
-                                        d="M9.17011 15.5794C8.98011 15.5794 8.79011 15.5094 8.64011 15.3594C8.35011 15.0694 8.35011 14.5894 8.64011 14.2994L14.3001 8.63938C14.5901 8.34938 15.0701 8.34938 15.3601 8.63938C15.6501 8.92937 15.6501 9.40937 15.3601 9.69937L9.70011 15.3594C9.56011 15.5094 9.36011 15.5794 9.17011 15.5794Z"
-                                        fill="var(--texto)" style="fill: var(--fillg);" />
-                                    <path
-                                        d="M14.8301 15.5794C14.6401 15.5794 14.4501 15.5094 14.3001 15.3594L8.64011 9.69937C8.35011 9.40937 8.35011 8.92937 8.64011 8.63938C8.93011 8.34938 9.41011 8.34938 9.70011 8.63938L15.3601 14.2994C15.6501 14.5894 15.6501 15.0694 15.3601 15.3594C15.2101 15.5094 15.0201 15.5794 14.8301 15.5794Z"
-                                        fill="var(--texto)" style="fill: var(--fillg);" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_4418_7347">
-                                        <rect width="24" height="24" fill="var(--texto)" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </button>
-
-                        }
-
-                        @if(mostrarEliminar) {
-
-                        <button class="btn-accion eliminar" (click)="onEliminar(fila)" title="Eliminar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-                                fill="var(--texto)">
-                                <g clip-path="url(#clip0_4418_7385)">
-                                    <path
-                                        d="M20.9999 6.73046C20.9799 6.73046 20.9499 6.73046 20.9199 6.73046C15.6299 6.20046 10.3499 6.00046 5.11992 6.53046L3.07992 6.73046C2.65992 6.77046 2.28992 6.47046 2.24992 6.05046C2.20992 5.63046 2.50992 5.27046 2.91992 5.23046L4.95992 5.03046C10.2799 4.49046 15.6699 4.70046 21.0699 5.23046C21.4799 5.27046 21.7799 5.64046 21.7399 6.05046C21.7099 6.44046 21.3799 6.73046 20.9999 6.73046Z"
-                                        fill="var(--texto)" style="fill: var(--fillg);" />
-                                    <path
-                                        d="M8.50001 5.72C8.46001 5.72 8.42001 5.72 8.37001 5.71C7.97001 5.64 7.69001 5.25 7.76001 4.85L7.98001 3.54C8.14001 2.58 8.36001 1.25 10.69 1.25H13.31C15.65 1.25 15.87 2.63 16.02 3.55L16.24 4.85C16.31 5.26 16.03 5.65 15.63 5.71C15.22 5.78 14.83 5.5 14.77 5.1L14.55 3.8C14.41 2.93 14.38 2.76 13.32 2.76H10.7C9.64001 2.76 9.62001 2.9 9.47001 3.79L9.24001 5.09C9.18001 5.46 8.86001 5.72 8.50001 5.72Z"
-                                        fill="var(--texto)" style="fill: var(--fillg);" />
-                                    <path
-                                        d="M15.2099 22.7496H8.7899C5.2999 22.7496 5.1599 20.8196 5.0499 19.2596L4.3999 9.18959C4.3699 8.77959 4.6899 8.41959 5.0999 8.38959C5.5199 8.36959 5.8699 8.67959 5.8999 9.08959L6.5499 19.1596C6.6599 20.6796 6.6999 21.2496 8.7899 21.2496H15.2099C17.3099 21.2496 17.3499 20.6796 17.4499 19.1596L18.0999 9.08959C18.1299 8.67959 18.4899 8.36959 18.8999 8.38959C19.3099 8.41959 19.6299 8.76959 19.5999 9.18959L18.9499 19.2596C18.8399 20.8196 18.6999 22.7496 15.2099 22.7496Z"
-                                        fill="var(--texto)" style="fill: var(--fillg);" />
-                                    <path
-                                        d="M13.6601 17.25H10.3301C9.92008 17.25 9.58008 16.91 9.58008 16.5C9.58008 16.09 9.92008 15.75 10.3301 15.75H13.6601C14.0701 15.75 14.4101 16.09 14.4101 16.5C14.4101 16.91 14.0701 17.25 13.6601 17.25Z"
-                                        fill="var(--texto)" style="fill: var(--fillg);" />
-                                    <path
-                                        d="M14.5 13.25H9.5C9.09 13.25 8.75 12.91 8.75 12.5C8.75 12.09 9.09 11.75 9.5 11.75H14.5C14.91 11.75 15.25 12.09 15.25 12.5C15.25 12.91 14.91 13.25 14.5 13.25Z"
-                                        fill="var(--texto)" style="fill: var(--fillg);" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_4418_7385">
-                                        <rect width="24" height="24" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                        </button>
-                        }
-
-                    </div>
-
-                </td>
-            </tr>
+            <!-- modo ver muestra el valor de la celda segun la clave de la columna -->
+            @if (filaEditando !== fila) {
+            {{ fila[columnas.key] }}
             }
 
-        </tbody>
+            @else {
+    @if (columnas.key === 'estado') {
+        <select [(ngModel)]="filaEditando![columnas.key]" class="input-edicion">
+            <option value="Activo">Activo</option>
+            <option value="Devuelto">Devuelto</option>
+            <option value="Vencido">Vencido</option>
+        </select>
+    } @else {
+        <input [(ngModel)]="filaEditando![columnas.key]"
+            [disabled]="esCampoBloqueado(columnas.key)"
+            (ngModelChange)="filaEditando![columnas.key] = $event"
+            class="input-edicion" />
+    }
+}
+          </div>
 
-    </table>
+        </td>
+        }
 
-    <div class="paginacion">
+        <td class="td-acciones">
 
-        <!-- mostrando la cant de paginas finales -->
-        <span class="mostrando">
-            Mostrando {{ (paginaActual - 1) * itemsPorPagina + 1 }}
-            a {{ itemsHasta }}
-            de {{ totalItems }}
-        </span>
+          <div class="acciones-grupo">
+            @if (filaEditando !== fila) {
 
-        <div class="paginas">
+            <!-- (sin editar) -->
+            <!-- Botón editar, con el click ejecuta onEditar pasando argumento fila -->
+            <button class="btn-accion" (click)="onEditar(fila)" title="Editar">
 
-            <button class="btn-pag" (click)="anterior()" [disabled]="paginaActual === 1">
-
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none">
-                    <path
-                        d="M14.9998 19.9201L8.47984 13.4001C7.70984 12.6301 7.70984 11.3701 8.47984 10.6001L14.9998 4.08008"
-                        stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                </svg>
-
-            </button>
-
-            <!-- listado de paginas -->
-            @for (pags of paginas; track pags) {
-            <!-- num de pag -->
-            <button class="btn-pag" [class.activa]="pags === paginaActual" (click)="irPagina(pags)">
-                @if (pags !== '...'){
-                {{ pags }}
-                }
-            </button>
-
-            @if (pags === '...'){
-            <span class="puntos"> ...</span>
-            }
-            <button class="btn-pag" (click)="siguiente()" [disabled]="paginaActual === totalPaginas">
-
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none">
-                    <path
-                        d="M8.90991 19.9201L15.4299 13.4001C16.1999 12.6301 16.1999 11.3701 15.4299 10.6001L8.90991 4.08008"
-                        stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <g clip-path="url(#clip0_4418_6054)">
+                  <path
+                    d="M13.2599 3.59924L5.04985 12.2892C4.73985 12.6192 4.43985 13.2692 4.37985 13.7192L4.00985 16.9592C3.87985 18.1292 4.71985 18.9292 5.87985 18.7292L9.09985 18.1792C9.54985 18.0992 10.1799 17.7692 10.4899 17.4292L18.6999 8.73924C20.1199 7.23924 20.7599 5.52924 18.5499 3.43924C16.3499 1.36924 14.6799 2.09924 13.2599 3.59924Z"
+                    stroke="var(--texto)" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path opacity="0.4" d="M11.8901 5.05078C12.3201 7.81078 14.5601 9.92078 17.3401 10.2008"
+                    stroke="var(--texto)" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path opacity="0.4" d="M3 22H21" stroke="var(--texto)" stroke-width="1.5" stroke-miterlimit="10"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_4418_6054">
+                    <rect width="24" height="24" fill="var(--texto)" />
+                  </clipPath>
+                </defs>
+              </svg>
 
             </button>
             }
 
-        </div>
+            @else {
+            <!-- modo edicion-->
+
+            <button class="btn-accion" type="button" (click)="guardarEdicion()" title="Guardar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="var(--texto)">
+                <g clip-path="url(#clip0_4418_7375)">
+                  <path
+                    d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z"
+                    fill="var(--texto)" style="fill: var(--fillg);" />
+                  <path
+                    d="M10.5799 15.5796C10.3799 15.5796 10.1899 15.4996 10.0499 15.3596L7.21994 12.5296C6.92994 12.2396 6.92994 11.7596 7.21994 11.4696C7.50994 11.1796 7.98994 11.1796 8.27994 11.4696L10.5799 13.7696L15.7199 8.62961C16.0099 8.33961 16.4899 8.33961 16.7799 8.62961C17.0699 8.91961 17.0699 9.39961 16.7799 9.68961L11.1099 15.3596C10.9699 15.4996 10.7799 15.5796 10.5799 15.5796Z"
+                    fill="var(--texto)" style="fill: var(--fillg);" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_4418_7375">
+                    <rect width="24" height="24" fill="var(--texto)" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+
+            <button class="btn-accion" (click)="cancelarEdicion()" title="Cancelar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="var(--texto)">
+                <g clip-path="url(#clip0_4418_7347)">
+                  <path
+                    d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z"
+                    fill="var(--texto)" style="fill: var(--fillg);" />
+                  <path
+                    d="M9.17011 15.5794C8.98011 15.5794 8.79011 15.5094 8.64011 15.3594C8.35011 15.0694 8.35011 14.5894 8.64011 14.2994L14.3001 8.63938C14.5901 8.34938 15.0701 8.34938 15.3601 8.63938C15.6501 8.92937 15.6501 9.40937 15.3601 9.69937L9.70011 15.3594C9.56011 15.5094 9.36011 15.5794 9.17011 15.5794Z"
+                    fill="var(--texto)" style="fill: var(--fillg);" />
+                  <path
+                    d="M14.8301 15.5794C14.6401 15.5794 14.4501 15.5094 14.3001 15.3594L8.64011 9.69937C8.35011 9.40937 8.35011 8.92937 8.64011 8.63938C8.93011 8.34938 9.41011 8.34938 9.70011 8.63938L15.3601 14.2994C15.6501 14.5894 15.6501 15.0694 15.3601 15.3594C15.2101 15.5094 15.0201 15.5794 14.8301 15.5794Z"
+                    fill="var(--texto)" style="fill: var(--fillg);" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_4418_7347">
+                    <rect width="24" height="24" fill="var(--texto)" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+
+            }
+
+            @if(mostrarEliminar) {
+
+            <button class="btn-accion eliminar" (click)="onEliminar(fila)" title="Eliminar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="var(--texto)">
+                <g clip-path="url(#clip0_4418_7385)">
+                  <path
+                    d="M20.9999 6.73046C20.9799 6.73046 20.9499 6.73046 20.9199 6.73046C15.6299 6.20046 10.3499 6.00046 5.11992 6.53046L3.07992 6.73046C2.65992 6.77046 2.28992 6.47046 2.24992 6.05046C2.20992 5.63046 2.50992 5.27046 2.91992 5.23046L4.95992 5.03046C10.2799 4.49046 15.6699 4.70046 21.0699 5.23046C21.4799 5.27046 21.7799 5.64046 21.7399 6.05046C21.7099 6.44046 21.3799 6.73046 20.9999 6.73046Z"
+                    fill="var(--texto)" style="fill: var(--fillg);" />
+                  <path
+                    d="M8.50001 5.72C8.46001 5.72 8.42001 5.72 8.37001 5.71C7.97001 5.64 7.69001 5.25 7.76001 4.85L7.98001 3.54C8.14001 2.58 8.36001 1.25 10.69 1.25H13.31C15.65 1.25 15.87 2.63 16.02 3.55L16.24 4.85C16.31 5.26 16.03 5.65 15.63 5.71C15.22 5.78 14.83 5.5 14.77 5.1L14.55 3.8C14.41 2.93 14.38 2.76 13.32 2.76H10.7C9.64001 2.76 9.62001 2.9 9.47001 3.79L9.24001 5.09C9.18001 5.46 8.86001 5.72 8.50001 5.72Z"
+                    fill="var(--texto)" style="fill: var(--fillg);" />
+                  <path
+                    d="M15.2099 22.7496H8.7899C5.2999 22.7496 5.1599 20.8196 5.0499 19.2596L4.3999 9.18959C4.3699 8.77959 4.6899 8.41959 5.0999 8.38959C5.5199 8.36959 5.8699 8.67959 5.8999 9.08959L6.5499 19.1596C6.6599 20.6796 6.6999 21.2496 8.7899 21.2496H15.2099C17.3099 21.2496 17.3499 20.6796 17.4499 19.1596L18.0999 9.08959C18.1299 8.67959 18.4899 8.36959 18.8999 8.38959C19.3099 8.41959 19.6299 8.76959 19.5999 9.18959L18.9499 19.2596C18.8399 20.8196 18.6999 22.7496 15.2099 22.7496Z"
+                    fill="var(--texto)" style="fill: var(--fillg);" />
+                  <path
+                    d="M13.6601 17.25H10.3301C9.92008 17.25 9.58008 16.91 9.58008 16.5C9.58008 16.09 9.92008 15.75 10.3301 15.75H13.6601C14.0701 15.75 14.4101 16.09 14.4101 16.5C14.4101 16.91 14.0701 17.25 13.6601 17.25Z"
+                    fill="var(--texto)" style="fill: var(--fillg);" />
+                  <path
+                    d="M14.5 13.25H9.5C9.09 13.25 8.75 12.91 8.75 12.5C8.75 12.09 9.09 11.75 9.5 11.75H14.5C14.91 11.75 15.25 12.09 15.25 12.5C15.25 12.91 14.91 13.25 14.5 13.25Z"
+                    fill="var(--texto)" style="fill: var(--fillg);" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_4418_7385">
+                    <rect width="24" height="24" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+            }
+
+          </div>
+
+        </td>
+      </tr>
+      }
+
+    </tbody>
+
+  </table>
+
+  <div class="paginacion">
+
+    <!-- mostrando la cant de paginas finales -->
+    <span class="mostrando">
+      Mostrando {{ (paginaActual - 1) * itemsPorPagina + 1 }}
+      a {{ itemsHasta }}
+      de {{ totalItems }}
+    </span>
+
+    <div class="paginas">
+
+      <button class="btn-pag" (click)="anterior()" [disabled]="paginaActual === 1">
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none">
+          <path d="M14.9998 19.9201L8.47984 13.4001C7.70984 12.6301 7.70984 11.3701 8.47984 10.6001L14.9998 4.08008"
+            stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+
+      </button>
+
+      <!-- listado de paginas -->
+      @for (pags of paginas; track pags) {
+      <!-- num de pag -->
+      <button class="btn-pag" [class.activa]="pags === paginaActual" (click)="irPagina(pags)">
+        @if (pags !== '...'){
+        {{ pags }}
+        }
+      </button>
+
+      @if (pags === '...'){
+      <span class="puntos"> ...</span>
+      }
+      <button class="btn-pag" (click)="siguiente()" [disabled]="paginaActual === totalPaginas">
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none">
+          <path d="M8.90991 19.9201L15.4299 13.4001C16.1999 12.6301 16.1999 11.3701 15.4299 10.6001L8.90991 4.08008"
+            stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+
+      </button>
+      }
 
     </div>
+
+  </div>
 
 </div>

@@ -51,7 +51,7 @@
 
   </div>
 
-  <app-tabla [columnas]="columnas" [datos]="EjPaginado" [mostrarEliminar]="false" [totalItems]="datosTablaArray.length"
+  <app-tabla [columnas]="columnas" [datos]="EjPaginado" [camposBloqueados]="['libro', 'usuario', 'fechaAlta', 'fechaVenc']" [mostrarEliminar]="false" [totalItems]="datosTablaArray.length"
     [itemsPorPagina]="10" [paginaActual]="paginaActual" (cambioPagina)="paginaActual = $event"
     (editar)="Editar($event['id'], $event['datos'])">
   </app-tabla>

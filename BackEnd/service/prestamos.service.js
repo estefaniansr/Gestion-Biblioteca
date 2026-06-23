@@ -56,6 +56,15 @@ exports.devolverLibroService = async (pId) => {
     }
 }
 
+exports.actualizarEstadoService = async (pId, pEstado) => {
+    try {
+        console.log('Prestamos Service - actualizarEstadoService')
+        return await prestamosRepository.actualizarEstadoRepository(pId, pEstado)
+    } catch (error) {
+        console.log('Error en actualizarEstadoService', error)
+    }
+}
+
 exports.eliminarPrestamoService = async (pId) => {
     try {
         console.log('Prestamos Service - eliminarPrestamoService')

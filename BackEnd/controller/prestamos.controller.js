@@ -85,6 +85,28 @@ exports.devolverLibroController = async (req, res) => {
     }
 }
 
+exports.actualizarEstadoController = async (req, res) => {
+    try {
+        console.log('Prestamos Controller - actualizarEstadoController')
+        const id = req.params.id
+        const { estado } = req.body
+
+        const prestamo = await prestamosService.actualizarEstadoService(id, estado)
+
+        if (!prestamo) {
+            return res.status(404).send(`No se encontró el préstamo con id: ${id}`)
+        }
+
+        res.status(200).send(JSON.stringify(prestamo))
+    } catch (error) {
+        console.log('Error en actualizarEstadoController', error)
+        res.status(500).send({
+            code: 500,
+            message: "Error al actualizar el estado del préstamo"
+        })
+    }
+}
+
 exports.eliminarPrestamoController = async (req, res) => {
     try {
         console.log('Prestamos Controller - eliminarPrestamoController')

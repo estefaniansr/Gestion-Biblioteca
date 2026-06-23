@@ -116,4 +116,19 @@ exports.eliminarPrestamoRepository = async (pId) => {
     }
 }
 
+exports.actualizarEstadoRepository = async (pId, pEstado) => {
+    try {
+        console.log('Prestamos Repository - actualizarEstado')
+        const prestamo = await Prestamos.findByIdAndUpdate(
+            pId,
+            { $set: { estado: pEstado } },
+            { new: true }
+        )
+        if (!prestamo) return null
+        return prestamo
+    } catch (error) {
+        console.log('ERROR en Prestamos Repository - actualizarEstado', error)
+        throw error
+    }
+}
 

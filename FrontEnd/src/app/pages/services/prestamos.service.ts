@@ -29,6 +29,10 @@ export class PrestamosService {
         return this.http.patch(`${this.apiUrl}/${id}`, {});
     }
 
+    ActualizarEstado(id: string, estado: string) {
+    return this.http.patch(`${this.apiUrl}/${id}/estado`, { estado })
+}
+
     EliminarPrestamo(id: string) {
         return this.http.delete(`${this.apiUrl}/${id}`);
     }
