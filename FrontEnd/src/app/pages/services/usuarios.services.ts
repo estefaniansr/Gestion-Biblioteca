@@ -28,7 +28,7 @@ export class UsuariosService {
         pEmail: string,
         pTelefono: string | number
     ) {
-        return this.http.post(this.apiUrl, {
+        return this.http.post(`${this.apiUrl}/crear`, {
             nombre: pNombre,
             apellido: pApellido,
             DNI: Number(pDNI),
@@ -38,10 +38,10 @@ export class UsuariosService {
     }
 
     public editarUsuario(id: string, datos: Record<string, TipoDato>) {
-        return this.http.put(`${this.apiUrl}/${id}`, datos);
+        return this.http.put(`${this.apiUrl}/modificar/${id}`, datos);
     }
 
     public borrarUsuario(id: string) {
-        return this.http.delete(`${this.apiUrl}/${id}`);
+        return this.http.delete(`${this.apiUrl}/borrar/${id}`);
     }
 }

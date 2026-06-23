@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { LibrosPages } from './FrontEnd/src/app/pages/libros/libros.pages';
-import { UsuariosPages } from './FrontEnd/src/app/pages/usuarios/usuarios.pages';
-import { PrestamosPages } from './FrontEnd/src/app/pages/prestamos/prestamos.pages';
-import { CategoriasPages } from './FrontEnd/src/app/pages/categorias/categorias.pages';
+import { LibrosPages } from './pages/libros/libros.pages';
+import { UsuariosPages } from './pages/usuarios/usuarios.pages';
+import { PrestamosPages } from './pages/prestamos/prestamos.pages';
+import { CategoriasPages } from './pages/categorias/categorias.pages';
 
 export const routes: Routes = [
     {

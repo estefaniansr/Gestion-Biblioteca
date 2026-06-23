@@ -73,65 +73,49 @@ export class UsuariosPages implements OnInit {
   constructor(private usuarioService: UsuariosService) { }
 
   actualizar() {
-    this.usuarioService.obtenerUsuarios().suscribe({
-      next: (data) => {
-        this.usuariosTabla = data;
-        this.usuariosLLamados = data;
-        this.cantidadUsuarios = data.length;
-      },
-      error: () => {
-        console.log("error al cargar usuarios")
-      }
+    this.usuarioService.obtenerUsuarios().subscribe((usuarios)=>{
+      this.usuariosLLamados = usuarios
+      this.usuariosTabla = this.usuariosLLamados
+      this.cantidadUsuarios = this.usuariosLLamados.length
+    })
+
+  }
+
+  buscador(input: string) {
+    if(input == ''){
+      this.usuariosTabla = this.usuariosLLamados
+    }
+    this.usuarioService.usuarioBusqueda(input).subscribe(usuarios => {
+      this.usuariosTabla = usuarios
     })
   }
 
-  async buscador(input: string) {
-      if(input == '') {
-        this.usuariosTabla = this.usuariosLLamados
-        return
-      }
-    try {
-      let respuesta = await this.usuarioService.usuarioBusqueda(input);
-      this.usuariosTabla = respuesta;
-    } catch (error) {
-      console.log('error al buscar');
-    }
-  }
-
-  async guardarModalUsuario(datos: Record<string, TipoDato>) {
+  guardarModalUsuario(datos: Record<string, TipoDato>){
     this.datosdeModal.nombre = String(datos["Nombre"])
     this.datosdeModal.apellido = String(datos["Apellido"])
     this.datosdeModal.DNI = Number(datos["DNI"])
     this.datosdeModal.email = String(datos["Email"])
     this.datosdeModal.telefono = Number(datos["Telefono Celular"])
-
-
-    let respuesta = await this.usuarioService.crearUsuario(this.datosdeModal.nombre,
-      this.datosdeModal.apellido,
-      this.datosdeModal.DNI,
-      this.datosdeModal.email,
-      this.datosdeModal.telefono)
-
-    if (respuesta.ok == true) {
-      setTimeout(() => {
+    this.usuarioService.crearUsuario(this.datosdeModal.nombre, this.datosdeModal.apellido, this.datosdeModal.DNI, this.datosdeModal.email, this.datosdeModal.telefono).subscribe((next) => {
+      setTimeout(()=>{
         this.modalAbierto = false
         this.actualizar()
-      }, 250)
-    }
-
+      },250)
+    })
   }
 
-  async editarUsuario(event: { id: string; datos: Record<string, TipoDato> }) {
-    await this.usuarioService.editarUsuario(event.id, event.datos);
+  editarUsuario(event: { id: string; datos: Record<string, TipoDato> }) {
+    this.usuarioService.editarUsuario(event.id, event.datos).subscribe((res)=>{
+      console.log(res)
+    })
   }
 
-  async borrarUsuario(idUsuario: String) {
-    let respuesta = await this.usuarioService.borrarUsuario(idUsuario)
-    if (respuesta.ok == true) {
-      setTimeout(() => {
+  borrarUsuario(idUsuario: string) {
+    this.usuarioService.borrarUsuario(idUsuario).subscribe((next) => {
+      setTimeout(()=> {
         this.actualizar()
       }, 250)
-    }
+    })
   }
 
   get EjPaginado(): FilaTabla[] {
