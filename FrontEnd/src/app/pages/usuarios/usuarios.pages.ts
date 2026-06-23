@@ -83,6 +83,10 @@ export class UsuariosPages implements OnInit {
   }
 
   async buscador(input: string) {
+      if(input == '') {
+        this.usuariosTabla = this.usuariosLLamados
+        return
+      }
     try {
       let respuesta = await this.usuarioService.usuarioBusqueda(input);
       this.usuariosTabla = respuesta;
