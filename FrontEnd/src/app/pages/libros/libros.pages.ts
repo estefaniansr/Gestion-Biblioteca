@@ -28,7 +28,7 @@ import { PrestamosService } from "../services/prestamos.services";
 })
 
 export class LibrosPages implements OnInit {
-    // implementa la interfaz onInit de angular para que poder usar sus metodos
+    
 
     activo = 'libros'
     opciones = [];
@@ -69,7 +69,7 @@ export class LibrosPages implements OnInit {
         'No func'
     ]
 
-    constructor(private librosService: LibrosService, private categoriasService: CategoriasService, private prestamosService: PrestamosService) { } // servicio que se comunica con el service
+    constructor(private librosService: LibrosService, private categoriasService: CategoriasService, private prestamosService: PrestamosService) { } 
 
     cargarDatos() {
         this.librosService.ObtenerLibros().subscribe({
@@ -131,7 +131,7 @@ export class LibrosPages implements OnInit {
         })
     }
 
-    ngOnInit(): void { //  cuando carga el componente
+    ngOnInit(): void { 
         this.cargarDatos()
         this.cargarCategorias()
         this.cargarPrestados()

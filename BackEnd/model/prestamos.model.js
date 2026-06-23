@@ -40,5 +40,3 @@ const prestamosSchema = mongoose.Schema(
 )
 
 module.exports = mongoose.model('Prestamos', prestamosSchema, 'prestamos')
-
-// comentar lo de ObjectId

@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 
-// componentes
 import { headerComponente } from "../../components/header/header.component";
 import { BuscadorComponente } from "../../components/buscador/buscador.component";
 import { BotonComponente } from "../../components/boton/boton.component";
@@ -8,13 +7,11 @@ import { TituloComponent } from "../../components/titulo/titulo.component";
 import { TagComponent } from "../../components/tags/tags.component";
 import { TablaComponent } from "../../components/tabla/tabla.component";
 
-// models
 import { Prestamo } from "../../models/prestamo.interface";
 import { EstadisticasPrestamos } from "../../models/estadisticasPrestamos.interface";
 import { FilaTabla } from "../../models/filaTabla.type";
 import { ModalComponent } from "../../components/modal/modal.component";
 
-// services
 import { PrestamosService } from "../services/prestamos.services";
 import { HttpClient } from "@angular/common/http";
 import { Campo } from "../../models/campo.type";

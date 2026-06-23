@@ -44,12 +44,12 @@ export class TablaComponent {
 
 
     columnasLimitadas(): columnaTabla[] {
-        return this.columnas.slice(0, 10); // copia el lugar del array de la posicion 0 a la 10
+        return this.columnas.slice(0, 10); 
     }
 
     totalPaginas(): number {
         return Math.ceil(this.totalItems / this.itemsPorPagina);
-        // Math.ceil redondea par arriba
+        
     }
 
     paginas(): (number | string)[] {
@@ -59,7 +59,7 @@ export class TablaComponent {
 
         if (total <= 5) {
             return Array.from({ length: total }, (_, i) => i + 1);
-            // crea un array del 1 al total
+            
         }
 
         const pages: (number | string)[] = [1];
@@ -88,7 +88,7 @@ export class TablaComponent {
         this.filaEditando = item;
 
 
-        this.filaEditada = { ...item } // ... trae los items para clonar sin modificar la original
+        this.filaEditada = { ...item } 
     }
 
     cancelarEdicion() {

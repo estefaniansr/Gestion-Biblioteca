@@ -3,7 +3,7 @@ import { TipoDato } from '../../models/TipoDato.type';
 import { Usuario } from '../../models/usuarios.model';
 
 @Injectable({
-    providedIn: 'root' // el servicio esta disponible globalmente
+    providedIn: 'root'
 })
 
 export class UsuariosService {

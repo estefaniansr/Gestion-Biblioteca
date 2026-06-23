@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-import { headerComponente } from "../../components/header/header.component"; // importar el header
-import { BuscadorComponente } from "../../components/buscador/buscador.component"; // importar el buscador
-import { BotonComponente } from "../../components/boton/boton.component"; // importar el boton
-import { TituloComponent } from "../../components/titulo/titulo.component"; // importar titulo
-import { TagComponent } from "../../components/tags/tags.component"; // importar tags
-import { TablaComponent } from "../../components/tabla/tabla.component"; // importar tabla
-import { ModalComponent } from "../../components/modal/modal.component"; // importar modal
+import { headerComponente } from "../../components/header/header.component"; 
+import { BuscadorComponente } from "../../components/buscador/buscador.component"; 
+import { BotonComponente } from "../../components/boton/boton.component"; 
+import { TituloComponent } from "../../components/titulo/titulo.component"; 
+import { TagComponent } from "../../components/tags/tags.component"; 
+import { TablaComponent } from "../../components/tabla/tabla.component"; 
+import { ModalComponent } from "../../components/modal/modal.component"; 
 
 import { Campo } from "../../models/campo.type";
 import { TipoDato } from "../../models/TipoDato.type";

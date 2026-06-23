@@ -13,7 +13,7 @@ export class headerComponente {
     @Input() activo: string = ''
     oscuro: boolean = false
 
-    // Inyeccion del servicio Router para navegar entre páginas
+    
     constructor(private router: Router) { }
 
     cambiarTema() {

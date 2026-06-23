@@ -1,29 +1,29 @@
 import { Component, OnInit } from "@angular/core";
 
 
-// componentes
-import { headerComponente } from "../../components/header/header.component"; // importar el header
-import { BuscadorComponente } from "../../components/buscador/buscador.component"; // importar el buscador
-import { BotonComponente } from "../../components/boton/boton.component"; // importar el boton
-import { TituloComponent } from "../../components/titulo/titulo.component"; // importar titulo
-import { TagComponent } from "../../components/tags/tags.component"; // importar tags
-import { TablaComponent } from "../../components/tabla/tabla.component"; // importar tabla
-import { ModalComponent } from "../../components/modal/modal.component"; // importar modal
 
-// types e interfaces
+import { headerComponente } from "../../components/header/header.component"; 
+import { BuscadorComponente } from "../../components/buscador/buscador.component"; 
+import { BotonComponente } from "../../components/boton/boton.component"; 
+import { TituloComponent } from "../../components/titulo/titulo.component"; 
+import { TagComponent } from "../../components/tags/tags.component"; 
+import { TablaComponent } from "../../components/tabla/tabla.component"; 
+import { ModalComponent } from "../../components/modal/modal.component"; 
+
+
 import { Campo } from "../../models/campo.type";
 import { TipoDato } from "../../models/TipoDato.type";
 import { FilaTabla } from "../../models/filaTabla.type";
 import { CampoSelect } from "../../models/campoSelect.interface";
 import { Categoria } from "../../models/categoria.interface";
-// services
+
 import { LibrosService } from "../services/libros.services";
 import { CategoriasService } from "../services/categorias.services";
 import { PrestamosService } from "../services/prestamos.services";
 @Component({
     selector: 'app-libros',
     standalone: true,
-    imports: [headerComponente, BuscadorComponente, BotonComponente, TituloComponent, TagComponent, TablaComponent, ModalComponent], // importas los componentess
+    imports: [headerComponente, BuscadorComponente, BotonComponente, TituloComponent, TagComponent, TablaComponent, ModalComponent], 
     templateUrl: './categorias.pages.html',
     styleUrl: './categorias.pages.css'
 })
@@ -60,15 +60,15 @@ export class CategoriasPages implements OnInit {
         }
     ]
 
-    constructor(private librosService: LibrosService, private categoriasService: CategoriasService, private prestamosService: PrestamosService) { } // servicio que se comunica con la API
-    private convertirAFilaTabla(categorias: Categoria[]): //recibe como parametro array de obj. categoria
-    FilaTabla[] //devuelve array de obj. filatabla
+    constructor(private librosService: LibrosService, private categoriasService: CategoriasService, private prestamosService: PrestamosService) { } 
+    private convertirAFilaTabla(categorias: Categoria[]): 
+    FilaTabla[] 
      {
-    return categorias.map(categoria => ({ // recorre todos los elementos del array y devuelve un nuevo array
+    return categorias.map(categoria => ({ 
         _id: categoria._id,
         nombre: categoria.nombre,
-        descripcion: categoria.descripcion ?? '' // los signos son para indicar, si lo que esta del lado izquierdo es undefined usar lo de la derecha
-    })); // crea un nuevo objeto con esos campos
+        descripcion: categoria.descripcion ?? '' 
+    })); 
 }
 cargarDatos() {
     this.categoriasService.ObtenerCategorias().subscribe({

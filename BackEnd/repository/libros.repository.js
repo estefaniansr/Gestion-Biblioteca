@@ -81,7 +81,7 @@ exports.buscarLibroRepository = async (input) => {
         */
 
         const libro = await libros.find({
-            $or: [ // or busca si se cumple al menos una conidicon
+            $or: [ 
                 {
                     libro: flexible
                 },

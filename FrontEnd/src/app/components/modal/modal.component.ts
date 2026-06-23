@@ -24,7 +24,7 @@ export class ModalComponent implements OnChanges {
 
     valores: Record<string, TipoDato> = {};
 
-    ngOnChanges() { // se ejecuta automaticamente cuando cambia un @Input
+    ngOnChanges() { 
         if (this.abierto) {
             document.body.style.overflow = 'hidden';
         } else {
@@ -32,17 +32,17 @@ export class ModalComponent implements OnChanges {
         }
 
         if (this.campos.length) {
-            this.valores = Object.fromEntries( // fromEntries convierte un Record (clave,valor) a un objeto
-                this.campos.map(c => [c.nombre, '']) // recorre todos los elementos y por c uno devuelve un array con 2 posiciones
+            this.valores = Object.fromEntries( 
+                this.campos.map(c => [c.nombre, '']) 
             );
         }
     }
 
     valido(): boolean {
-        return this.campos.some(c => { // some devuelve true o false y recorre todo
+        return this.campos.some(c => { 
             const valor = this.valores[c.nombre]
             return c.requerido && (valor === null || valor === undefined || valor === '')
-            // devuelve true si esta vacio y es requerido
+            
         })
     }
 

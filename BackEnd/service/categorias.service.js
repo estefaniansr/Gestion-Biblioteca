@@ -30,12 +30,12 @@ exports.editarCategoriaService = async (id, datos) => {
 }
 exports.crearCategoriaService = async (datos) => {
     try {
-        if (!datos.nombre || datos.nombre.trim() === '') { //si viene vacio da error
+        if (!datos.nombre || datos.nombre.trim() === '') { 
             throw new Error('El nombre de la categoría es obligatorio')
         }
-        datos.nombre = datos.nombre.trim() //elimina espacios extras
-        datos.descripcion = datos.descripcion?.trim() || '' //si no viene descripcion asignar vacio 
-        const categoriaExistente = await categoriasRepository.buscarCategoriaRepository(datos.nombre)//verificar si existe categoria no ese nombre
+        datos.nombre = datos.nombre.trim() 
+        datos.descripcion = datos.descripcion?.trim() || '' 
+        const categoriaExistente = await categoriasRepository.buscarCategoriaRepository(datos.nombre)
         if (categoriaExistente.length > 0) {
             throw new Error(`La categoría ${datos.nombre} ya existe`)
         }

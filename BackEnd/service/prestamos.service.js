@@ -32,7 +32,7 @@ exports.crearPrestamoService = async (pUsuarioId, pLibroId) => {
         console.log('Prestamos Service - crearPrestamoService')
         const fechaPrestamo = new Date()
         const fechaVencimiento = new Date()
-        fechaVencimiento.setDate(fechaVencimiento.getDate() + 30) // suma 30 dias
+        fechaVencimiento.setDate(fechaVencimiento.getDate() + 30) 
 
         return await prestamosRepository.crearPrestamoRepository(
             pUsuarioId,
