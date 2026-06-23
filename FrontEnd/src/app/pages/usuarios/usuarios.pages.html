@@ -7,7 +7,7 @@
   <!-- Pasa los @Input del componente titulo y entre "el nombre" -->
   <div class="acciones">
 
-    <app-buscador placeholder="Busca por nombre, DNI o telefono..." (valorChange)="filtrado($event)"></app-buscador>
+    <app-buscador placeholder="Busca por nombre, DNI o telefono..." (valorChange)="buscador($event)"></app-buscador>
 
     <app-boton [texto]="'Nuevo usuario'" (abrir)="modalAbierto = true"></app-boton>
   </div>
@@ -17,8 +17,6 @@
 <app-modal titulo="Nuevo usuario" [abierto]="modalAbierto" [campos]="CamposModal"
   (guardar)="guardarModalUsuario($event)" (cancelar)="modalAbierto = false" />
 }
-
-
 
 <div class="tags-container">
   <app-tags titulo="Usuarios" [cantidad]="cantidadUsuarios">
@@ -42,6 +40,6 @@
 
 <app-tabla [columnas]="columnasUsuarios" [datos]="usuariosTabla" [mostrarEliminar]="true"
   [totalItems]="usuariosTabla.length" [itemsPorPagina]="10" [paginaActual]="paginaActual"
-  (cambioPagina)="paginaActual = $event" (editar)="editarUsuario($event)" (eliminar)="eliminarUsuarioBoton($event)"
+  (cambioPagina)="paginaActual = $event" (editar)="editarUsuario($event)" (eliminar)="borrarUsuario($event)"
   [camposBloqueados]="['DNI']">
 </app-tabla>

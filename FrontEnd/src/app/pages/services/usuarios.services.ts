@@ -79,7 +79,8 @@ export class UsuariosService {
             throw error
         }
     }
-    async editarUsuario(pId: string, datos: Usuario) {
+
+    async editarUsuario(pId: string, datos: Record<string, TipoDato>) {
         try {
             const respuesta = await fetch(`${this.url}/modificar/${pId}`, {
                 method: "PUT",
@@ -89,12 +90,15 @@ export class UsuariosService {
                 body: JSON.stringify(datos)
             });
 
+            console.log()
+            console.log(respuesta)
             return respuesta;
         } catch (error) {
             throw error;
         }
     }
-    async borrarUsuario(datos: string) {
+
+    async borrarUsuario(datos: String) {
         let datoTest = datos
         try {
             let respuesta = await fetch(`${this.url}/borrar/${datoTest}`, {

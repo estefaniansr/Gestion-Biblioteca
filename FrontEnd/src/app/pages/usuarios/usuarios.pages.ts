@@ -47,7 +47,6 @@ export class UsuariosPages implements OnInit {
     telefono: 0,
   }
 
-  modalBorrarAbierto = false
   usuarioFiltrado?: Usuario
   cartel = false
   activo = 'usuarios';
@@ -92,24 +91,6 @@ export class UsuariosPages implements OnInit {
     }
   }
 
-  abrirModal() {
-    this.modalAbierto = true
-  }
-
-  abrirModalBorrar() {
-    this.modalBorrarAbierto = true
-    this.modalAbierto = false
-  }
-
-  async filtrado(valor: string) {
-    let texto = valor
-    this.usuariosTabla = await this.usuarioService.usuarioBusqueda(texto)
-
-    if (texto == '') {
-      this.usuariosTabla = this.usuariosLLamados
-    }
-  }
-
   async guardarModalUsuario(datos: Record<string, TipoDato>) {
     this.datosdeModal.nombre = String(datos["Nombre"])
     this.datosdeModal.apellido = String(datos["Apellido"])
@@ -124,79 +105,26 @@ export class UsuariosPages implements OnInit {
       this.datosdeModal.email,
       this.datosdeModal.telefono)
 
-    if (respuesta.ok == true) {
-      this.modalAbierto = false
-      this.mensajeModal = `<h2>Usuario creado correctamente</h2>`
-      this.cartel = true
-
-      this.cerrarModales()
+    if(respuesta.ok == true){
+      setTimeout(()=>{
+        this.modalAbierto = false
+        this.actualizar()
+      }, 250)
     }
-    else if (respuesta.ok == false) {
-      this.modalAbierto = false
-      this.mensajeModal = `<h2>Error
-      <br>El numero de DNI: ${this.datosdeModal.DNI} ya esta registrado</h2>`
-      this.cartel = true
 
-      this.cerrarModales()
-    }
-    this.modalAbierto = false
-    this.actualizar()
   }
 
   async editarUsuario(event: { id: string; datos: Record<string, TipoDato> }) {
-    const usuario: Usuario = {
-      _id: event.id,
-      nombre: String(event.datos["Nombre"] ?? ""),
-      apellido: String(event.datos["Apellido"] ?? ""),
-      DNI: Number(event.datos["DNI"] ?? 0),
-      email: String(event.datos["Email"] ?? ""),
-      telefono: Number(event.datos["Telefono Celular"] ?? 0),
-    };
-
-    await this.usuarioService.editarUsuario(usuario._id, usuario);
+    await this.usuarioService.editarUsuario(event.id, event.datos);
   }
 
-  eliminarUsuarioBoton(id: String | Number) {
-    this.usuarioFiltrado = this.usuariosLLamados.find(usuario => usuario._id == id)
-    this.mensajeModal = `<h1>Desea borrar este usuario?</h1>
-  <br>
-  <h2>Nombre: ${this.usuarioFiltrado?.nombre}
-  <br>
-  Apellido: ${this.usuarioFiltrado?.apellido}
-  <br>
-  DNI: ${this.usuarioFiltrado?.DNI}
-  </h2>`
-
-    this.abrirModalBorrar()
-  }
-
-  async guardarModalBorrar(datos: Record<string, TipoDato>) {
-
-    if (!this.usuarioFiltrado?._id) {
-      console.log('No existe este usuario')
-      return
+  async borrarUsuario(idUsuario: String){
+    let respuesta = await this.usuarioService.borrarUsuario(idUsuario)
+    if(respuesta.ok == true){
+    setTimeout(()=>{
+          this.actualizar()
+    }, 250)
     }
-
-    let respuesta = await this.usuarioService.borrarUsuario(this.usuarioFiltrado._id)
-
-    if (respuesta.ok == true) {
-      this.modalBorrarAbierto = false
-      this.mensajeModal = `<h2>Usuario borrado con DNI: ${this.usuarioFiltrado.DNI}
-      <br>borrado correctamente</h2>`
-      this.cartel = true
-
-      this.cerrarModales()
-
-      this.actualizar()
-    }
-  }
-
-  cerrarModales() {
-    setTimeout(() => {
-      this.modalAbierto = false
-      this.modalBorrarAbierto = false
-      this.cartel = false
-    }, 2500)
   }
 
   get EjPaginado(): FilaTabla[] {
