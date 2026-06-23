@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-import { headerComponente } from "../../components/header/header.component"; 
-import { BuscadorComponente } from "../../components/buscador/buscador.component"; 
-import { BotonComponente } from "../../components/boton/boton.component"; 
-import { TituloComponent } from "../../components/titulo/titulo.component"; 
-import { TagComponent } from "../../components/tags/tags.component"; 
-import { TablaComponent } from "../../components/tabla/tabla.component"; 
-import { ModalComponent } from "../../components/modal/modal.component"; 
+import { headerComponente } from "../../components/header/header.component";
+import { BuscadorComponente } from "../../components/buscador/buscador.component";
+import { BotonComponente } from "../../components/boton/boton.component";
+import { TituloComponent } from "../../components/titulo/titulo.component";
+import { TagComponent } from "../../components/tags/tags.component";
+import { TablaComponent } from "../../components/tabla/tabla.component";
+import { ModalComponent } from "../../components/modal/modal.component";
 
 import { Campo } from "../../models/campo.type";
 import { TipoDato } from "../../models/TipoDato.type";
@@ -28,7 +28,6 @@ export class UsuariosPages implements OnInit {
     await this.actualizar()
   }
 
-  constructor(private usuarioService: UsuariosService) { }
 
   usuariosLLamados: Usuario[] = []
 
@@ -71,15 +70,19 @@ export class UsuariosPages implements OnInit {
     { tipo: 'text', nombre: 'Nombre', label: 'Nombre', placeholder: 'Juan', requerido: true },
   ];
 
-  async actualizar() {
-    this.usuariosTabla = []
-    this.usuariosLLamados = []
+  constructor(private usuarioService: UsuariosService) { }
 
-    this.usuariosLLamados = await this.usuarioService.obtenerUsuarios()
-
-    this.usuariosTabla = this.usuariosLLamados
-
-    this.cantidadUsuarios = this.usuariosLLamados.length
+  actualizar() {
+    this.usuarioService.obtenerUsuarios().suscribe({
+      next: (data) => {
+        this.usuariosTabla = data;
+        this.usuariosLLamados = data;
+        this.cantidadUsuarios = data.length;
+      },
+      error: () => {
+        console.log("error al cargar usuarios")
+      }
+    })
   }
 
   async buscador(input: string) {
@@ -109,8 +112,8 @@ export class UsuariosPages implements OnInit {
       this.datosdeModal.email,
       this.datosdeModal.telefono)
 
-    if(respuesta.ok == true){
-      setTimeout(()=>{
+    if (respuesta.ok == true) {
+      setTimeout(() => {
         this.modalAbierto = false
         this.actualizar()
       }, 250)
@@ -122,17 +125,17 @@ export class UsuariosPages implements OnInit {
     await this.usuarioService.editarUsuario(event.id, event.datos);
   }
 
-  async borrarUsuario(idUsuario: String){
+  async borrarUsuario(idUsuario: String) {
     let respuesta = await this.usuarioService.borrarUsuario(idUsuario)
-    if(respuesta.ok == true){
-    setTimeout(()=>{
-          this.actualizar()
-    }, 250)
+    if (respuesta.ok == true) {
+      setTimeout(() => {
+        this.actualizar()
+      }, 250)
     }
   }
 
   get EjPaginado(): FilaTabla[] {
-    const indice = (this.paginaActual - 1) * 10; 
+    const indice = (this.paginaActual - 1) * 10;
     return this.usuariosTabla.slice(indice, indice + 10);
   }
 
