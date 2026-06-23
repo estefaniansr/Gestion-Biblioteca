@@ -8,3 +8,9 @@ export interface Usuario {
     email:string,
     telefono: number
 }
+
+export interface UsuarioMin {
+  _id: string;
+  nombre: string;
+  apellido: string;
+}

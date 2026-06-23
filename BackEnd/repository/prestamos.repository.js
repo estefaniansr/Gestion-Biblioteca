@@ -36,6 +36,7 @@ exports.obtenerEstadisticasRepository = async () => {
     try {
         console.log('Prestamos Repository - obtenerEstadisticasRepository')
         const hoy = new Date()
+        hoy.setHours(0, 0, 0, 0)
 
         const total = await Prestamos.countDocuments()
         const activos = await Prestamos.countDocuments({
@@ -46,8 +47,13 @@ exports.obtenerEstadisticasRepository = async () => {
             estado: 'Devuelto'
         })
         const vencidos = await Prestamos.countDocuments({
-            estado: 'Activo',
-            fechaVencimiento: { $lt: hoy }
+            $or: [
+                { estado: 'Vencido' }, 
+                { 
+                    estado: 'Activo', 
+                    fechaVencimiento: { $lt: hoy } 
+                }
+            ]
         })
 
         return { total, activos, entregados, vencidos }

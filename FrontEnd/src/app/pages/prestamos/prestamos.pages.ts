@@ -15,6 +15,9 @@ import { ModalComponent } from "../../components/modal/modal.component";
 import { PrestamosService } from "../services/prestamos.services";
 import { HttpClient } from "@angular/common/http";
 import { Campo } from "../../models/campo.type";
+import { UsuarioMin } from "../../models/usuarios.model";
+import { LibroMin } from "../../models/libro";
+import { TipoDato } from "../../models/TipoDato.type";
 
 @Component({
   selector: 'app-prestamos',
@@ -25,8 +28,8 @@ import { Campo } from "../../models/campo.type";
 })
 export class PrestamosPages implements OnInit {
 
-  usuarios: any[] = []
-  libros: any[] = []
+  usuarios: UsuarioMin[] = []
+  libros: LibroMin[] = []
 
   activo = 'prestamos'
   textoBusqueda = ''
@@ -66,7 +69,11 @@ export class PrestamosPages implements OnInit {
   cargarEstadisticas() {
     this.prestamosService.ObtenerEstadisticas().subscribe({
       next: (datos: EstadisticasPrestamos) => {
+        console.log("LO QUE LLEGA DEL BACKEND:", datos);
         this.estadisticas = datos
+        this.estadisticas.activos =datos.activos
+        this.estadisticas.entregados = datos.entregados
+        this.estadisticas.vencidos = datos.vencidos
       },
       error: (err) => {
         console.error(err)
@@ -86,8 +93,8 @@ export class PrestamosPages implements OnInit {
     })
   }
 
-  Editar(id: string, datos: Record<string, any>) {
-    const nuevoEstado = datos['estado']
+  Editar(id: string, datos: Record<string, unknown>) {
+    const nuevoEstado = datos['estado'] as string;
     this.prestamosService.ActualizarEstado(id, nuevoEstado).subscribe({
       next: (res) => {
         this.cargarPrestamos()
@@ -148,39 +155,42 @@ export class PrestamosPages implements OnInit {
   }
 
   cargarUsuarios() {
-    this.http.get<any[]>('http://localhost:3000/usuarios').subscribe({
-      next: (data) => {
-        this.usuarios = data
-        this.actualizarCamposModal()
-      },
-      error: (err) => {
-        console.error('Error al cargar usuarios', err)
-      }
+    this.http.get<UsuarioMin[]>('http://localhost:3000/usuarios').subscribe({
+        next: (data) => {
+            this.usuarios = data
+            this.actualizarCamposModal()
+        },
+        error: (err) => {
+            console.error('Error al cargar usuarios', err)
+        }
     })
   }
 
-  cargarLibros() {
-    this.http.get<any[]>('http://localhost:3000/libros').subscribe({
-      next: (data) => {
-        this.libros = data
-        this.actualizarCamposModal()
-      },
-      error: (err) => {
-        console.error('Error al cargar libros', err)
-      }
+cargarLibros() {
+    this.http.get<LibroMin[]>('http://localhost:3000/libros').subscribe({
+        next: (data) => {
+            this.libros = data
+            this.actualizarCamposModal()
+        },
+        error: (err) => {
+            console.error('Error al cargar libros', err)
+        }
     })
   }
 
-  Guardar(datos: Record<string, any>) {
-    this.prestamosService.CrearPrestamo(datos['usuarioId'], datos['libroId']).subscribe({
-      next: (res) => {
-        this.cargarPrestamos()
-        this.cargarEstadisticas()
-        this.modalAbierto = false
-      },
-      error: (err) => {
-        console.log('Error al crear el préstamo', err)
-      }
+Guardar(datos: Record<string, unknown>) {
+    const usuarioId = datos['usuarioId'] as string;
+    const libroId = datos['libroId'] as string;
+    this.prestamosService.CrearPrestamo(usuarioId, libroId).subscribe({
+        next: (res) => {
+            console.log('Préstamo creado', res)
+            this.cargarPrestamos()
+            this.cargarEstadisticas()
+            this.modalAbierto = false
+        },
+        error: (err) => {
+            console.log('Error al crear el préstamo', err)
+        }
     })
   }
 

@@ -17,8 +17,8 @@ export class PrestamosService {
         return this.http.get<Prestamo[]>(this.apiUrl);
     }
 
-    ObtenerEstadisticas(): Observable<any> {
-        return this.http.get<any>(`${this.apiUrl}/estadisticas`);
+    ObtenerEstadisticas(): Observable<EstadisticasPrestamos> {
+        return this.http.get<EstadisticasPrestamos>(`${this.apiUrl}/estadisticas`);
     }
 
     CrearPrestamo(usuarioId: string, libroId: string) {
