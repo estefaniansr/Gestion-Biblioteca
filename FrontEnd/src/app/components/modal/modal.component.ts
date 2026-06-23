@@ -65,7 +65,6 @@ export class ModalComponent implements OnChanges { // implmenta OnChanges para d
     }
 
     confirmar() {
-        console.log("Datos guardados")
         this.guardar.emit(this.valores)
     }
 

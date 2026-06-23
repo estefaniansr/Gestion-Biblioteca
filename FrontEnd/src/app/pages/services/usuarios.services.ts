@@ -28,7 +28,6 @@ export class UsuariosService {
             return arrayEscribir
         }
         catch(error){
-            console.log('Error al obtener Usuarios')
             return []
         }
     }
@@ -55,7 +54,6 @@ export class UsuariosService {
             return arrayEscribir
         }
         catch(error){
-            console.log('Error al realizar la busqueda')
             return []
         }
     }
@@ -78,7 +76,6 @@ export class UsuariosService {
             return respuesta
         }
         catch(error){
-            console.log('Error al crear Usuario')
             throw error
         }
     }
@@ -97,7 +94,6 @@ export class UsuariosService {
 
     }
     catch(error){
-      console.log('Error al intentar editar Usuario')
       throw error
     }
   }
@@ -111,7 +107,6 @@ export class UsuariosService {
       return respuesta
     }
     catch(error){
-      console.log('Error al intentar borrar usuario')
       throw error
     }
   }

@@ -157,7 +157,6 @@ async buscador(input:string) {
   }
 
   async editarUsuario(datos:{_id:string; datos:Usuario}){
-    console.log(typeof datos)
     await this.usuarioService.editarUsuario(datos.datos._id, datos.datos)
   }
 

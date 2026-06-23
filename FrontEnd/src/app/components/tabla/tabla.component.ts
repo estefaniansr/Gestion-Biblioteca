@@ -132,10 +132,8 @@ export class TablaComponent {
     }
 
     guardarEdicion() {
-        console.log("clikeo guardar edicion")
 
         if (!this.filaEditando) {
-            console.log("no tiene fila")
             return; // si no hay fila seleccionado hace return y cancela
         }
         const id = this.filaEditando['_id'] as string;
@@ -143,16 +141,12 @@ export class TablaComponent {
             * obtiene el _id del objeto que esta editando el la filaEditando
             * el as string le dice a ts que el valor sera string
          */
-        console.log("ID", id)
         this.editar.emit({ id, datos: this.filaEditando });
         /**
          * Emite un evento al padre (.emit)
          * le envia el id del libro
          * y en datos envia la fila editando
          */
-
-
-        console.log("editar emitido")
         this.cancelarEdicion();
     }
 

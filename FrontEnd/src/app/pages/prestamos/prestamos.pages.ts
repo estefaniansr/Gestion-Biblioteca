@@ -93,7 +93,6 @@ export class PrestamosPages implements OnInit {
     const nuevoEstado = datos['estado']
     this.prestamosService.ActualizarEstado(id, nuevoEstado).subscribe({
         next: (res) => {
-            console.log('Estado actualizado', res)
             this.cargarPrestamos()
             this.cargarEstadisticas()
         },
@@ -178,7 +177,6 @@ cargarLibros() {
 Guardar(datos: Record<string, any>) {
     this.prestamosService.CrearPrestamo(datos['usuarioId'], datos['libroId']).subscribe({
         next: (res) => {
-            console.log('Préstamo creado', res)
             this.cargarPrestamos()
             this.cargarEstadisticas()
             this.modalAbierto = false
